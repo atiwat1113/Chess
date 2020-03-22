@@ -1,79 +1,31 @@
 package entity.base;
 
-import entity.Box;
+import java.awt.*;
 
 public abstract class Entity {
-	private int x;
-	private int y;
+	private Point p;
+	private boolean isMove;
+	
+	public Entity(Point p) {//-------------------------------------------------------
+		this.p = p;
+		isMove = false;
+	}
 	
 	public abstract int getSymbol();
-
-	public Entity() {
+	public abstract boolean move(Point p);
+	public abstract Point[] canMove();
+	public abstract Point[] canEat();
+	
+	public void remove() {//----------------------------------------
 		
 	}
-	
-	public int getX() {
-		return x;
+
+	public Point getP() {
+		return p;
 	}
 
-	public void setX(int x) {
-		this.x = x;
+	public void setP(Point p) {
+		this.p = p;
 	}
 
-	public int getY() {
-		return y;
-	}
-
-	public void setY(int y) {
-		this.y = y;
-	}
-	
-	public boolean move(Direction dir) {
-		int targetx = x;
-		int targety = y;
-		
-		direction = dir; //Update move position
-
-		switch(dir) {
-		case LEFT:
-			targetx -= 1;
-			break;
-		case UP:
-			targety -= 1;
-			break;
-		case RIGHT:
-			targetx += 1;
-			break;
-		case DOWN:
-			targety += 1;
-			break;
-		default:
-			break;
-		}
-		
-		if(GameController.getCurrentMap().isMovePossible(targetx, targety,this)) {
-			GameController.getCurrentMap().removeEntity(x,y);
-			GameController.getCurrentMap().addEntity(this, targetx, targety);
-			return true;
-		}else {
-			return false;
-		}
-	}
-	
-	
-	public void remove() {
-		GameController.getCurrentMap().removeEntity(x,y);
-	}
-
-	public Direction getDirection() {
-		return direction;
-	}
-
-	public void setDirection(Direction direction) {
-		this.direction = direction;
-	}
-	
-	public static boolean isBox(Entity e) {
-		return e.getClass()==Box.class || e.getClass()==ColorBox.class;
-	}
 }
