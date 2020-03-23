@@ -2,9 +2,13 @@ package entity.base;
 
 import java.awt.*;
 
+import logic.Side;
+
+
 public abstract class Entity {
 	private Point p;
 	private boolean isMove;
+	private Side side;
 	
 	public Entity(Point p) {// Point (y,x)
 		this.p = p;
