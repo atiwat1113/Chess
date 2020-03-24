@@ -19,7 +19,13 @@ public class King extends Entity{
 		return Sprites.W_KING;
 	}
 	public boolean move(Point p) {//--------------------
-		return true;
+		for (Point moveablePoint : this.canMove()) {
+			if (moveablePoint.equals(p)) {
+				this.p = p;
+				return true;
+			}
+		}
+		return false;
 	}
 	public Point[] canMove() {
 		return null;
