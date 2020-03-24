@@ -15,7 +15,7 @@ public class Knight extends Entity{
 	@Override
 	public int getSymbol() {
 		// TODO Auto-generated method stub
-		if (this.side == Side.Black) {
+		if (this.side == Side.BLACK) {
 			return Sprites.B_KNIGHT;
 		}
 		return Sprites.W_KNIGHT;

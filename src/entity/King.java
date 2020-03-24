@@ -16,7 +16,7 @@ public class King extends Entity {
 
 	@Override
 	public int getSymbol() {
-		if (this.side == Side.Black) {
+		if (this.side == Side.BLACK) {
 			return Sprites.B_KING;
 		}
 		return Sprites.W_KING;
