@@ -23,7 +23,7 @@ public class King extends Entity {
 	}
 
 	@Override
-	public Point[] canMove() {
+	public Point[] moveList() {
 		return null;
 	}
 
