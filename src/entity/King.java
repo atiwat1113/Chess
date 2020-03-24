@@ -1,8 +1,10 @@
 package entity;
 
 import java.awt.Point;
+import java.util.ArrayList;
 
 import entity.base.Entity;
+import logic.Board;
 import logic.Side;
 import logic.Sprites;
 
@@ -30,7 +32,13 @@ public class King extends Entity{
 	public Point[] canMove() {
 		return null;
 	}
-	public Point[] canEat() {
-		return null;
+	public Point[] canEat(Board board) {
+		ArrayList<Point> eatablePoint = new ArrayList<Point>();
+		for (Point moveablePoint : this.canMove()) {
+			if (board.getEntity(moveablePoint.x, moveablePoint.y) != null && board.getEntity(moveablePoint.x, moveablePoint.y).getSide() != this.side) {
+				eatablePoint.add(moveablePoint);
+			}
+		}
+		return (Point[]) eatablePoint.toArray();
 	}
 }
