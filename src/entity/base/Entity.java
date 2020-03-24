@@ -6,12 +6,13 @@ import logic.Side;
 
 
 public abstract class Entity {
-	private Point p;
-	private boolean isMove;
-	private Side side;
+	protected Point p;
+	protected boolean isMove;
+	protected Side side;
 	
-	public Entity(Point p) {// Point (y,x)
+	public Entity(Point p,Side side) {// Point (y,x)
 		this.p = p;
+		this.side = side;
 		isMove = false;
 	}
 	
