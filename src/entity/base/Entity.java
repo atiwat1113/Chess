@@ -6,14 +6,14 @@ import java.util.ArrayList;
 import logic.Board;
 import logic.Side;
 
-public abstract class Entity { // แก้ private --> protected
+public abstract class Entity { // private --> protected
 	protected Point p;
 	protected boolean isMove;
 	protected Side side;
 
 	public Entity(Point p, Side side) {// Point (y,x)
 		this.p = p;
-		this.side = side; // น่าจะต้องบอกฝั่งไว้ตั้งแต่ตอนสร้างหมาก
+		this.side = side; // should be set since creating an entity.
 		isMove = false;
 	}
 
@@ -21,7 +21,7 @@ public abstract class Entity { // แก้ private --> protected
 
 	public abstract Point[] canMove();
 
-	public boolean move(Point p) { // การ move ของทุกหมากมีรูปแบบเดียวกัน
+	public boolean move(Point p) { // all Entity's move are the same.
 		for (Point moveablePoint : this.canMove()) {
 			if (moveablePoint.equals(p)) {
 				this.p = p;
@@ -31,7 +31,7 @@ public abstract class Entity { // แก้ private --> protected
 		return false;
 	}
 
-	public Point[] canEat(Board board) { // การเช็คช่องที่กินได้ของทุกหมากมีวิธีการเช็คเหมือนกัน
+	public Point[] canEat(Board board) { //all Entity's canEat() are the same.
 		ArrayList<Point> eatablePoint = new ArrayList<Point>();
 		for (Point moveablePoint : this.canMove()) {
 			if (board.getEntity(moveablePoint.x, moveablePoint.y) != null

@@ -14,6 +14,7 @@ public class King extends Entity {
 		neverMove = true;
 	}
 
+	@Override
 	public int getSymbol() {
 		if (this.side == Side.Black) {
 			return Sprites.B_KING;
@@ -21,6 +22,7 @@ public class King extends Entity {
 		return Sprites.W_KING;
 	}
 
+	@Override
 	public Point[] canMove() {
 		return null;
 	}
