@@ -25,7 +25,7 @@ public class Rook extends Entity {
 	}
 
 	@Override
-	public Point[] canMove() {
+	public Point[] moveList() {
 		// TODO Auto-generated method stub
 		return null;
 	}

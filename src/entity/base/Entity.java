@@ -19,23 +19,24 @@ public abstract class Entity { // private --> protected
 
 	public abstract int getSymbol();
 
-	public abstract Point[] canMove();
+	public abstract Point[] moveList();
 
-	public boolean move(Point p) { // all Entity's move are the same.
-		for (Point moveablePoint : this.canMove()) {
+	public boolean move(Board board , Point p) { // all Entity's move are the same.
+		for (Point moveablePoint : this.moveList()) {
 			if (moveablePoint.equals(p)) {
 				this.p = p;
+				board.remove(p);
 				return true;
 			}
 		}
 		return false;
 	}
 
-	public Point[] canEat(Board board) { //all Entity's canEat() are the same.
+	public Point[] eatList(Board board) { //all Entity's canEat() are the same.
 		ArrayList<Point> eatablePoint = new ArrayList<Point>();
-		for (Point moveablePoint : this.canMove()) {
-			if (board.getEntity(moveablePoint.x, moveablePoint.y) != null
-					&& board.getEntity(moveablePoint.x, moveablePoint.y).getSide() != this.side) {
+		for (Point moveablePoint : this.moveList()) {
+			if (board.getEntity(moveablePoint) != null
+					&& board.getEntity(moveablePoint).getSide() != this.side) {
 				eatablePoint.add(moveablePoint);
 			}
 		}
