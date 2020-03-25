@@ -6,15 +6,21 @@ import java.awt.*;
 
 public abstract class GameController {
 	protected static Board board;
-	protected static Side side;
+	protected static Side turn;
 	
 	public static void IntializeMap(String[][] map,int px,int py) {
-		side = Side.WHITE;
+		turn = Side.WHITE;
 		board = new Board(map);
 	}
 	
+	public static Side isGameWin() {
+		if (isGameWin(Side.BLACK)) return Side.BLACK;
+		else if (isGameWin(Side.WHITE)) return Side.WHITE;
+		return null;
+	}
+	
 	public static boolean isGameWin(Side side) {// have to Override
-		return true;
+		return false;
 	}
 	
 	public static boolean isCheck(Side side) {
@@ -24,7 +30,11 @@ public abstract class GameController {
 		return canEat(side,pointKing);
 	}
 	
-	public static boolean canEat(Side side, Point point) {// null point also can eat
+	public static Point[] moveList(Point p) {
+		return board.getEntity(p).moveList(board);
+	}
+	
+	public static boolean canEat(Side side, Point point) {// Ex for black: white can eat this point?
 		Entity[] allEntity = board.getAllPieces(side);
 		for (Entity e : allEntity) {
 			Point[] eatablePoint = e.eatList(board);
@@ -37,11 +47,25 @@ public abstract class GameController {
 		return false;
 	}
 	
+	public static boolean isTurn(Point p, Side turn) {
+		if (p == null) {
+			System.out.println("Don't have this point.");
+			return false;
+		}if(board.getEntity(p)==null) {
+			System.out.println("It is empty.");
+			return false;
+		}if (board.getEntity(p).getSide()!=turn) {
+			System.out.println("It's not you piece.");
+			return false;
+		}
+		return true;
+	}
+	
 	public static void nextTurn() {
-		if (side == Side.BLACK) {
-			side = Side.WHITE;
+		if (turn == Side.BLACK) {
+			turn = Side.WHITE;
 		}else {
-			side = Side.BLACK;
+			turn = Side.BLACK;
 		}
 	}
 	
@@ -53,17 +77,15 @@ public abstract class GameController {
 	}
 	
 	public static boolean move(Point p1,Point p2) { //move from p1 to p2
-		if (click(p1)==null) return false;
-		// move ------------------------------------------------------------------------------------
-		return true;
+		return board.getEntity(p1).move(board,p2);
 	}
 	
 	public static Board getBoard() {
 		return board;
 	}
 
-	public static Side getSide() {
-		return side;
+	public static Side getTurn() {
+		return turn;
 	}
 	
 	public static Side getAnotherSide(Side side) {

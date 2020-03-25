@@ -91,6 +91,9 @@ public class Board{
 		return cellmap[p.x][p.y].setEntity(e);
 	}
 	public Entity getEntity(Point p) {
+		if (p.x<0 || p.y<0 || p.x>=height || p.y>=width) {
+			return null;
+		}
 		if (cellmap[p.x][p.y].IsEmpty()) {
 			return null;
 		}

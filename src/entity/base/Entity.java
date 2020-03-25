@@ -24,22 +24,23 @@ public abstract class Entity { // private --> protected
 	public ArrayList<Point> moveList(Board board, Point point, Point vector) {
 		ArrayList<Point> ret = new ArrayList<Point>();
 		Point nextPoint = new Point(point.x + vector.x, point.y + vector.y);
-		if (outOfBoard(board, point)) return ret;
-		if (board.getEntity(point)==null ) {
+		if (nextPoint==null || outOfBoard(board, nextPoint)) ret.add(point);
+		else if (board.getEntity(point)==null ) {
 			ret = moveList( board, nextPoint, vector);
 			ret.add(point);
 		}else if (board.getEntity(nextPoint).getSide() != side) {
-			ret = new ArrayList<Point>();
 			ret.add(point);
+			ret.add(nextPoint);
 		}
 		return ret;//same side
 	}
 	
 	public boolean move(Board board , Point p) { // all Entity's move are the same.
+		Point oldPoint = this.p;
 		for (Point moveablePoint : this.moveList(board)) {
 			if (moveablePoint.equals(p)) {
 				this.p = p;
-				board.remove(p);
+				board.remove(oldPoint);
 				return true;
 			}
 		}
@@ -58,6 +59,7 @@ public abstract class Entity { // private --> protected
 	}
 	
 	public boolean outOfBoard(Board board,Point P) {
+		if (P==null) return false;
 		if (P.x < board.getHeight() && P.x >= 0) return false;
 		if (P.y < board.getWidth() && P.y >= 0) return false;
 		return true;

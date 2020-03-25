@@ -1,9 +1,11 @@
 package logic;
 
 import java.awt.*;
+import java.util.ArrayList;
 import java.util.Scanner;
 import logic.*;
 import entity.base.Entity;
+import game.base.GameController;
 
 public class PrintBoard {
 	private static String[] w_p = {"--", "WK", "WQ", "WR", "WB", "WN", "WP"};
@@ -19,25 +21,51 @@ public class PrintBoard {
 						 {w_p[6],w_p[6],w_p[6],w_p[6],w_p[6],w_p[6],w_p[6],w_p[6]},
 						 {w_p[0],w_p[0],w_p[0],w_p[0],w_p[0],w_p[0],w_p[0],w_p[0]},
 						 {w_p[3],w_p[5],w_p[4],w_p[2],w_p[1],w_p[4],w_p[5],w_p[3]}};
-		Board board = new Board(nb);
-		System.out.println("Create board complete");
-		print(board);
-		Side turn = Side.WHITE;
+		GameController.IntializeMap(nb, 8, 8);
+		print(GameController.getBoard());
 		while (true) {
-			System.out.print("" + turn + " turn ");
+			System.out.print("" + GameController.getTurn() + " turn ");
 			String walkfrom = kb.nextLine();
+			if (GameController.isGameWin()!=null) {
+				System.out.println(""+GameController.isGameWin()+" win");
+				break;
+			}
 			if (walkfrom.charAt(0)=='q') break;
-			if (walkfrom.charAt(0)=='p') print(board);
-			if (!isTurn(stringToPoint(walkfrom),turn,board)) {
+			if (walkfrom.charAt(0)=='p') print(GameController.getBoard());
+			if (stringToPoint(walkfrom)==null) {
+				System.out.println("Don't have this point.\nPick again!!");
+				continue;
+			}else if (!GameController.isTurn(stringToPoint(walkfrom),GameController.getTurn())) {
 				System.out.println("Pick again!!");
 				continue;
 			}
 			Point piece = stringToPoint(walkfrom);
+			print(GameController.getBoard());
+			printMove(GameController.moveList(piece));
+			
 			String walkTo = kb.nextLine();
-			//-----------------------------------------------------------------------------
-			print(board);
+			if (stringToPoint(walkTo) == null) {
+				System.out.println("Don't have this point.\nPick again!!");
+				continue;
+			}
+			Point moveTo = stringToPoint(walkTo);
+			if (!GameController.move(piece, moveTo)) {
+				System.out.println("Pick again!!");
+				continue;
+			}
+			GameController.nextTurn();
+			print(GameController.getBoard());
 		}
 	}
+	public static void printMove(Point[] pointList) {
+		String s1="abcdefgh";
+		String s2="87654321";
+		for (Point p : pointList) {
+			System.out.println("" + s1.charAt(p.y) + " " + s2.charAt(p.x) + " ");
+		}
+		System.out.println();
+	}
+	
 	public static void print(Board board) {
 		System.out.println("  -a---b---c---d---e---f---g---h--");
 		for(int i=0; i<8; i++) {
@@ -56,20 +84,6 @@ public class PrintBoard {
 		}
 	}
 	
-	public static boolean isTurn(Point p, Side turn, Board board) {
-		if (p == null) {
-			System.out.println("Don't have this point.");
-			return false;
-		}if(board.getEntity(p)==null) {
-			System.out.println("It is empty.");
-			return false;
-		}if (board.getEntity(p).getSide()!=turn) {
-			System.out.println("It's not you piece.");
-			return false;
-		}
-		return true;
-	}
-	
 	public static Point stringToPoint(String str) {
 		if (str.length()!=2) return null;
 		String s1="abcdefgh";
@@ -83,4 +97,14 @@ public class PrintBoard {
 		}
 		return null;
 	}
+	/*public static boolean move(Point piece, Point moveTo, Board board) {
+		Point[] canMoveList = board.getEntity(piece).moveList(board);
+		for(Point p : canMoveList) {
+			if(p.x==moveTo.x && p.y==moveTo.y) {
+				board.getEntity(piece).move(board,moveTo);
+				return true;
+			}
+		}
+		return false;
+	}*/
 }
