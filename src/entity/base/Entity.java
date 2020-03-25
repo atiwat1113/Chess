@@ -24,7 +24,7 @@ public abstract class Entity { // private --> protected
 	public ArrayList<Point> moveList(Board board, Point point, Point vector) {//------
 		ArrayList<Point> ret = new ArrayList<Point>();
 		Point nextPoint = new Point(point.x + vector.x, point.y + vector.y);
-<<<<<<< HEAD
+
 <<<<<<< HEAD
 		if (nextPoint==null || !isInBoard(board, nextPoint)) ret.add(point);
 		else if (board.getEntity(point)==null ) {
