@@ -20,8 +20,8 @@ public class Board{
 		blackKing = null;
 		whitePieces = new ArrayList<Entity>();
 		blackPieces = new ArrayList<Entity>();
-		setWidth(column);
-		setHeight(row);
+		width = column;
+		height = row;
 		cellmap = new Cell[row][column];
 		for(int i=0;i<row;i++) {// Point (y,x) => (i,j)
 			for(int j=0;j<column;j++) {
@@ -84,6 +84,9 @@ public class Board{
 			}
 		}
 	}
+	public boolean move (Point p1, Point p2) {
+		if (p2 )
+	}
 	public void remove(Point p) {
 		addEntity(null, p);
 	}
@@ -91,13 +94,15 @@ public class Board{
 		return cellmap[p.x][p.y].setEntity(e);
 	}
 	public Entity getEntity(Point p) {
-		if (p.x<0 || p.y<0 || p.x>=height || p.y>=width) {
-			return null;
-		}
-		if (cellmap[p.x][p.y].IsEmpty()) {
+		if (!isInBoard(p) || cellmap[p.x][p.y].IsEmpty()) {
 			return null;
 		}
 		return cellmap[p.x][p.y].getEntity();
+	}
+	public boolean isInBoard(Point p) {
+		if (p.x<0 || p.x>height) return false;
+		if (p.y<0 || p.y>width) return false;
+		return true;
 	}
 	public Entity[] getAllPieces(Side side){
 		if (side == Side.WHITE) {
@@ -108,14 +113,8 @@ public class Board{
 	public int getWidth() {
 		return width;
 	}
-	public void setWidth(int width) {
-		this.width = width;
-	}
 	public int getHeight() {
 		return height;
-	}
-	public void setHeight(int height) {
-		this.height = height;
 	}
 	public Entity getKing(Side side) {
 		if (side == Side.WHITE) return whiteKing;

@@ -19,14 +19,22 @@ public abstract class Entity { // private --> protected
 
 	public abstract int getSymbol();
 
-	public abstract Point[] moveList(Board board);
+	public abstract ArrayList<Point> moveList(Board board);
 	
-	public ArrayList<Point> moveList(Board board, Point point, Point vector) {
+	public ArrayList<Point> moveList(Board board, Point point, Point vector) {//------
 		ArrayList<Point> ret = new ArrayList<Point>();
 		Point nextPoint = new Point(point.x + vector.x, point.y + vector.y);
 <<<<<<< HEAD
+<<<<<<< HEAD
 		if (nextPoint==null || !isInBoard(board, nextPoint)) ret.add(point);
 		else if (board.getEntity(point)==null ) {
+||||||| ff0bc55
+		if (outOfBoard(board, point)) return ret;
+		if (board.getEntity(point)==null ) {
+=======
+		if (nextPoint==null || outOfBoard(board, nextPoint)) ret.add(point);
+		else if (board.getEntity(point)==null ) {
+>>>>>>> cfeafa9424e13860b36f1ece38f0c692d563b9c1
 ||||||| ff0bc55
 		if (outOfBoard(board, point)) return ret;
 		if (board.getEntity(point)==null ) {
@@ -42,8 +50,20 @@ public abstract class Entity { // private --> protected
 		}
 		return ret;//same side
 	}
+		
+	public ArrayList<Point> eatList(Board board) { 
+		ArrayList<Point> eatablePoint = new ArrayList<Point>();
+		for (Point moveablePoint : this.moveList(board)) {
+			if (board.getEntity(moveablePoint) != null &&
+				board.getEntity(moveablePoint).getSide() != this.side) {
+				eatablePoint.add(moveablePoint);
+			}
+		}
+		return eatablePoint;
+	}
 	
-	public boolean move(Board board , Point p) { // all Entity's move are the same.
+	public boolean move(Board board , Point p) throws NullPointException { 
+		if (p==null) throw new NullPointException("");
 		Point oldPoint = this.p;
 		for (Point moveablePoint : this.moveList(board)) {
 			if (moveablePoint.equals(p)) {
@@ -55,30 +75,7 @@ public abstract class Entity { // private --> protected
 		return false;
 	}
 
-	public Point[] eatList(Board board) { //all Entity's canEat() are the same.
-		ArrayList<Point> eatablePoint = new ArrayList<Point>();
-		for (Point moveablePoint : this.moveList(board)) {
-			if (board.getEntity(moveablePoint) != null
-					&& board.getEntity(moveablePoint).getSide() != this.side) {
-				eatablePoint.add(moveablePoint);
-			}
-		}
-		return (Point[]) eatablePoint.toArray();
-	}
 	
-<<<<<<< HEAD
-	public boolean isInBoard(Board board,Point P) {
-		if (P==null) return false;
-||||||| ff0bc55
-	public boolean outOfBoard(Board board,Point P) {
-=======
-	public boolean outOfBoard(Board board,Point P) {
-		if (P==null) return false;
->>>>>>> cfeafa9424e13860b36f1ece38f0c692d563b9c1
-		if (P.x < board.getHeight() && P.x >= 0) return false;
-		if (P.y < board.getWidth() && P.y >= 0) return false;
-		return true;
-	}
 	public void remove() {// ----------------------------------------
 
 	}
