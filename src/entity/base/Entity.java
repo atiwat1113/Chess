@@ -17,7 +17,7 @@ public abstract class Entity { // private --> protected
 		isMove = false;
 	}
 
-	public abstract int getSymbol();
+	public abstract Point getSymbol();
 
 	public abstract ArrayList<Point> moveList(Board board);
 	
