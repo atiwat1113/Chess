@@ -1,11 +1,11 @@
 package logic;
 
 import java.awt.*;
+import game.base.Board;
 import java.util.ArrayList;
 import java.util.Scanner;
 import logic.*;
 import entity.base.Entity;
-import game.base.GameController;
 
 public class PrintBoard {
 	private static String[] w_p = {"--", "WK", "WQ", "WR", "WB", "WN", "WP"};

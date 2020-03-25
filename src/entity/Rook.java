@@ -2,11 +2,8 @@ package entity;
 
 import java.awt.Point;
 import java.util.ArrayList;
-
 import entity.base.Entity;
-import logic.Board;
-import logic.Side;
-import logic.Sprites;
+import logic.*;
 
 public class Rook extends Entity {
 

@@ -1,11 +1,12 @@
-package logic;
+package game.base;
 
+import logic.*;
 import entity.base.Entity;
 import entity.*;
 import java.awt.*;
 import java.util.ArrayList;
 
-public class Board{
+public class Board {// abstract
 	private Cell[][] cellmap;
 	private ArrayList<Entity> whitePieces, blackPieces;//have to add in remove, addEntity
 	private Entity whiteKing, blackKing;
@@ -74,9 +75,12 @@ public class Board{
 			}
 		}
 	}
-	public boolean move (Point p1, Point p2) {
+	public boolean isWin(Side side) {
+		return false;
+	}
+	public boolean move(Point p1, Point p2) {
 		if (p2 == null || !isInBoard(p2)) return false;
-		return getEntity(p1).move(this, p2);
+		return this.getEntity(p1).moveEntity(this, p2);
 	}
 	public void remove(Point p) {
 		addEntity(null, p);
@@ -95,11 +99,11 @@ public class Board{
 		if (p.y<0 || p.y>width) return false;
 		return true;
 	}
-	public Entity[] getAllPieces(Side side){
+	public ArrayList<Entity> getAllPieces(Side side){
 		if (side == Side.WHITE) {
-			return (Entity[]) whitePieces.toArray();
+			return whitePieces;
 		}
-		return (Entity[]) blackPieces.toArray();
+		return blackPieces;
 	}
 	public int getWidth() {
 		return width;

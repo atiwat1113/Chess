@@ -2,10 +2,7 @@ package entity.base;
 
 import java.awt.*;
 import java.util.ArrayList;
-
-import javax.swing.text.html.HTMLDocument.HTMLReader.IsindexAction;
-
-import logic.Board;
+import game.base.Board;
 import logic.Side;
 
 public abstract class Entity { // private --> protected
@@ -51,8 +48,7 @@ public abstract class Entity { // private --> protected
 		return eatablePoint;
 	}
 	
-	public boolean move(Board board , Point p) throws NullPointException { 
-		if (p==null) throw new NullPointException("");
+	public boolean moveEntity(Board board , Point p) { 
 		Point oldPoint = this.p;
 		for (Point moveablePoint : this.moveList(board)) {
 			if (moveablePoint.equals(p)) {
