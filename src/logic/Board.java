@@ -33,48 +33,38 @@ public class Board{
 					addEntity(whiteKing,p);
 					break;
 				case "WQ":
-					Entity wq = new Queen(p,Side.WHITE);
-					addEntity(wq,p);
+					addEntity(new Queen(p,Side.WHITE),p);
 					break;
 				case "WR":
-					Entity wr = new Rook(p,Side.WHITE);
-					addEntity(wr,p);
+					addEntity(new Rook(p,Side.WHITE),p);
 					break;
 				case "WB":
-					Entity wb = new Bishop(p,Side.WHITE);
-					addEntity(wb,p);
+					addEntity(new Bishop(p,Side.WHITE),p);
 					break;
 				case "WN":
-					Entity wn = new Knight(p,Side.WHITE);
-					addEntity(wn,p);
+					addEntity(new Knight(p,Side.WHITE),p);
 					break;
 				case "WP":
-					Entity wp = new Pawn(p,Side.WHITE);
-					addEntity(wp,p);
+					addEntity(new Pawn(p,Side.WHITE),p);
 					break;
 				case "BK":
 					blackKing = new King(p,Side.BLACK);
 					addEntity(blackKing,p);
 					break;
 				case "BQ":
-					Entity bq = new Queen(p,Side.BLACK);
-					addEntity(bq,p);
+					addEntity(new Queen(p,Side.BLACK),p);
 					break;
 				case "BR":
-					Entity br = new Rook(p,Side.BLACK);
-					addEntity(br,p);
+					addEntity(new Rook(p,Side.BLACK),p);
 					break;
 				case "BB":
-					Entity bb = new Bishop(p,Side.BLACK);
-					addEntity(bb,p);
+					addEntity(new Bishop(p,Side.BLACK),p);
 					break;
 				case "BN":
-					Entity bn = new Knight(p,Side.BLACK);
-					addEntity(bn,p);
+					addEntity(new Knight(p,Side.BLACK),p);
 					break;
 				case "BP":
-					Entity bp = new Pawn(p,Side.BLACK);
-					addEntity(bp,p);
+					addEntity(new Pawn(p,Side.BLACK),p);
 					break;
 				case "--":
 					break;
@@ -85,7 +75,8 @@ public class Board{
 		}
 	}
 	public boolean move (Point p1, Point p2) {
-		if (p2 )
+		if (p2 == null || !isInBoard(p2)) return false;
+		return getEntity(p1).move(this, p2);
 	}
 	public void remove(Point p) {
 		addEntity(null, p);

@@ -3,6 +3,8 @@ package entity.base;
 import java.awt.*;
 import java.util.ArrayList;
 
+import javax.swing.text.html.HTMLDocument.HTMLReader.IsindexAction;
+
 import logic.Board;
 import logic.Side;
 
@@ -22,33 +24,20 @@ public abstract class Entity { // private --> protected
 	public abstract ArrayList<Point> moveList(Board board);
 	
 	public ArrayList<Point> moveList(Board board, Point point, Point vector) {//------
-		ArrayList<Point> ret = new ArrayList<Point>();
+		ArrayList<Point> returnList = new ArrayList<Point>();
 		Point nextPoint = new Point(point.x + vector.x, point.y + vector.y);
-<<<<<<< HEAD
-<<<<<<< HEAD
-		if (nextPoint==null || !isInBoard(board, nextPoint)) ret.add(point);
-		else if (board.getEntity(point)==null ) {
-||||||| ff0bc55
-		if (outOfBoard(board, point)) return ret;
-		if (board.getEntity(point)==null ) {
-=======
-		if (nextPoint==null || outOfBoard(board, nextPoint)) ret.add(point);
-		else if (board.getEntity(point)==null ) {
->>>>>>> cfeafa9424e13860b36f1ece38f0c692d563b9c1
-||||||| ff0bc55
-		if (outOfBoard(board, point)) return ret;
-		if (board.getEntity(point)==null ) {
-=======
-		if (nextPoint==null || outOfBoard(board, nextPoint)) ret.add(point);
-		else if (board.getEntity(point)==null ) {
->>>>>>> cfeafa9424e13860b36f1ece38f0c692d563b9c1
-			ret = moveList( board, nextPoint, vector);
-			ret.add(point);
-		}else if (board.getEntity(nextPoint).getSide() != side) {
-			ret.add(point);
-			ret.add(nextPoint);
+		if (!board.isInBoard(point)) return returnList;
+		if (board.getEntity(point) == null) {
+			ArrayList<Point> pointList = moveList(board, nextPoint, vector);
+			pointList.add(point);
+			return pointList;
+ 		}else if (board.getEntity(point).getSide() == side) return returnList;
+		else if (board.getEntity(nextPoint).getSide()!=side) {
+			returnList.add(point);
+			return returnList;
 		}
-		return ret;//same side
+		System.out.println("Error");
+		return null;
 	}
 		
 	public ArrayList<Point> eatList(Board board) { 
