@@ -3,8 +3,7 @@ package entity;
 import java.awt.Point;
 
 import entity.base.Entity;
-import logic.Side;
-import logic.Sprites;
+import logic.*;
 
 public class Pawn extends Entity {
 
@@ -18,11 +17,11 @@ public class Pawn extends Entity {
 		if (this.side == Side.BLACK) {
 			return Sprites.B_PAWN;
 		}
-		return Sprites.B_PAWN;
+		return Sprites.W_PAWN;
 	}
 
 	@Override
-	public Point[] moveList() {
+	public Point[] moveList(Board board) {
 		// TODO Auto-generated method stub
 		return null;
 	}

@@ -13,33 +13,73 @@ public class Board{
 	private int width;
 	private int height;
 	//private Game game;//enum game
-	public Board(String[][] map) { // W B --- K Q R B Kn P --- 0
+	public Board(String[][] map) { 
 		int column = map[0].length;
+		int row = map.length;
 		whiteKing = null;
 		blackKing = null;
 		whitePieces = new ArrayList<Entity>();
 		blackPieces = new ArrayList<Entity>();
-		int row = map.length;
 		setWidth(column);
 		setHeight(row);
 		cellmap = new Cell[row][column];
 		for(int i=0;i<row;i++) {// Point (y,x) => (i,j)
 			for(int j=0;j<column;j++) {
 				Point p = new Point(i,j);
-				switch (map[i][j]) {
+				cellmap[i][j] = new Cell();
+				switch (map[i][j]) {// W B --- K Q R B N P --- 0
 				case "WK":
 					whiteKing = new King(p,Side.WHITE);
 					addEntity(whiteKing,p);
 					break;
 				case "WQ":
-					addEntity(new Queen(p,Side.WHITE),p);
+					Entity wq = new Queen(p,Side.WHITE);
+					addEntity(wq,p);
 					break;
-				//case "WR": ---------------------------------------------------------
-				case "0":
-					addEntity(null, p);
+				case "WR":
+					Entity wr = new Rook(p,Side.WHITE);
+					addEntity(wr,p);
+					break;
+				case "WB":
+					Entity wb = new Bishop(p,Side.WHITE);
+					addEntity(wb,p);
+					break;
+				case "WN":
+					Entity wn = new Knight(p,Side.WHITE);
+					addEntity(wn,p);
+					break;
+				case "WP":
+					Entity wp = new Pawn(p,Side.WHITE);
+					addEntity(wp,p);
+					break;
+				case "BK":
+					blackKing = new King(p,Side.BLACK);
+					addEntity(blackKing,p);
+					break;
+				case "BQ":
+					Entity bq = new Queen(p,Side.BLACK);
+					addEntity(bq,p);
+					break;
+				case "BR":
+					Entity br = new Rook(p,Side.BLACK);
+					addEntity(br,p);
+					break;
+				case "BB":
+					Entity bb = new Bishop(p,Side.BLACK);
+					addEntity(bb,p);
+					break;
+				case "BN":
+					Entity bn = new Knight(p,Side.BLACK);
+					addEntity(bn,p);
+					break;
+				case "BP":
+					Entity bp = new Pawn(p,Side.BLACK);
+					addEntity(bp,p);
+					break;
+				case "--":
 					break;
 				default:
-					System.out.println("Error");//-------------------------------
+					System.out.println("Error");
 				}
 			}
 		}
@@ -51,6 +91,9 @@ public class Board{
 		return cellmap[p.x][p.y].setEntity(e);
 	}
 	public Entity getEntity(Point p) {
+		if (cellmap[p.x][p.y].IsEmpty()) {
+			return null;
+		}
 		return cellmap[p.x][p.y].getEntity();
 	}
 	public Entity[] getAllPieces(Side side){

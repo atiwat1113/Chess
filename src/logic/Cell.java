@@ -14,7 +14,9 @@ public class Cell {
 		return isEmpty;
 	}
 	
-	public boolean setEntity(Entity e) {//---------------------------------------------
+	public boolean setEntity(Entity e) {
+		myEntity=e;
+		isEmpty=false;
 		return true;
 	}
 	
@@ -27,7 +29,4 @@ public class Cell {
 		isEmpty = true;
 	}
 	
-	public int getSymbol() {//------------------------------------------------------------------
-		return 0;
-	}
 }

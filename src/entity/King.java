@@ -3,8 +3,7 @@ package entity;
 import java.awt.Point;
 
 import entity.base.Entity;
-import logic.Side;
-import logic.Sprites;
+import logic.*;
 
 public class King extends Entity {
 	private boolean neverMove;// for castling
@@ -23,7 +22,7 @@ public class King extends Entity {
 	}
 
 	@Override
-	public Point[] moveList() {
+	public Point[] moveList(Board board) {
 		return null;
 	}
 
