@@ -9,10 +9,18 @@ import logic.Side;
 import logic.Sprites;
 
 public class Queen extends Entity{
-
-		public Queen (Point p,Side side) {
-			super(p,side);
-		}
+	
+	private boolean isFromPawn;
+	
+	public Queen(Point p, Side side) {
+		super(p,side);
+		isFromPawn=false;
+	}
+	
+	public Queen(Point p,Side side, Boolean isFromPawn) {
+		super(p,side);
+		this.isFromPawn=isFromPawn;
+	}
 	
 	@Override
 	public int getSymbol() {
@@ -37,4 +45,8 @@ public class Queen extends Entity{
 		return (Point[]) returnPoint.toArray();
 	}
 
+	public boolean isFromPawn() {
+		return isFromPawn;
+	}
+	
 }

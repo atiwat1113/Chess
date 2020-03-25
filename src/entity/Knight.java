@@ -9,9 +9,16 @@ import logic.Side;
 import logic.Sprites;
 
 public class Knight extends Entity{
-
+	private boolean isFromPawn;
+	
 	public Knight(Point p, Side side) {
 		super(p,side);
+		isFromPawn=false;
+	}
+	
+	public Knight(Point p,Side side, Boolean isFromPawn) {
+		super(p,side);
+		this.isFromPawn=isFromPawn;
 	}
 	
 	@Override
@@ -36,4 +43,8 @@ public class Knight extends Entity{
 		return (Point[]) returnPoint.toArray();
 	}
 
+	public boolean isFromPawn() {
+		return isFromPawn;
+	}
+	
 }

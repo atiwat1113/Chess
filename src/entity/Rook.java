@@ -11,10 +11,18 @@ import logic.Sprites;
 public class Rook extends Entity {
 
 	private boolean neverMove;
-
+	private boolean isFromPawn;
+	
 	public Rook(Point p, Side side) {
 		super(p, side);
 		this.neverMove = true;
+		isFromPawn=false;
+	}
+	
+	public Rook(Point p,Side side, Boolean isFromPawn) {
+		super(p,side);
+		this.neverMove = true;
+		this.isFromPawn=isFromPawn;
 	}
 
 	@Override
@@ -36,4 +44,16 @@ public class Rook extends Entity {
 		return (Point[]) returnPoint.toArray();
 	}
 
+	public boolean isFromPawn() {
+		return isFromPawn;
+	}
+
+	public boolean isNeverMove() {
+		return neverMove;
+	}
+
+	public void setNeverMove(boolean neverMove) {
+		this.neverMove = neverMove;
+	}
+	
 }
