@@ -1,10 +1,9 @@
 package entity;
 
 import java.awt.Point;
-
+import java.util.ArrayList;
 import entity.base.Entity;
-import logic.Side;
-import logic.Sprites;
+import logic.*;
 
 public class Bishop extends Entity{
 
@@ -22,9 +21,13 @@ public class Bishop extends Entity{
 	}
 
 	@Override
-	public Point[] moveList() {
-		// TODO Auto-generated method stub
-		return null;
+	public Point[] moveList(Board board) {
+		ArrayList<Point> returnPoint = new ArrayList<Point>();
+		for (Point p : moveList(board, p, new Point(1,1))) returnPoint.add(p);
+		for (Point p : moveList(board, p, new Point(1,-1))) returnPoint.add(p);
+		for (Point p : moveList(board, p, new Point(-1,1))) returnPoint.add(p);
+		for (Point p : moveList(board, p, new Point(-1,-1))) returnPoint.add(p);
+		return (Point[]) returnPoint.toArray();
 	}
 
 }

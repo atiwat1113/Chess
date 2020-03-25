@@ -47,7 +47,7 @@ public abstract class GameController {
 	
 	public static Point[] click(Point p) {
 		if (board.getEntity(p)!=null) {
-			return board.getEntity(p).moveList();
+			return board.getEntity(p).moveList(board);
 		}
 		return null;
 	}
