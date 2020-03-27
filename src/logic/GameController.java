@@ -2,6 +2,10 @@ package logic;
 
 import entity.base.Entity;
 import game.base.Board;
+import myException.NullEntityException;
+import myException.NullPointException;
+import myException.WrongPieceException;
+
 import java.awt.*;
 import java.util.*;
 
@@ -18,14 +22,14 @@ public abstract class GameController {
 		Entity king = board.getKing(getAnotherSide(side));
 		if (king == null) return true;
 		Point pointKing = king.getP();
-		return eatablePoint(side,pointKing);
+		return canBeEaten(side,pointKing);
 	}
 	
 	public static ArrayList<Point> moveList(Point p) {
 		return board.getEntity(p).moveList(board);
 	}
 	
-	public static boolean eatablePoint(Side side, Point point) {// find good method name
+	public static boolean canBeEaten(Side side, Point point) {// find good method name
 		ArrayList<Entity> allEntity = board.getAllPieces(side);// Ex for black: white can eat this point?
 		for (Entity e : allEntity) {
 			ArrayList<Point> eatablePoint = e.eatList(board);
@@ -38,16 +42,13 @@ public abstract class GameController {
 		return false;
 	}
 	
-	public static boolean isTurn(Point p, Side turn) {//----------------------throw exception
+	public static boolean isTurn(Point p, Side turn) throws Exception{//----------------------throw exception
 		if (p == null) {
-			System.out.println("Don't have this point.");
-			return false;
+			throw new NullPointException("Don't have this point.");
 		}if(board.getEntity(p)==null) {
-			System.out.println("It is empty.");
-			return false;
+			throw new NullEntityException("It is empty.");
 		}if (board.getEntity(p).getSide()!=turn) {
-			System.out.println("It's not you piece.");
-			return false;
+			throw new WrongPieceException("It's not your piece.");
 		}
 		return true;
 	}
