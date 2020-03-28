@@ -2,11 +2,9 @@ package entity;
 
 import java.awt.Point;
 import java.util.ArrayList;
-
 import entity.base.Entity;
-import logic.Board;
-import logic.Side;
-import logic.Sprites;
+import logic.*;
+import game.base.Board;
 
 public class Knight extends Entity{
 	private boolean isFromPawn;
@@ -31,13 +29,13 @@ public class Knight extends Entity{
 	}
 
 	@Override
-	public Point[] moveList(Board board) {
+	public ArrayList<Point> moveList(Board board) {
 		Point[] checkPoint = {new Point(1,2),new Point(2,1),new Point(2,-1),new Point(1,-2),
 				new Point(-1,-2),new Point(-2,-1),new Point(-2,1),new Point(-1,2)};
 		ArrayList<Point> returnPoint = new ArrayList<Point>();
 		for (Point p : checkPoint) {
 			Point check = new Point(this.p.x+p.x,this.p.y+p.y);
-			if (!isInBoard(board, check)) {
+			if (!board.isInBoard(check)) {
 				continue;
 			}
 			if(board.getEntity(check) == null || board.getEntity(check).getSide() != side) {
@@ -45,7 +43,7 @@ public class Knight extends Entity{
 				System.out.println(""+check.x+" "+check.y);//--------------------------------------------------------
 			}
 		}
-		return (Point[]) returnPoint.toArray();
+		return returnPoint;
 	}
 
 	public boolean isFromPawn() {

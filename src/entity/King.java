@@ -1,9 +1,11 @@
 package entity;
 
 import java.awt.Point;
+import java.util.ArrayList;
 
 import entity.base.Entity;
 import logic.*;
+import game.base.Board;
 
 public class King extends Entity {
 	private boolean neverMove;// for castling
@@ -22,7 +24,7 @@ public class King extends Entity {
 	}
 
 	@Override
-	public Point[] moveList(Board board) {
+	public ArrayList<Point> moveList(Board board) {
 		return null;
 	}
 

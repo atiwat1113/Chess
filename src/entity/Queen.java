@@ -4,9 +4,8 @@ import java.awt.Point;
 import java.util.ArrayList;
 
 import entity.base.Entity;
-import logic.Board;
-import logic.Side;
-import logic.Sprites;
+import logic.*;
+import game.base.Board;
 
 public class Queen extends Entity{
 	
@@ -32,7 +31,7 @@ public class Queen extends Entity{
 	}
 
 	@Override
-	public Point[] moveList(Board board) {
+	public ArrayList<Point> moveList(Board board) {
 		ArrayList<Point> returnPoint = new ArrayList<Point>();
 		for (Point p : moveList(board, p, new Point(1,1))) returnPoint.add(p);
 		for (Point p : moveList(board, p, new Point(1,-1))) returnPoint.add(p);
@@ -42,7 +41,7 @@ public class Queen extends Entity{
 		for (Point p : moveList(board, p, new Point(0,1))) returnPoint.add(p);
 		for (Point p : moveList(board, p, new Point(-1,0))) returnPoint.add(p);
 		for (Point p : moveList(board, p, new Point(0,-1))) returnPoint.add(p);
-		return (Point[]) returnPoint.toArray();
+		return returnPoint;
 	}
 
 	public boolean isFromPawn() {

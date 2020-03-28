@@ -1,9 +1,10 @@
 package entity;
 
 import java.awt.Point;
-
+import java.util.ArrayList;
 import entity.base.Entity;
 import logic.*;
+import game.base.Board;
 
 public class Pawn extends Entity {
 
@@ -21,7 +22,7 @@ public class Pawn extends Entity {
 	}
 
 	@Override
-	public Point[] moveList(Board board) {
+	public ArrayList<Point> moveList(Board board) {
 		// TODO Auto-generated method stub
 		return null;
 	}
