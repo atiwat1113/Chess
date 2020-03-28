@@ -6,28 +6,32 @@ import java.util.ArrayList;
 import java.util.Scanner;
 import logic.*;
 import entity.base.Entity;
+import myException.*;
 
 public class PrintBoard {
-	private static String[] w_p = {"--", "WK", "WQ", "WR", "WB", "WN", "WP"};
-	private static String[] b_p = {"--", "BK", "BQ", "BR", "BB", "BN", "BP"};
+	private static String[] w_p = {"--", "WK", "WQ", "WB", "WN", "WR", "WP"};
+	private static String[] b_p = {"--", "BK", "BQ", "BB", "BN", "BR", "BP"};
 	
 	public static void main(String[]args) {
 		Scanner kb = new Scanner(System.in);
-		String[][] nb = {{b_p[3],b_p[5],b_p[4],b_p[2],b_p[1],b_p[4],b_p[5],b_p[3]},
+		String[][] nb = {{b_p[5],b_p[4],b_p[3],b_p[2],b_p[1],b_p[3],b_p[4],b_p[5]},
 						 {b_p[0],b_p[0],b_p[0],b_p[0],b_p[0],b_p[0],b_p[0],b_p[0]},
 						 {b_p[6],b_p[6],b_p[6],b_p[6],b_p[6],b_p[6],b_p[6],b_p[6]},
 						 {b_p[0],b_p[0],b_p[0],b_p[0],b_p[0],b_p[0],b_p[0],b_p[0]},
 				 		 {w_p[0],w_p[0],w_p[0],w_p[0],w_p[0],w_p[0],w_p[0],w_p[0]},
 						 {w_p[6],w_p[6],w_p[6],w_p[6],w_p[6],w_p[6],w_p[6],w_p[6]},
 						 {w_p[0],w_p[0],w_p[0],w_p[0],w_p[0],w_p[0],w_p[0],w_p[0]},
-						 {w_p[3],w_p[5],w_p[4],w_p[2],w_p[1],w_p[4],w_p[5],w_p[3]}};
+						 {w_p[5],w_p[4],w_p[3],w_p[2],w_p[1],w_p[3],w_p[4],w_p[5]}};
 		GameController.IntializeMap(nb, 8, 8);
 		print(GameController.getBoard());
 		while (true) {
 			System.out.print("" + GameController.getTurn() + " turn ");
 			String walkfrom = kb.nextLine();
-			if (GameController.isGameWin()!=null) {
-				System.out.println(""+GameController.isGameWin()+" win");
+			if (GameController.isWin(Side.WHITE)) {
+				System.out.println("White win");
+				break;
+			}else if (GameController.isWin(Side.BLACK)) {
+				System.out.println("Black win");
 				break;
 			}
 			if (walkfrom.charAt(0)=='q') break;
@@ -35,7 +39,11 @@ public class PrintBoard {
 			if (stringToPoint(walkfrom)==null) {
 				System.out.println("Don't have this point.\nPick again!!");
 				continue;
-			}else if (!GameController.isTurn(stringToPoint(walkfrom),GameController.getTurn())) {
+			}
+			try {
+				GameController.isTurn(stringToPoint(walkfrom),GameController.getTurn());
+			} catch (Exception e) {
+				System.out.println(e.getMessage());
 				System.out.println("Pick again!!");
 				continue;
 			}
@@ -57,11 +65,12 @@ public class PrintBoard {
 			print(GameController.getBoard());
 		}
 	}
-	public static void printMove(Point[] pointList) {
+	public static void printMove(ArrayList<Point> pointList) {
 		String s1="abcdefgh";
 		String s2="87654321";
+		System.out.print("Move to : ");
 		for (Point p : pointList) {
-			System.out.println("" + s1.charAt(p.y) + " " + s2.charAt(p.x) + " ");
+			System.out.print("(" + s1.charAt(p.y) + s2.charAt(p.x) + ") ");
 		}
 		System.out.println();
 	}
@@ -75,9 +84,9 @@ public class PrintBoard {
 					System.out.print(" -- ");
 					continue;
 				}
-				int pr = board.getEntity(new Point(i,j)).getSymbol();
-				if (pr>0) System.out.print(" " + w_p[pr] + " ");
-				else if (pr<0) System.out.print(" " + b_p[-pr] + " ");
+				Point pr = board.getEntity(new Point(i,j)).getSymbol();
+				if (pr.y==0) System.out.print(" " + w_p[pr.x+1] + " ");
+				else if (pr.y==1) System.out.print(" " + b_p[pr.x+1] + " ");
 				else System.out.println("Error");
 			}
 			System.out.println();

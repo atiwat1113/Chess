@@ -78,9 +78,18 @@ public class Board {// abstract
 	public boolean isWin(Side side) {
 		return false;
 	}
-	public boolean move(Point p1, Point p2) {
-		if (p2 == null || !isInBoard(p2)) return false;
-		return this.getEntity(p1).moveEntity(this, p2);
+	public boolean move(Point oldPoint, Point newPoint) {
+		if (newPoint == null || !isInBoard(newPoint)) return false;
+		Entity moveEntity = this.getEntity(oldPoint);
+		for (Point moveablePoint : moveEntity.moveList(this)) {
+			if (moveablePoint.equals(newPoint)) {
+				remove(oldPoint);
+				moveEntity.setP(newPoint);
+				addEntity(moveEntity, newPoint);
+				return true;
+			}
+		}
+		return false;
 	}
 	public void remove(Point p) {
 		addEntity(null, p);
@@ -95,8 +104,8 @@ public class Board {// abstract
 		return cellmap[p.x][p.y].getEntity();
 	}
 	public boolean isInBoard(Point p) {
-		if (p.x<0 || p.x>height) return false;
-		if (p.y<0 || p.y>width) return false;
+		if (p.x<0 || p.x>=height) return false;
+		if (p.y<0 || p.y>=width) return false;
 		return true;
 	}
 	public ArrayList<Entity> getAllPieces(Side side){

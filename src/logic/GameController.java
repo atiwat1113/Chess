@@ -5,7 +5,6 @@ import game.base.Board;
 import myException.NullEntityException;
 import myException.NullPointException;
 import myException.WrongPieceException;
-
 import java.awt.*;
 import java.util.*;
 
@@ -18,6 +17,10 @@ public abstract class GameController {
 		board = new Board(map);
 	}
 	
+	public static boolean isWin(Side side) {
+		return board.isWin(side);
+	}
+
 	public static boolean isCheck(Side side) {
 		Entity king = board.getKing(getAnotherSide(side));
 		if (king == null) return true;

@@ -22,15 +22,19 @@ public abstract class Entity { // private --> protected
 	
 	public ArrayList<Point> moveList(Board board, Point point, Point vector) {//------
 		ArrayList<Point> returnList = new ArrayList<Point>();
-		Point nextPoint = new Point(point.x + vector.x, point.y + vector.y);
-		if (!board.isInBoard(point)) return returnList;
-		if (board.getEntity(point) == null) {
+		Point nextPoint = addVector(point, vector);
+		if (!board.isInBoard(nextPoint)) {
+			return returnList;
+		}
+		if (board.getEntity(nextPoint) == null) {
 			ArrayList<Point> pointList = moveList(board, nextPoint, vector);
-			pointList.add(point);
+			pointList.add(nextPoint);
 			return pointList;
- 		}else if (board.getEntity(point).getSide() == side) return returnList;
-		else if (board.getEntity(nextPoint).getSide()!=side) {
-			returnList.add(point);
+ 		}else if (board.getEntity(nextPoint).getSide() == side) {
+ 			return returnList;
+ 		}
+		else if (board.getEntity(nextPoint).getSide() != side) {
+			returnList.add(nextPoint);
 			return returnList;
 		}
 		System.out.println("Error");
@@ -48,7 +52,7 @@ public abstract class Entity { // private --> protected
 		return eatablePoint;
 	}
 	
-	public boolean moveEntity(Board board , Point p) { 
+	/*public boolean moveEntity(Board board , Point p) { 
 		Point oldPoint = this.p;
 		for (Point moveablePoint : this.moveList(board)) {
 			if (moveablePoint.equals(p)) {
@@ -58,12 +62,15 @@ public abstract class Entity { // private --> protected
 			}
 		}
 		return false;
-	}
-
+	}*/
 	
-	public void remove() {// ----------------------------------------
-
+	public Point addVector(Point p1, Point p2) {
+		return new Point(p1.x+p2.x,p1.y+p2.y);
 	}
+	
+	/*public void remove() {// ----------------------------------------
+
+	}*/
 
 	public Point getP() {
 		return p;
