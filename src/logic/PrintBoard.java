@@ -15,12 +15,12 @@ public class PrintBoard {
 	public static void main(String[]args) {
 		Scanner kb = new Scanner(System.in);
 		String[][] nb = {{b_p[5],b_p[4],b_p[3],b_p[2],b_p[1],b_p[3],b_p[4],b_p[5]},
-						 {b_p[0],b_p[0],b_p[0],b_p[0],b_p[0],b_p[0],b_p[0],b_p[0]},
 						 {b_p[6],b_p[6],b_p[6],b_p[6],b_p[6],b_p[6],b_p[6],b_p[6]},
 						 {b_p[0],b_p[0],b_p[0],b_p[0],b_p[0],b_p[0],b_p[0],b_p[0]},
+						 {b_p[0],b_p[0],b_p[0],b_p[0],b_p[0],b_p[0],b_p[0],b_p[0]},
 				 		 {w_p[0],w_p[0],w_p[0],w_p[0],w_p[0],w_p[0],w_p[0],w_p[0]},
-						 {w_p[6],w_p[6],w_p[6],w_p[6],w_p[6],w_p[6],w_p[6],w_p[6]},
 						 {w_p[0],w_p[0],w_p[0],w_p[0],w_p[0],w_p[0],w_p[0],w_p[0]},
+						 {w_p[6],w_p[6],w_p[6],w_p[6],w_p[6],w_p[6],w_p[6],w_p[6]},
 						 {w_p[5],w_p[4],w_p[3],w_p[2],w_p[1],w_p[3],w_p[4],w_p[5]}};
 		GameController.IntializeMap(nb, 8, 8);
 		print(GameController.getBoard());
@@ -58,9 +58,12 @@ public class PrintBoard {
 				System.out.println("Pick again!!");
 				continue;
 			}
+			if(GameController.isCheck()) {//--------------------------
+				System.out.println("" + GameController.getAnotherSide(GameController.getTurn()) + "Check!!");
+			}
 			GameController.nextTurn();
 			print(GameController.getBoard());
-			if(GameController.isCheck()) {
+			if(GameController.isCheck()) {//-------------------------------
 				System.out.println("" + GameController.getAnotherSide(GameController.getTurn()) + "Check!!");
 			}
 		}

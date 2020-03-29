@@ -4,6 +4,7 @@ import java.awt.*;
 import java.util.ArrayList;
 import game.base.Board;
 import logic.Side;
+// remain: check, clasting, Promotion, draw, en passant
 
 public abstract class Entity { // private --> protected
 	protected Point p;

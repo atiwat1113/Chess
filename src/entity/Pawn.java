@@ -20,14 +20,60 @@ public class Pawn extends Entity {
 		}
 		return Sprites.W_PAWN;
 	}
-
+	
 	@Override
 	public ArrayList<Point> moveList(Board board) {
-		return null;
+		ArrayList<Point> returnPoint = new ArrayList<Point>();
+		if(side == Side.WHITE) {
+			Point nextPoint = new Point(p.x-1,p.y);
+			if(p.x==0) {
+				System.out.println("Error Pawn");
+				return returnPoint;
+			}else if (board.getEntity(nextPoint)!=null) {
+				return returnPoint;
+			}
+			if(p.x==6) {
+				returnPoint.add(new Point(4,p.y));
+			}
+			returnPoint.add(nextPoint);
+		}else {
+			Point nextPoint = new Point(p.x+1,p.y);
+			if(p.x==7) {
+				System.out.println("Error Pawn");
+				return returnPoint;
+			}else if (board.getEntity(nextPoint)!=null) {
+				return returnPoint;
+			}
+			if(p.x==1) {
+				returnPoint.add(new Point(3,p.y));
+			}
+			returnPoint.add(nextPoint);
+		}
+		for (Point p : eatList(board)) {
+			returnPoint.add(p);
+		}
+		return returnPoint;
 	}
 	
 	@Override
 	public ArrayList<Point> eatList(Board board) { 
-		return null;
+		ArrayList<Point> returnPoint = new ArrayList<Point>();
+		Point[] point = new Point[2];
+		if(side == Side.WHITE) {
+			point[0]=new Point (p.x-1,p.y+1);
+			point[1]=new Point (p.x-1,p.y-1);
+		}else {
+			point[0]=new Point (p.x+1,p.y+1);
+			point[1]=new Point (p.x+1,p.y-1);
+		}
+		for(Point pp : point) {
+			if(!board.isInBoard(pp)) continue;
+			if(board.getEntity(pp)==null) continue;
+			if(board.getEntity(pp).getSide()==GameController.getAnotherSide(side)) {
+				returnPoint.add(pp);
+			}
+		}
+		return returnPoint;
 	}
+	
 }

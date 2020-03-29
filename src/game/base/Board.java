@@ -87,7 +87,7 @@ public class Board {// abstract
 		ArrayList<Point> movePoint = moveEntity.moveList(this);
 		ArrayList<Integer> removeIndex = new ArrayList<Integer>();
 		for(int i = 0; i<movePoint.size(); i++) {
-			if (isCheck(p, movePoint.get(i), getKing(moveEntity.getSide()))) {//---------------------------
+			if (isCheckKing(p, movePoint.get(i), getKing(moveEntity.getSide()))) {//---------------------------
 				removeIndex.add(i);
 			}
 		}
@@ -96,13 +96,30 @@ public class Board {// abstract
 		}
 		return movePoint;
 	}
-	public boolean isCheck(Point movePoint, Point toPoint, Entity king) {
+	public boolean isCheck(Point movePoint, Point toPoint, Entity king) {//-----------------------
 		Side side = king.getSide();//
 		Point kingPoint = king.getP();
 		if (canBeEaten(side, toPoint)) {
 			return true;
 		}
-		Point vector = new Point(toPoint.x-kingPoint.x,toPoint.y-kingPoint.y);
+		//Point vector = new Point(toPoint.x-kingPoint.x,toPoint.y-kingPoint.y);
+		Point[] rookVector = {new Point(1,0),new Point(-1,0),new Point(0,1),new Point(0,-1)};
+		Point[] bishopVector = {new Point(1,1),new Point(-1,1),new Point(1,-1),new Point(-1,-1)};
+		for(Point vector : rookVector) {
+			if (checkRook(kingPoint, vector, movePoint, side)) return true;
+		}
+		for(Point vector : bishopVector) {//check bishop and queen
+			if (checkBishop(kingPoint, vector, movePoint, side)) return true;
+		}
+		return false;
+	}
+	public boolean isCheckKing(Point movePoint, Point toPoint, Entity king) {
+		Side side = king.getSide();//
+		Point kingPoint = king.getP();
+		if (canBeEaten(side, toPoint)) {
+			return true;
+		}
+		Point vector = new Point(movePoint.x-kingPoint.x,movePoint.y-kingPoint.y);
 		if (vector.x*vector.y==0) {//check rook and queen
 			if (vector.x!=0)vector.x/=Math.abs(vector.x);
 			if (vector.y!=0)vector.y/=Math.abs(vector.y);
@@ -115,12 +132,14 @@ public class Board {// abstract
 		return false;
 	}
 	public boolean checkRook(Point point, Point vector, Point removePoint, Side side) {
-		Point nextPoint = Entity.addVector(point, vector); 
+		System.out.println(vector.toString());
+		Point nextPoint = Entity.addVector(point, vector);
+		if (!isInBoard(nextPoint)) return false;
 		if (nextPoint.equals(removePoint) || getEntity(nextPoint)==null) {
 			return checkRook(nextPoint, vector, removePoint, side);
 		}else if (getEntity(nextPoint).getSide()==side) {
 			return false;
-		}else if (getEntity(nextPoint).getSide()==side) {
+		}else if (getEntity(nextPoint).getSide()!=side) {
 			if (getEntity(nextPoint) instanceof Rook || getEntity(nextPoint) instanceof Queen) {
 				return true;
 			}
@@ -130,7 +149,9 @@ public class Board {// abstract
 		return false;
 	}
 	public boolean checkBishop(Point point, Point vector, Point removePoint, Side side) {
-		Point nextPoint = Entity.addVector(point, vector); 
+		System.out.println(vector.toString());
+		Point nextPoint = Entity.addVector(point, vector);
+		if (!isInBoard(nextPoint)) return false;
 		if (nextPoint.equals(removePoint) || getEntity(nextPoint)==null) {
 			return checkRook(nextPoint, vector, removePoint, side);
 		}else if (getEntity(nextPoint).getSide()==side) {
@@ -161,15 +182,18 @@ public class Board {// abstract
 		Entity king = getKing(side);
 		Point kingPoint = king.getP();
 		remove(kingPoint);
+		addEntity(king, point);
 		ArrayList<Entity> allEntity = getAllPieces(side);// Ex for black: white can eat this point?
 		for (Entity e : allEntity) {
 			ArrayList<Point> eatablePoint = e.eatList(this);
 			for (Point p : eatablePoint) {
+				System.out.println(p.toString());//----------------------
 				if(p.x==point.x && p.y==point.y) {
 					return true;
 				}
 			}
 		}
+		remove(point);
 		addEntity(king, kingPoint);
 		return false;
 	}
