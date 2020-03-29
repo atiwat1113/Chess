@@ -64,7 +64,7 @@ public abstract class Entity { // private --> protected
 		return false;
 	}*/
 	
-	public Point addVector(Point p1, Point p2) {
+	public static Point addVector(Point p1, Point p2) {
 		return new Point(p1.x+p2.x,p1.y+p2.y);
 	}
 	

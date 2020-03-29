@@ -17,32 +17,22 @@ public abstract class GameController {
 		board = new Board(map);
 	}
 	
-	public static boolean isWin(Side side) {
-		return board.isWin(side);
+	public static boolean isWin() {
+		return board.isWin(turn);
 	}
 
-	public static boolean isCheck(Side side) {
-		Entity king = board.getKing(getAnotherSide(side));
-		if (king == null) return true;
+	public static boolean isCheck() {// white turn 
+		Entity king = board.getKing(turn);//black king
+		if (king == null) {
+			System.out.println("Error");
+			return true;
+		}
 		Point pointKing = king.getP();
-		return canBeEaten(side,pointKing);
+		return board.canBeEaten(turn,pointKing);
 	}
 	
 	public static ArrayList<Point> moveList(Point p) {
-		return board.getEntity(p).moveList(board);
-	}
-	
-	public static boolean canBeEaten(Side side, Point point) {// find good method name
-		ArrayList<Entity> allEntity = board.getAllPieces(side);// Ex for black: white can eat this point?
-		for (Entity e : allEntity) {
-			ArrayList<Point> eatablePoint = e.eatList(board);
-			for (Point p : eatablePoint) {
-				if(p.x==point.x && p.y==point.y) {
-					return true;
-				}
-			}
-		}
-		return false;
+		return board.moveList(p);
 	}
 	
 	public static boolean isTurn(Point p, Side turn) throws Exception{//----------------------throw exception

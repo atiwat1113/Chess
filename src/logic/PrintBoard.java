@@ -27,11 +27,8 @@ public class PrintBoard {
 		while (true) {
 			System.out.print("" + GameController.getTurn() + " turn ");
 			String walkfrom = kb.nextLine();
-			if (GameController.isWin(Side.WHITE)) {
-				System.out.println("White win");
-				break;
-			}else if (GameController.isWin(Side.BLACK)) {
-				System.out.println("Black win");
+			if (GameController.isWin()) {
+				System.out.println("" + GameController.getTurn() + " win");
 				break;
 			}
 			if (walkfrom.charAt(0)=='q') break;
@@ -63,6 +60,9 @@ public class PrintBoard {
 			}
 			GameController.nextTurn();
 			print(GameController.getBoard());
+			if(GameController.isCheck()) {
+				System.out.println("" + GameController.getAnotherSide(GameController.getTurn()) + "Check!!");
+			}
 		}
 	}
 	public static void printMove(ArrayList<Point> pointList) {

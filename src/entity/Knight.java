@@ -30,17 +30,14 @@ public class Knight extends Entity{
 
 	@Override
 	public ArrayList<Point> moveList(Board board) {
-		Point[] checkPoint = {new Point(1,2),new Point(2,1),new Point(2,-1),new Point(1,-2),
-				new Point(-1,-2),new Point(-2,-1),new Point(-2,1),new Point(-1,2)};
 		ArrayList<Point> returnPoint = new ArrayList<Point>();
-		for (Point p : checkPoint) {
+		for (Point p : board.getKnightWalk()) {
 			Point check = new Point(this.p.x+p.x,this.p.y+p.y);
 			if (!board.isInBoard(check)) {
 				continue;
 			}
 			if(board.getEntity(check) == null || board.getEntity(check).getSide() != side) {
 				returnPoint.add(check);
-				System.out.println(""+check.x+" "+check.y);//--------------------------------------------------------
 			}
 		}
 		return returnPoint;

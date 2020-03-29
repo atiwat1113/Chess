@@ -7,7 +7,7 @@ import logic.*;
 import game.base.Board;
 
 public class Pawn extends Entity {
-
+	private boolean twoMove;
 	public Pawn(Point p, Side side) {
 		super(p, side);
 	}
@@ -23,8 +23,11 @@ public class Pawn extends Entity {
 
 	@Override
 	public ArrayList<Point> moveList(Board board) {
-		// TODO Auto-generated method stub
 		return null;
 	}
-
+	
+	@Override
+	public ArrayList<Point> eatList(Board board) { 
+		return null;
+	}
 }
