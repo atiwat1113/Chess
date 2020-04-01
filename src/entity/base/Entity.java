@@ -85,4 +85,10 @@ public abstract class Entity { // private --> protected
 		return side;
 	}
 
+	@Override
+	public String toString() {
+		return "Entity [p=" + p + ", side=" + side + "]";
+	}
+	
+
 }

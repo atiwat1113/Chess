@@ -22,13 +22,7 @@ public abstract class GameController {
 	}
 
 	public static boolean isCheck() {// white turn 
-		Entity king = board.getKing(turn);//black king
-		if (king == null) {
-			System.out.println("Error");
-			return true;
-		}
-		Point pointKing = king.getP();
-		return board.canBeEaten(turn,pointKing);
+		return board.canBeEaten(turn);
 	}
 	
 	public static ArrayList<Point> moveList(Point p) {

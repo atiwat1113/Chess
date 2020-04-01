@@ -1,5 +1,5 @@
 package logic;
 
 public enum Side {
-	WHITE, BLACK
+	WHITE, BLACK, EMPTY
 }
