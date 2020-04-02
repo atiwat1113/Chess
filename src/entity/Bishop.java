@@ -6,19 +6,19 @@ import entity.base.Entity;
 import logic.*;
 import game.base.Board;
 
-public class Bishop extends Entity{
+public class Bishop extends Entity {
 	private boolean isFromPawn;
-	
+
 	public Bishop(Point p, Side side) {
-		super(p,side);
-		isFromPawn=false;
+		super(p, side);
+		isFromPawn = false;
 	}
-	
-	public Bishop(Point p,Side side, Boolean isFromPawn) {
-		super(p,side);
-		this.isFromPawn=isFromPawn;
+
+	public Bishop(Point p, Side side, Boolean isFromPawn) {
+		super(p, side);
+		this.isFromPawn = isFromPawn;
 	}
-	
+
 	@Override
 	public Point getSymbol() {
 		// TODO Auto-generated method stub
@@ -31,13 +31,17 @@ public class Bishop extends Entity{
 	@Override
 	public ArrayList<Point> moveList(Board board) {
 		ArrayList<Point> returnPoint = new ArrayList<Point>();
-		for (Point p : moveList(board, p, new Point(1,1))) returnPoint.add(p);
-		for (Point p : moveList(board, p, new Point(1,-1))) returnPoint.add(p);
-		for (Point p : moveList(board, p, new Point(-1,1))) returnPoint.add(p);
-		for (Point p : moveList(board, p, new Point(-1,-1))) returnPoint.add(p);
+		for (Point p : moveList(board, p, new Point(1, 1)))
+			returnPoint.add(p);
+		for (Point p : moveList(board, p, new Point(1, -1)))
+			returnPoint.add(p);
+		for (Point p : moveList(board, p, new Point(-1, 1)))
+			returnPoint.add(p);
+		for (Point p : moveList(board, p, new Point(-1, -1)))
+			returnPoint.add(p);
 		return returnPoint;
 	}
-	
+
 	public boolean isFromPawn() {
 		return isFromPawn;
 	}

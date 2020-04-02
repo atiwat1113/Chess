@@ -1,6 +1,6 @@
 package myException;
 
-public class WrongPieceException extends Exception{
+public class WrongPieceException extends Exception {
 
 	/**
 	 * 

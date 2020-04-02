@@ -7,20 +7,20 @@ import entity.base.Entity;
 import logic.*;
 import game.base.Board;
 
-public class Queen extends Entity{
-	
+public class Queen extends Entity {
+
 	private boolean isFromPawn;
-	
+
 	public Queen(Point p, Side side) {
-		super(p,side);
-		isFromPawn=false;
+		super(p, side);
+		isFromPawn = false;
 	}
-	
-	public Queen(Point p,Side side, Boolean isFromPawn) {
-		super(p,side);
-		this.isFromPawn=isFromPawn;
+
+	public Queen(Point p, Side side, Boolean isFromPawn) {
+		super(p, side);
+		this.isFromPawn = isFromPawn;
 	}
-	
+
 	@Override
 	public Point getSymbol() {
 		// TODO Auto-generated method stub
@@ -33,19 +33,27 @@ public class Queen extends Entity{
 	@Override
 	public ArrayList<Point> moveList(Board board) {
 		ArrayList<Point> returnPoint = new ArrayList<Point>();
-		for (Point p : moveList(board, p, new Point(1,1))) returnPoint.add(p);
-		for (Point p : moveList(board, p, new Point(1,-1))) returnPoint.add(p);
-		for (Point p : moveList(board, p, new Point(-1,1))) returnPoint.add(p);
-		for (Point p : moveList(board, p, new Point(-1,-1))) returnPoint.add(p);
-		for (Point p : moveList(board, p, new Point(1,0))) returnPoint.add(p);
-		for (Point p : moveList(board, p, new Point(0,1))) returnPoint.add(p);
-		for (Point p : moveList(board, p, new Point(-1,0))) returnPoint.add(p);
-		for (Point p : moveList(board, p, new Point(0,-1))) returnPoint.add(p);
+		for (Point p : moveList(board, p, new Point(1, 1)))
+			returnPoint.add(p);
+		for (Point p : moveList(board, p, new Point(1, -1)))
+			returnPoint.add(p);
+		for (Point p : moveList(board, p, new Point(-1, 1)))
+			returnPoint.add(p);
+		for (Point p : moveList(board, p, new Point(-1, -1)))
+			returnPoint.add(p);
+		for (Point p : moveList(board, p, new Point(1, 0)))
+			returnPoint.add(p);
+		for (Point p : moveList(board, p, new Point(0, 1)))
+			returnPoint.add(p);
+		for (Point p : moveList(board, p, new Point(-1, 0)))
+			returnPoint.add(p);
+		for (Point p : moveList(board, p, new Point(0, -1)))
+			returnPoint.add(p);
 		return returnPoint;
 	}
 
 	public boolean isFromPawn() {
 		return isFromPawn;
 	}
-	
+
 }

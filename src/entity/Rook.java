@@ -10,17 +10,17 @@ public class Rook extends Entity {
 
 	private boolean neverMove;
 	private boolean isFromPawn;
-	
+
 	public Rook(Point p, Side side) {
 		super(p, side);
 		this.neverMove = true;
-		isFromPawn=false;
+		isFromPawn = false;
 	}
-	
-	public Rook(Point p,Side side, Boolean isFromPawn) {
-		super(p,side);
+
+	public Rook(Point p, Side side, Boolean isFromPawn) {
+		super(p, side);
 		this.neverMove = true;
-		this.isFromPawn=isFromPawn;
+		this.isFromPawn = isFromPawn;
 	}
 
 	@Override
@@ -35,10 +35,14 @@ public class Rook extends Entity {
 	@Override
 	public ArrayList<Point> moveList(Board board) {
 		ArrayList<Point> returnPoint = new ArrayList<Point>();
-		for (Point p : moveList(board, p, new Point(1,0))) returnPoint.add(p);
-		for (Point p : moveList(board, p, new Point(0,1))) returnPoint.add(p);
-		for (Point p : moveList(board, p, new Point(-1,0))) returnPoint.add(p);
-		for (Point p : moveList(board, p, new Point(0,-1))) returnPoint.add(p);
+		for (Point p : moveList(board, p, new Point(1, 0)))
+			returnPoint.add(p);
+		for (Point p : moveList(board, p, new Point(0, 1)))
+			returnPoint.add(p);
+		for (Point p : moveList(board, p, new Point(-1, 0)))
+			returnPoint.add(p);
+		for (Point p : moveList(board, p, new Point(0, -1)))
+			returnPoint.add(p);
 		return returnPoint;
 	}
 
@@ -53,5 +57,5 @@ public class Rook extends Entity {
 	public void setNeverMove(boolean neverMove) {
 		this.neverMove = neverMove;
 	}
-	
+
 }
