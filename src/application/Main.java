@@ -18,7 +18,7 @@ public class Main extends Application{
 
 		Scene scene = new Scene(root);
 
-		primaryStage.setTitle("Harvest Simulator");
+		primaryStage.setTitle("Chess");
 		primaryStage.setScene(scene);
 		primaryStage.sizeToScene();
 		primaryStage.setResizable(false);
