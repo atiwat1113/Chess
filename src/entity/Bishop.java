@@ -20,7 +20,7 @@ public class Bishop extends Entity {
 	}
 
 	@Override
-	public Point getSymbol() {
+	public String getSymbol() {
 		// TODO Auto-generated method stub
 		if (this.side == Side.BLACK) {
 			return Sprites.B_BISHOP;

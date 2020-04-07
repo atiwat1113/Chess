@@ -13,7 +13,9 @@ public class Main extends Application{
 		root.setPadding(new Insets(10));
 		root.setSpacing(10);
 		root.setPrefHeight(400);
-
+		
+		BoardPane boardPane = new BoardPane();
+		root.getChildren().add(boardPane);
 		
 
 		Scene scene = new Scene(root);

@@ -287,4 +287,7 @@ public class Board {// abstract
 			return true;
 		return false;
 	}
+	public Cell[][] getCellmap() {
+		return cellmap;
+	}
 }

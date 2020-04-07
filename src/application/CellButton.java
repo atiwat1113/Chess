@@ -53,6 +53,9 @@ public class CellButton extends Button {
 	public void unhighlight() {
 		this.setBackground(new Background(new BackgroundFill(Color.WHITE, CornerRadii.EMPTY, Insets.EMPTY)));
 	}
+	public Point getPoint() {
+		return point;
+	}
 	
 //	private void setTooltip() {
 //		Tooltip	tooltip = new Tooltip();
