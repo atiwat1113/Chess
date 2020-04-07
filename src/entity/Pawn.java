@@ -26,27 +26,27 @@ public class Pawn extends Entity {
 	public ArrayList<Point> moveList(Board board) {
 		ArrayList<Point> returnPoint = new ArrayList<Point>();
 		if (side == Side.WHITE) {
-			Point nextPoint = new Point(p.x - 1, p.y);
-			if (p.x == 0) {
+			Point nextPoint = new Point(point.x - 1, point.y);
+			if (point.x == 0) {
 				System.out.println("Error Pawn");
 				return returnPoint;
 			} else if (board.getEntity(nextPoint) != null) {
 				return returnPoint;
 			}
-			if (p.x == 6) {
-				returnPoint.add(new Point(4, p.y));
+			if (point.x == 6) {
+				returnPoint.add(new Point(4, point.y));
 			}
 			returnPoint.add(nextPoint);
 		} else {
-			Point nextPoint = new Point(p.x + 1, p.y);
-			if (p.x == 7) {
+			Point nextPoint = new Point(point.x + 1, point.y);
+			if (point.x == 7) {
 				System.out.println("Error Pawn");
 				return returnPoint;
 			} else if (board.getEntity(nextPoint) != null) {
 				return returnPoint;
 			}
-			if (p.x == 1) {
-				returnPoint.add(new Point(3, p.y));
+			if (point.x == 1) {
+				returnPoint.add(new Point(3, point.y));
 			}
 			returnPoint.add(nextPoint);
 		}
@@ -56,18 +56,18 @@ public class Pawn extends Entity {
 		return returnPoint;
 	}
 
-	@Override
+	
 	public ArrayList<Point> eatList(Board board) {
 		ArrayList<Point> returnPoint = new ArrayList<Point>();
-		Point[] point = new Point[2];
+		Point[] eatPoint = new Point[2];
 		if (side == Side.WHITE) {
-			point[0] = new Point(p.x - 1, p.y + 1);
-			point[1] = new Point(p.x - 1, p.y - 1);
+			eatPoint[0] = new Point(point.x - 1, point.y + 1);
+			eatPoint[1] = new Point(point.x - 1, point.y - 1);
 		} else {
-			point[0] = new Point(p.x + 1, p.y + 1);
-			point[1] = new Point(p.x + 1, p.y - 1);
+			eatPoint[0] = new Point(point.x + 1, point.y + 1);
+			eatPoint[1] = new Point(point.x + 1, point.y - 1);
 		}
-		for (Point pp : point) {
+		for (Point pp : eatPoint) {
 			if (!board.isInBoard(pp))
 				continue;
 			if (board.getEntity(pp) == null)
@@ -78,5 +78,8 @@ public class Pawn extends Entity {
 		}
 		return returnPoint;
 	}
-
+	
+	public String toString() {
+		return "Pawn [point=" + point + ", side=" + side + "]";
+	}
 }

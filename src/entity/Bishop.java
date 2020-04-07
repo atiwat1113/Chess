@@ -31,13 +31,13 @@ public class Bishop extends Entity {
 	@Override
 	public ArrayList<Point> moveList(Board board) {
 		ArrayList<Point> returnPoint = new ArrayList<Point>();
-		for (Point p : moveList(board, p, new Point(1, 1)))
+		for (Point p : moveList(board, point, new Point(1, 1)))
 			returnPoint.add(p);
-		for (Point p : moveList(board, p, new Point(1, -1)))
+		for (Point p : moveList(board, point, new Point(1, -1)))
 			returnPoint.add(p);
-		for (Point p : moveList(board, p, new Point(-1, 1)))
+		for (Point p : moveList(board, point, new Point(-1, 1)))
 			returnPoint.add(p);
-		for (Point p : moveList(board, p, new Point(-1, -1)))
+		for (Point p : moveList(board, point, new Point(-1, -1)))
 			returnPoint.add(p);
 		return returnPoint;
 	}
@@ -45,5 +45,8 @@ public class Bishop extends Entity {
 	public boolean isFromPawn() {
 		return isFromPawn;
 	}
-
+	
+	public String toString() {
+		return "Bishop [point=" + point + ", side=" + side + "]";
+	}
 }

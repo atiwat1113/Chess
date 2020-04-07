@@ -31,8 +31,8 @@ public class Knight extends Entity {
 	@Override
 	public ArrayList<Point> moveList(Board board) {
 		ArrayList<Point> returnPoint = new ArrayList<Point>();
-		for (Point p : board.getKnightWalk()) {
-			Point check = new Point(this.p.x + p.x, this.p.y + p.y);
+		for (Point p : Board.getKnightWalk()) {
+			Point check = new Point(this.point.x + p.x, this.point.y + p.y);
 			if (!board.isInBoard(check)) {
 				continue;
 			}
@@ -46,5 +46,8 @@ public class Knight extends Entity {
 	public boolean isFromPawn() {
 		return isFromPawn;
 	}
-
+	
+	public String toString() {
+		return "Knight [point=" + point + ", side=" + side + "]";
+	}
 }

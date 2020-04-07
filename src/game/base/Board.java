@@ -1,21 +1,22 @@
 package game.base;
 
-import logic.*;
+import logic.Sprites;
+import logic.Cell;
+import logic.Side;
 import entity.base.Entity;
 import entity.*;
 import java.awt.*;
 import java.util.ArrayList;
-import java.lang.Math;
+//import java.lang.Math;
 
-public class Board {// abstract
+public abstract class Board {
 	private Cell[][] cellmap;
 	private Entity whiteKing, blackKing;
-	private Point[] knightWalk = { new Point(1, 2), new Point(2, 1), new Point(2, -1), new Point(1, -2),
+	protected static final Point[] knightWalk = { new Point(1, 2), new Point(2, 1), new Point(2, -1), new Point(1, -2),
 			new Point(-1, -2), new Point(-2, -1), new Point(-2, 1), new Point(-1, 2) };
-	private Point[] KingWalk = { new Point(1, 1), new Point(1, 0), new Point(1, -1), new Point(0, -1), new Point(-1, -1),
+	protected static final Point[] KingWalk = { new Point(1, 1), new Point(1, 0), new Point(1, -1), new Point(0, -1), new Point(-1, -1),
 			new Point(-1, 0), new Point(-1, 1), new Point(0, 1) };
-	private int width;
-	private int height;
+	private int width, height;
 
 	// private Game game;//enum game
 	public Board(String[][] map) {
@@ -31,181 +32,84 @@ public class Board {// abstract
 				Point p = new Point(i, j);
 				cellmap[i][j] = new Cell();
 				switch (map[i][j]) {// W B --- K Q R B N P --- 0
-				case "WK":
+				case Sprites.W_KING:
 					whiteKing = new King(p, Side.WHITE);
 					addEntity(whiteKing, p);
 					break;
-				case "WQ":
+				case Sprites.W_QUEEN:
 					addEntity(new Queen(p, Side.WHITE), p);
 					break;
-				case "WR":
+				case Sprites.W_ROOK:
 					addEntity(new Rook(p, Side.WHITE), p);
 					break;
-				case "WB":
+				case Sprites.W_BISHOP:
 					addEntity(new Bishop(p, Side.WHITE), p);
 					break;
-				case "WN":
+				case Sprites.W_KNIGHT:
 					addEntity(new Knight(p, Side.WHITE), p);
 					break;
-				case "WP":
+				case Sprites.W_PAWN:
 					addEntity(new Pawn(p, Side.WHITE), p);
 					break;
-				case "BK":
+				case Sprites.B_KING:
 					blackKing = new King(p, Side.BLACK);
 					addEntity(blackKing, p);
 					break;
-				case "BQ":
+				case Sprites.B_QUEEN:
 					addEntity(new Queen(p, Side.BLACK), p);
 					break;
-				case "BR":
+				case Sprites.B_ROOK:
 					addEntity(new Rook(p, Side.BLACK), p);
 					break;
-				case "BB":
+				case Sprites.B_BISHOP:
 					addEntity(new Bishop(p, Side.BLACK), p);
 					break;
-				case "BN":
+				case Sprites.B_KNIGHT:
 					addEntity(new Knight(p, Side.BLACK), p);
 					break;
-				case "BP":
+				case Sprites.B_PAWN:
 					addEntity(new Pawn(p, Side.BLACK), p);
 					break;
-				case "--":
+				case Sprites.BLANK:
 					break;
 				default:
-					System.out.println("Error");
+					System.out.println("Error create board");
 				}
 			}
 		}
 	}
-
-	public boolean isWin(Side side) {
-		return false;
-	}
-
-	public ArrayList<Point> moveList(Point p) {
-		Entity moveEntity = getEntity(p);
-		ArrayList<Point> movePoint = moveEntity.moveList(this);
-		ArrayList<Integer> removeIndex = new ArrayList<Integer>();
-		for (int i = 0; i < movePoint.size(); i++) {// ----------------------------------------
-			if (isCheck(p, movePoint.get(i), getKing(moveEntity.getSide()))) {// ---------------------------
-				removeIndex.add(i);
-			}
-		}
-		for (int i = removeIndex.size() - 1; i >= 0; i--) {
-			movePoint.remove(removeIndex.get(i));
-		}
-		return movePoint;
-	}
-
-	public boolean isCheck(Point movePoint, Point toPoint, Entity king) {// -----------------------
-		Side side = king.getSide();//
-		Point kingPoint = king.getP();
-		if (canBeEaten(side)) {
-			return true;
-		}
-		// Point vector = new Point(toPoint.x-kingPoint.x,toPoint.y-kingPoint.y);
-		Point[] rookVector = { new Point(1, 0), new Point(-1, 0), new Point(0, 1), new Point(0, -1) };
-		Point[] bishopVector = { new Point(1, 1), new Point(-1, 1), new Point(1, -1), new Point(-1, -1) };
-		for (Point vector : rookVector) {
-			if (checkRook(kingPoint, vector, movePoint, side))
-				return true;
-		}
-		for (Point vector : bishopVector) {// check bishop and queen
-			if (checkBishop(kingPoint, vector, movePoint, side))
-				return true;
-		}
-		return false;
-	}
-
-	public boolean isCheckKing(Point movePoint, Point toPoint, Entity king) {
-		Side side = king.getSide();//
-		Point kingPoint = king.getP();
-		if (canBeEaten(side)) {
-			return true;
-		}
-		Point vector = new Point(movePoint.x - kingPoint.x, movePoint.y - kingPoint.y);
-		if (vector.x * vector.y == 0) {// check rook and queen
-			if (vector.x != 0)
-				vector.x /= Math.abs(vector.x);
-			if (vector.y != 0)
-				vector.y /= Math.abs(vector.y);
-			if (checkRook(kingPoint, vector, movePoint, side))
-				return true;
-		} else if (Math.abs(vector.x) == Math.abs(vector.y)) {// check bishop and queen
-			vector.x /= Math.abs(vector.x);
-			vector.y /= Math.abs(vector.y);
-			if (checkBishop(kingPoint, vector, movePoint, side))
-				return true;
-		}
-		return false;
-	}
-
-	public boolean checkRook(Point point, Point vector, Point removePoint, Side side) {
-		Point nextPoint = Entity.addVector(point, vector);
-		if (vector.equals(new Point(0, 0)))
-			return false;
-		// System.out.println(" " + vector.toString());//---------------
-		// System.out.println(vector.toString());
-		if (!isInBoard(nextPoint))
-			return false;
-		if (nextPoint.equals(removePoint) || getEntity(nextPoint) == null) {
-			return checkRook(nextPoint, vector, removePoint, side);
-			// }else if (isSameSide(getEntity(nextPoint).getSide(), side)) {
-			// return false;
-		} else if (getEntity(nextPoint).getSide() != side) {
-			if (getEntity(nextPoint) instanceof Rook || getEntity(nextPoint) instanceof Queen) {
-				return true;
-			}
-			return false;
-		}
-		// System.out.println("Error checkRook");
-		return false;
-	}
-
-	public boolean checkBishop(Point point, Point vector, Point removePoint, Side side) {
-		// System.out.println(vector.toString());
-		Point nextPoint = Entity.addVector(point, vector);
-		if (!isInBoard(nextPoint))
-			return false;
-		if (nextPoint.equals(removePoint) || getEntity(nextPoint) == null) {
-			return checkRook(nextPoint, vector, removePoint, side);
-			// }else if (getEntity(nextPoint).getSide()==side) {
-			// return false;
-		} else if (getEntity(nextPoint).getSide() == side) {
-			if (getEntity(nextPoint) instanceof Bishop || getEntity(nextPoint) instanceof Queen) {
-				return true;
-			}
-			return false;
-		}
-		// System.out.println("Error checkBishop");
-		return false;
-	}
-
-	public boolean move(Point oldPoint, Point newPoint) {
-		if (newPoint == null || !isInBoard(newPoint))
-			return false;
+	
+	//iswin
+	public abstract boolean isWin(Side side);
+	
+	//move
+	public boolean move(Point oldPoint, Point newPoint, ArrayList<Point> moveList) {
 		Entity moveEntity = this.getEntity(oldPoint);
-		for (Point moveablePoint : moveEntity.moveList(this)) {
+		for (Point moveablePoint : moveList) {
 			if (moveablePoint.equals(newPoint)) {
 				remove(oldPoint);
-				moveEntity.setP(newPoint);
+				moveEntity.setPoint(newPoint);
 				addEntity(moveEntity, newPoint);
 				return true;
 			}
 		}
 		return false;
 	}
-
-	public boolean canBeEaten(Side side) {// nomove
-		Entity king = getKing(side);
-		Point kingPoint = king.getP();
-		ArrayList<Entity> allEntity = getAllPieces(side);// Ex for black: white can eat this point?
+	//complete moveList to display
+	protected abstract ArrayList<Point> removeCannotMovePoint(Point oldPoint, ArrayList<Point> movePoint);
+	public ArrayList<Point> moveList(Point point) {
+		Entity moveEntity = getEntity(point);
+		ArrayList<Point> movePoint = moveEntity.moveList(this);
+		return removeCannotMovePoint(point, movePoint);
+	}
+	
+	//other
+	public boolean isEatenPoint(Point point, Side side) {
+		ArrayList<Entity> allEntity = getAllPieces(getAnotherSide(side));
 		for (Entity e : allEntity) {
-			System.out.println("Can " + e);
-			ArrayList<Point> eatablePoint = e.eatList(this);
+			ArrayList<Point> eatablePoint = e.moveList(this);
 			for (Point p : eatablePoint) {
-				System.out.println("point " + p.toString());// ----------------------
-				if (p.x == kingPoint.x && p.y == kingPoint.y) {
+				if (p.x == point.x && p.y == point.y) {
 					return true;
 				}
 			}
@@ -266,28 +170,24 @@ public class Board {// abstract
 		return blackKing;
 	}
 
-	public Entity getAnotherKing(Side side) {
+	public Side getAnotherSide(Side side) {
 		if (side == Side.BLACK)
-			return whiteKing;
-		return blackKing;
+			return Side.WHITE;
+		return Side.BLACK;
 	}
 
-	public Point[] getKnightWalk() {
+	public static Point[] getKnightWalk() {
 		return knightWalk;
 	}
 
-	public Point[] getKingWalk() {
+	public static Point[] getKingWalk() {
 		return KingWalk;
 	}
-
-	public boolean isSameSide(Side s1, Side s2) {
-		if (s1 == Side.BLACK && s2 == Side.BLACK)
-			return true;
-		if (s1 == Side.WHITE && s2 == Side.WHITE)
-			return true;
-		return false;
+	
+	public static Point addPoint(Point p1, Point p2) {
+		return new Point(p1.x + p2.x, p1.y + p2.y);
 	}
-	public Cell[][] getCellmap() {
-		return cellmap;
-	}
+//	public Cell[][] getCellmap() {
+//		return cellmap;
+//	}
 }

@@ -11,26 +11,17 @@ import myException.*;
 public class PrintBoard {
 	private static String[] w_p = { "--", "WK", "WQ", "WB", "WN", "WR", "WP" };
 	private static String[] b_p = { "--", "BK", "BQ", "BB", "BN", "BR", "BP" };
+	private static String[] blackRow = {Sprites.B_ROOK,Sprites.B_KNIGHT,Sprites.B_BISHOP,Sprites.B_QUEEN,Sprites.B_KING,Sprites.B_BISHOP,Sprites.B_KNIGHT,Sprites.B_ROOK};
+	private static String[] blackPawn = {Sprites.B_PAWN,Sprites.B_PAWN,Sprites.B_PAWN,Sprites.B_PAWN,Sprites.B_PAWN,Sprites.B_PAWN,Sprites.B_PAWN,Sprites.B_PAWN};
+	private static String[] blank = {Sprites.BLANK,Sprites.BLANK,Sprites.BLANK,Sprites.BLANK,Sprites.BLANK,Sprites.BLANK,Sprites.BLANK,Sprites.BLANK};
+	private static String[] whitePawn = {Sprites.W_PAWN,Sprites.W_PAWN,Sprites.W_PAWN,Sprites.W_PAWN,Sprites.W_PAWN,Sprites.W_PAWN,Sprites.W_PAWN,Sprites.W_PAWN};
+	private static String[] whiteRow = {Sprites.W_ROOK,Sprites.W_KNIGHT,Sprites.W_BISHOP,Sprites.W_QUEEN,Sprites.W_KING,Sprites.W_BISHOP,Sprites.W_KNIGHT,Sprites.W_ROOK};
 
 	public static void main(String[] args) {
 		Scanner kb = new Scanner(System.in);
-		String[][] nb = { { b_p[5], b_p[4], b_p[3], b_p[2], b_p[1], b_p[3], b_p[4], b_p[5] },
-				{ b_p[6], b_p[6], b_p[6], b_p[6], b_p[6], b_p[6], b_p[6], b_p[6] },
-				{ b_p[0], b_p[0], b_p[0], b_p[0], b_p[0], b_p[0], b_p[0], b_p[0] },
-				{ b_p[0], b_p[0], b_p[0], b_p[0], b_p[0], b_p[0], b_p[0], b_p[0] },
-				{ w_p[0], w_p[0], w_p[0], w_p[0], w_p[0], w_p[0], w_p[0], w_p[0] },
-				{ w_p[0], w_p[0], w_p[0], w_p[0], w_p[0], w_p[0], w_p[0], w_p[0] },
-				{ w_p[6], w_p[6], w_p[6], w_p[6], w_p[6], w_p[6], w_p[6], w_p[6] },
-				{ w_p[5], w_p[4], w_p[3], w_p[2], w_p[1], w_p[3], w_p[4], w_p[5] } };
-		String[][] ab = { { b_p[5], b_p[4], b_p[3], b_p[2], b_p[1], b_p[3], b_p[4], b_p[5] },
-				{ b_p[0], b_p[0], b_p[0], b_p[0], b_p[0], b_p[0], b_p[0], b_p[0] },
-				{ b_p[0], b_p[0], b_p[0], b_p[0], b_p[0], b_p[0], b_p[0], b_p[0] },
-				{ b_p[0], b_p[0], b_p[0], b_p[0], b_p[0], b_p[0], b_p[0], b_p[0] },
-				{ w_p[0], w_p[0], w_p[0], w_p[0], w_p[0], w_p[0], w_p[0], w_p[0] },
-				{ w_p[0], w_p[0], w_p[0], w_p[0], w_p[0], w_p[0], w_p[0], w_p[0] },
-				{ w_p[0], w_p[0], w_p[0], w_p[0], w_p[0], w_p[0], w_p[0], w_p[0] },
-				{ w_p[5], w_p[4], w_p[3], w_p[2], w_p[1], w_p[3], w_p[4], w_p[5] } };
-		GameController.IntializeMap(nb, 8, 8);// ---------------------------------
+		String[][] normalBoard = {blackRow, blackPawn, blank, blank, blank, blank, whitePawn, whiteRow};
+		String[][] noPawnBoard = {blackRow, blank, blank, blank, blank, blank, blank, whiteRow};
+		GameController.IntializeMap(normalBoard);// ---------------------------------
 		print(GameController.getBoard());
 		while (true) {
 			System.out.print("" + GameController.getTurn() + " turn ");
@@ -56,7 +47,8 @@ public class PrintBoard {
 			}
 			Point piece = stringToPoint(walkfrom);
 			print(GameController.getBoard());
-			printMove(GameController.moveList(piece));
+			ArrayList<Point> moveList = GameController.moveList(piece);
+			printMove(moveList);
 
 			String walkTo = kb.nextLine();
 			if (stringToPoint(walkTo) == null) {
@@ -64,19 +56,16 @@ public class PrintBoard {
 				continue;
 			}
 			Point moveTo = stringToPoint(walkTo);
-			if (!GameController.move(piece, moveTo)) {
+			if (!GameController.move(piece, moveTo,moveList)) {
 				System.out.println("Pick again!!");
 				continue;
 			}
-			if (GameController.isCheck()) {// --------------------------
+			if (GameController.isWin()) {// --------------------------
 				System.out.println("" + GameController.getAnotherSide(GameController.getTurn()) + "Check!!");
 			}
 			GameController.nextTurn();
 			System.out.println("Next turn");
 			print(GameController.getBoard());
-			if (GameController.isCheck()) {// -------------------------------
-				System.out.println("" + GameController.getAnotherSide(GameController.getTurn()) + "Check!!");
-			}
 		}
 	}
 
@@ -96,16 +85,12 @@ public class PrintBoard {
 			System.out.print("" + (8 - i) + " ");
 			for (int j = 0; j < 8; j++) {
 				if (board.getEntity(new Point(i, j)) == null) {
-					System.out.print(" -- ");
+					System.out.print("---|");
 					continue;
 				}
-				Point pr = board.getEntity(new Point(i, j)).getSymbol();
-				if (pr.y == 0)
-					System.out.print(" " + w_p[pr.x + 1] + " ");
-				else if (pr.y == 1)
-					System.out.print(" " + b_p[pr.x + 1] + " ");
-				else
-					System.out.println("Error");
+				String pr = board.getEntity(new Point(i, j)).getSymbol().substring(0, 4);
+				if (pr.substring(2, 4).equals("Kn")) pr=pr.substring(0, 2)+"N";
+				System.out.print(pr.substring(0, 3) + "|");
 			}
 			System.out.println();
 		}

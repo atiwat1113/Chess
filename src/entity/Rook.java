@@ -35,13 +35,13 @@ public class Rook extends Entity {
 	@Override
 	public ArrayList<Point> moveList(Board board) {
 		ArrayList<Point> returnPoint = new ArrayList<Point>();
-		for (Point p : moveList(board, p, new Point(1, 0)))
+		for (Point p : moveList(board, point, new Point(1, 0)))
 			returnPoint.add(p);
-		for (Point p : moveList(board, p, new Point(0, 1)))
+		for (Point p : moveList(board, point, new Point(0, 1)))
 			returnPoint.add(p);
-		for (Point p : moveList(board, p, new Point(-1, 0)))
+		for (Point p : moveList(board, point, new Point(-1, 0)))
 			returnPoint.add(p);
-		for (Point p : moveList(board, p, new Point(0, -1)))
+		for (Point p : moveList(board, point, new Point(0, -1)))
 			returnPoint.add(p);
 		return returnPoint;
 	}
@@ -57,5 +57,8 @@ public class Rook extends Entity {
 	public void setNeverMove(boolean neverMove) {
 		this.neverMove = neverMove;
 	}
-
+	
+	public String toString() {
+		return "Rook [point=" + point + ", side=" + side + "]";
+	}
 }

@@ -4,15 +4,15 @@ import java.awt.*;
 import java.util.ArrayList;
 import game.base.Board;
 import logic.Side;
-// remain: check, clasting, Promotion, draw, en passant
+// remain: clasting, Promotion, draw, en passant
 
 public abstract class Entity { // private --> protected
-	protected Point p;
+	protected Point point;
 	protected boolean isMove;
 	protected Side side;
 
-	public Entity(Point p, Side side) {// Point (y,x)
-		this.p = p;
+	public Entity(Point point, Side side) {// Point (y,x)
+		this.point = point;
 		this.side = side; // should be set since creating an entity.
 		isMove = false;
 	}
@@ -23,7 +23,7 @@ public abstract class Entity { // private --> protected
 
 	public ArrayList<Point> moveList(Board board, Point point, Point vector) {// ------
 		ArrayList<Point> returnList = new ArrayList<Point>();
-		Point nextPoint = addVector(point, vector);
+		Point nextPoint = Board.addPoint(point, vector);
 		if (!board.isInBoard(nextPoint)) {
 			return returnList;
 		}
@@ -41,15 +41,15 @@ public abstract class Entity { // private --> protected
 		return null;
 	}
 
-	public ArrayList<Point> eatList(Board board) {
-		ArrayList<Point> eatablePoint = new ArrayList<Point>();
-		for (Point moveablePoint : this.moveList(board)) {
-			if (board.getEntity(moveablePoint) != null && board.getEntity(moveablePoint).getSide() != this.side) {
-				eatablePoint.add(moveablePoint);
-			}
-		}
-		return eatablePoint;
-	}
+//	public ArrayList<Point> eatList(Board board) {
+//		ArrayList<Point> eatablePoint = new ArrayList<Point>();
+//		for (Point moveablePoint : this.moveList(board)) {
+//			if (board.getEntity(moveablePoint) != null && board.getEntity(moveablePoint).getSide() != this.side) {
+//				eatablePoint.add(moveablePoint);
+//			}
+//		}
+//		return eatablePoint;
+//	}
 
 	/*
 	 * public boolean moveEntity(Board board , Point p) { Point oldPoint = this.p;
@@ -58,9 +58,9 @@ public abstract class Entity { // private --> protected
 	 * } } return false; }
 	 */
 
-	public static Point addVector(Point p1, Point p2) {
-		return new Point(p1.x + p2.x, p1.y + p2.y);
-	}
+//	public static Point addVector(Point p1, Point p2) {
+//		return new Point(p1.x + p2.x, p1.y + p2.y);
+//	}
 
 	/*
 	 * public void remove() {// ----------------------------------------
@@ -68,21 +68,17 @@ public abstract class Entity { // private --> protected
 	 * }
 	 */
 
-	public Point getP() {
-		return p;
+	public Point getPoint() {
+		return point;
 	}
 
-	public void setP(Point p) {
-		this.p = p;
+	public void setPoint(Point point) {
+		this.point = point;
 	}
 
 	public Side getSide() {
 		return side;
 	}
 
-	@Override
-	public String toString() {
-		return "Entity [p=" + p + ", side=" + side + "]";
-	}
-
+	public abstract String toString();
 }

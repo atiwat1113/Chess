@@ -25,10 +25,9 @@ public class King extends Entity {
 
 	@Override
 	public ArrayList<Point> moveList(Board board) {
-
 		ArrayList<Point> returnPoint = new ArrayList<Point>();
-		for (Point p : board.getKingWalk()) {
-			Point check = new Point(this.p.x + p.x, this.p.y + p.y);
+		for (Point p : Board.getKingWalk()) {
+			Point check = new Point(this.point.x + p.x, this.point.y + p.y);
 			if (!board.isInBoard(check)) {
 				continue;
 			}
@@ -38,5 +37,8 @@ public class King extends Entity {
 		}
 		return returnPoint;
 	}
-
+	
+	public String toString() {
+		return "King [point=" + point + ", side=" + side + "]";
+	}
 }
