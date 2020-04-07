@@ -29,7 +29,9 @@ public class NormalBoard extends Board implements CheckMateAble{
 			for(int i = movePoint.size()-1; i>=0; i--) {
 				if (checkCannotMovePoint(oldPoint,new Point(-1,-1),movePoint.get(i),side)) movePoint.remove(i);
 			}
-			//return checkKingMove();
+			for(Point p : ((King) getEntity(oldPoint)).castingPoint(this)) {
+				movePoint.add(p);
+			} //for castling
 		}else {
 			Point kingPoint = getKing(side).getPoint();
 			for(int i = movePoint.size()-1; i>=0; i--) {

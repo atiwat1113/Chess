@@ -3,7 +3,7 @@ package game.base;
 import logic.Sprites;
 import logic.Cell;
 import logic.Side;
-import entity.base.Entity;
+import entity.base.*;
 import entity.*;
 import java.awt.*;
 import java.util.ArrayList;
@@ -87,6 +87,7 @@ public abstract class Board {
 		Entity moveEntity = this.getEntity(oldPoint);
 		for (Point moveablePoint : moveList) {
 			if (moveablePoint.equals(newPoint)) {
+				if (moveEntity instanceof HaveCastling) ((HaveCastling) moveEntity).setNeverMove();
 				remove(oldPoint);
 				moveEntity.setPoint(newPoint);
 				addEntity(moveEntity, newPoint);
@@ -107,8 +108,8 @@ public abstract class Board {
 	public boolean isEatenPoint(Point point, Side side) {
 		ArrayList<Entity> allEntity = getAllPieces(getAnotherSide(side));
 		for (Entity e : allEntity) {
-			ArrayList<Point> eatablePoint = e.moveList(this);
-			for (Point p : eatablePoint) {
+			ArrayList<Point> moveablePoint = e.moveList(this);
+			for (Point p : moveablePoint) {
 				if (p.x == point.x && p.y == point.y) {
 					return true;
 				}

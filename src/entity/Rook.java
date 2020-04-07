@@ -2,11 +2,11 @@ package entity;
 
 import java.awt.Point;
 import java.util.ArrayList;
-import entity.base.Entity;
+import entity.base.*;
 import logic.*;
 import game.base.Board;
 
-public class Rook extends Entity {
+public class Rook extends Entity implements HaveCastling {
 
 	private boolean neverMove;
 	private boolean isFromPawn;
@@ -50,15 +50,14 @@ public class Rook extends Entity {
 		return isFromPawn;
 	}
 
+	public String toString() {
+		return "Rook [point=" + point + ", side=" + side + "]";
+	}
+	
 	public boolean isNeverMove() {
 		return neverMove;
 	}
-
-	public void setNeverMove(boolean neverMove) {
-		this.neverMove = neverMove;
-	}
-	
-	public String toString() {
-		return "Rook [point=" + point + ", side=" + side + "]";
+	public void setNeverMove() {
+		this.neverMove = false;
 	}
 }
