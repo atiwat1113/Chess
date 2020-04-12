@@ -2,10 +2,8 @@ package application;
 
 import java.awt.Point;
 
-import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.image.Image;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.BackgroundImage;
@@ -14,8 +12,6 @@ import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import logic.Cell;
-import logic.GameController;
-import logic.Sprites;
 
 public class BoardCell extends Pane {
 
@@ -23,14 +19,16 @@ public class BoardCell extends Pane {
 	private Point p;
 	private Color color;
 	private boolean isClicked;
+	private boolean moveable;
 
 	public BoardCell(Cell cell, Point p, Color color) {
 		this.myCell = cell;
 		this.p = p;
 		this.color = color;
 		this.isClicked = false;
-		this.setPrefSize(100, 100);
-		this.setMinSize(100, 100);
+		this.moveable = false;
+		this.setPrefSize(50, 50);
+		this.setMinSize(50, 50);
 		this.setPadding(new Insets(8));
 		if (hasEntity()) this.setBackgroundTileColor(new Image(this.myCell.getEntity().getSymbol()));
 		else setBackgroundTileColor();
@@ -51,7 +49,7 @@ public class BoardCell extends Pane {
 		// TODO Auto-generated method stub
 		BackgroundFill bgFill = new BackgroundFill(this.color, CornerRadii.EMPTY, Insets.EMPTY);
 		BackgroundFill[] bgFillA = { bgFill };
-		BackgroundSize bgSize = new BackgroundSize(100, 100, false, false, false, false);
+		BackgroundSize bgSize = new BackgroundSize(50, 50, false, false, false, false);
 		BackgroundImage bgImg = new BackgroundImage(image, null, null, null, bgSize);
 		BackgroundImage[] bgImgA = { bgImg };
 		this.setBackground(new Background(bgFillA, bgImgA));
@@ -61,7 +59,7 @@ public class BoardCell extends Pane {
 		// TODO Auto-generated method stub
 		BackgroundFill bgFill = new BackgroundFill(this.color, CornerRadii.EMPTY, Insets.EMPTY);
 		BackgroundFill[] bgFillA = { bgFill };
-		BackgroundSize bgSize = new BackgroundSize(100, 100, false, false, false, false);
+		BackgroundSize bgSize = new BackgroundSize(50, 50, false, false, false, false);
 		BackgroundImage redDotImg = new BackgroundImage(redDot, null, null, null, bgSize);
 		BackgroundImage entityImg = new BackgroundImage(entity, null, null, null, bgSize);
 		BackgroundImage[] bgImgA = { entityImg, redDotImg };
@@ -72,8 +70,13 @@ public class BoardCell extends Pane {
 		if (hasEntity()) this.setBackgroundTileColor(new Image(this.myCell.getEntity().getSymbol()));
 		else setBackgroundTileColor();
 		this.isClicked = false;
+		this.moveable = false;
 	}
 	
+	public void setMyCell(Cell myCell) {
+		this.myCell = myCell;
+	}
+
 	public Cell getMyCell() {
 		return myCell;
 	}
@@ -88,6 +91,14 @@ public class BoardCell extends Pane {
 
 	public void setClicked(boolean isClicked) {
 		this.isClicked = isClicked;
+	}
+
+	public boolean isMoveable() {
+		return moveable;
+	}
+
+	public void setMoveable(boolean moveable) {
+		this.moveable = moveable;
 	}
 
 	

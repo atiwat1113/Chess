@@ -2,22 +2,24 @@ package application;
 
 import javafx.application.Application;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
-import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
+
 
 public class Main extends Application{
 	public void start(Stage primaryStage) {
 
-		HBox root = new HBox();
+		VBox root = new VBox();
 		root.setPadding(new Insets(10));
 		root.setSpacing(10);
 		root.setPrefHeight(400);
 		BoardPane boardPane = new BoardPane();
-		root.getChildren().add(boardPane);
-			
+		Text turn = boardPane.getTurnText();
+		root.getChildren().addAll(turn,boardPane);
+		root.setAlignment(Pos.CENTER);	
 	
 		Scene scene = new Scene(root);
 	

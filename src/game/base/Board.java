@@ -10,7 +10,7 @@ import java.util.ArrayList;
 //import java.lang.Math;
 
 public abstract class Board {
-	private Cell[][] cellmap;
+	private Cell[][] cellMap;
 	private Entity whiteKing, blackKing;
 	protected static final Point[] knightWalk = { new Point(1, 2), new Point(2, 1), new Point(2, -1), new Point(1, -2),
 			new Point(-1, -2), new Point(-2, -1), new Point(-2, 1), new Point(-1, 2) };
@@ -26,11 +26,11 @@ public abstract class Board {
 		blackKing = null;
 		width = column;
 		height = row;
-		cellmap = new Cell[row][column];
+		cellMap = new Cell[row][column];
 		for (int i = 0; i < row; i++) {// Point (y,x) => (i,j)
 			for (int j = 0; j < column; j++) {
 				Point p = new Point(i, j);
-				cellmap[i][j] = new Cell();
+				cellMap[i][j] = new Cell();
 				switch (map[i][j]) {// W B --- K Q R B N P --- 0
 				case Sprites.W_KING:
 					whiteKing = new King(p, Side.WHITE);
@@ -123,14 +123,14 @@ public abstract class Board {
 	}
 
 	public boolean addEntity(Entity e, Point p) {
-		return cellmap[p.x][p.y].setEntity(e);
+		return cellMap[p.x][p.y].setEntity(e);
 	}
 
 	public Entity getEntity(Point p) {
-		if (!isInBoard(p) || cellmap[p.x][p.y].IsEmpty()) {
+		if (!isInBoard(p) || cellMap[p.x][p.y].IsEmpty()) {
 			return null;
 		}
-		return cellmap[p.x][p.y].getEntity();
+		return cellMap[p.x][p.y].getEntity();
 	}
 
 	public boolean isInBoard(Point p) {
@@ -188,7 +188,7 @@ public abstract class Board {
 	public static Point addPoint(Point p1, Point p2) {
 		return new Point(p1.x + p2.x, p1.y + p2.y);
 	}
-	public Cell[][] getCellmap() {
-		return cellmap;
+	public Cell[][] getCellMap() {
+		return cellMap;
 	}
 }

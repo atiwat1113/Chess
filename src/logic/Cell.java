@@ -16,7 +16,8 @@ public class Cell {
 
 	public boolean setEntity(Entity e) {
 		myEntity = e;
-		isEmpty = false;
+		if(e == null) isEmpty = true;
+		else isEmpty = false;
 		return true;
 	}
 
