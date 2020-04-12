@@ -5,6 +5,7 @@ import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.ButtonType;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
@@ -26,7 +27,7 @@ public class BoardPane extends GridPane {
 	private Cell[][] cellMap;
 	private static final int row = 8;
 	private static final int column = 8;
-	private static final Color redTile = new Color((double) 215 / 255, (double) 89 / 255, (double) 89 / 255, 1);
+	private static final Color redTile = new Color((double) 200 / 255, (double) 200 / 255, (double) 200 / 255, 1);
 	private static final Color blackTile = new Color((double) 89 / 255, (double) 89 / 255, (double) 89 / 255, 1);
 	private BoardCell bc;
 	private Point currentSelectedPoint;
@@ -82,7 +83,7 @@ public class BoardPane extends GridPane {
 
 	private void addOnClickHandler(BoardCell myBoardCell) throws Exception {
 		// TODO Auto-generated method stub
-		//System.out.println("clicked");
+		// System.out.println("clicked");
 		updateBoard(myBoardCell);
 		if (myBoardCell.isMoveable()) {
 			// currentSelectedPoint = new Point(myBoardCell.getP().y,myBoardCell.getP().x);
@@ -95,8 +96,7 @@ public class BoardPane extends GridPane {
 			currentSelectedMoveList = null;
 			GameController.nextTurn();
 		} else {
-			if (myBoardCell.hasEntity()
-					&& GameController.isTurn(myBoardCell.getP(), GameController.getTurn())) {
+			if (myBoardCell.hasEntity() && GameController.isTurn(myBoardCell.getP(), GameController.getTurn())) {
 				if (!myBoardCell.isClicked()) {
 					for (BoardCell bc : this.getBoardCellList()) {
 						if (myBoardCell.getMyCell().getEntity().moveList(GameController.getBoard()).contains(bc.getP())) {
@@ -127,15 +127,19 @@ public class BoardPane extends GridPane {
 				}
 			}
 		}
-		
-		if(GameController.isWin()) {
+
+		if (GameController.isWin()) {
 			Alert alert = new Alert(AlertType.CONFIRMATION);
 			alert.setTitle("End Game");
 			alert.setHeaderText(null);
-			alert.setContentText(GameController.getTurn().toString() + " WIN!!!");
-			alert.showAndWait();
+			alert.setContentText(GameController.getTurn().toString() + " WIN!!!\nDo you want to exit?");
+			alert.showAndWait().ifPresent(response -> {
+				if (response == ButtonType.OK) {
+					System.exit(0);
+				}
+			});
 		}
-		this.turnText.setText(GameController.getTurn().toString() + " TURN"); 
+		this.turnText.setText(GameController.getTurn().toString() + " TURN");
 	}
 
 	private void updateBoard(BoardCell myBoardCell) {
@@ -147,7 +151,7 @@ public class BoardPane extends GridPane {
 			if (!bc.equals(myBoardCell))
 				bc.update();
 		}
-		
+
 	}
 
 	public ObservableList<BoardCell> getBoardCellList() {
@@ -158,5 +162,4 @@ public class BoardPane extends GridPane {
 		return turnText;
 	}
 
-	
 }
