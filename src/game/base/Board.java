@@ -188,7 +188,7 @@ public abstract class Board {
 	public static Point addPoint(Point p1, Point p2) {
 		return new Point(p1.x + p2.x, p1.y + p2.y);
 	}
-//	public Cell[][] getCellmap() {
-//		return cellmap;
-//	}
+	public Cell[][] getCellmap() {
+		return cellmap;
+	}
 }
