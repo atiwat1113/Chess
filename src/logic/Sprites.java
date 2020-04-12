@@ -18,4 +18,16 @@ public class Sprites {
 	public static final String B_ROOK = "B_Rook.png";
 	public static final String B_PAWN = "B_Pawn.png";
 
+	public static final String HIGHLIGHT_W_KING = "highlight_W_King.png";
+	public static final String HIGHLIGHT_W_QUEEN = "highlight_W_Queen.png";
+	public static final String HIGHLIGHT_W_BISHOP = "highlight_W_Bishop.png";
+	public static final String HIGHLIGHT_W_KNIGHT = "highlight_W_Knight.png";
+	public static final String HIGHLIGHT_W_ROOK = "highlight_W_Rook.png";
+	public static final String HIGHLIGHT_W_PAWN = "highlight_W_Pawn.png";
+	public static final String HIGHLIGHT_B_KING = "highlight_B_King.png";
+	public static final String HIGHLIGHT_B_QUEEN = "highlight_B_Queen.png";
+	public static final String HIGHLIGHT_B_BISHOP = "highlight_B_Bishop.png";
+	public static final String HIGHLIGHT_B_KNIGHT = "highlight_B_Knight.png";
+	public static final String HIGHLIGHT_B_ROOK = "highlight_B_Rook.png";
+	public static final String HIGHLIGHT_B_PAWN = "highlight_B_Pawn.png";
 }

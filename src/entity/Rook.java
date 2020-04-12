@@ -60,4 +60,13 @@ public class Rook extends Entity implements HaveCastling {
 	public void setNeverMove() {
 		this.neverMove = false;
 	}
+
+	@Override
+	public String getHighlightSymbol() {
+		// TODO Auto-generated method stub
+		if (this.side == Side.BLACK) {
+			return Sprites.HIGHLIGHT_B_ROOK;
+		}
+		return Sprites.HIGHLIGHT_W_ROOK;
+	}
 }

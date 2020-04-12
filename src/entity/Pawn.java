@@ -82,4 +82,13 @@ public class Pawn extends Entity {
 	public String toString() {
 		return "Pawn [point=" + point + ", side=" + side + "]";
 	}
+
+	@Override
+	public String getHighlightSymbol() {
+		// TODO Auto-generated method stub
+		if (this.side == Side.BLACK) {
+			return Sprites.HIGHLIGHT_B_PAWN;
+		}
+		return Sprites.HIGHLIGHT_W_PAWN;
+	}
 }

@@ -18,6 +18,8 @@ public abstract class Entity { // private --> protected
 	}
 
 	public abstract String getSymbol();
+	
+	public abstract String getHighlightSymbol();
 
 	public abstract ArrayList<Point> moveList(Board board);
 

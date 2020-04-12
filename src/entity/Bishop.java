@@ -49,4 +49,13 @@ public class Bishop extends Entity {
 	public String toString() {
 		return "Bishop [point=" + point + ", side=" + side + "]";
 	}
+
+	@Override
+	public String getHighlightSymbol() {
+		// TODO Auto-generated method stub
+		if (this.side == Side.BLACK) {
+			return Sprites.HIGHLIGHT_B_BISHOP;
+		}
+		return Sprites.HIGHLIGHT_W_BISHOP;
+	}
 }

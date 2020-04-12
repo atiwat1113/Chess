@@ -106,4 +106,13 @@ public class King extends Entity implements HaveCastling {
 		}finally {}
 		return null;
 	}
+
+	@Override
+	public String getHighlightSymbol() {
+		// TODO Auto-generated method stub
+		if (this.side == Side.BLACK) {
+			return Sprites.HIGHLIGHT_B_KING;
+		}
+		return Sprites.HIGHLIGHT_W_KING;
+	}
 }

@@ -59,4 +59,13 @@ public class Queen extends Entity {
 	public String toString() {
 		return "Queen [point=" + point + ", side=" + side + "]";
 	}
+
+	@Override
+	public String getHighlightSymbol() {
+		// TODO Auto-generated method stub
+		if (this.side == Side.BLACK) {
+			return Sprites.HIGHLIGHT_B_QUEEN;
+		}
+		return Sprites.HIGHLIGHT_W_QUEEN;
+	}
 }

@@ -109,6 +109,7 @@ public class BoardPane extends GridPane {
 						}
 					}
 					currentSelectedPoint = myBoardCell.getP();
+					myBoardCell.setBackgroundTileColor(new Image(myBoardCell.getMyCell().getEntity().getHighlightSymbol()));
 					//currentSelectedMoveList = myBoardCell.getMyCell().getEntity().moveList(GameController.getBoard());
 					myBoardCell.setClicked(true);
 				} else {
@@ -122,6 +123,7 @@ public class BoardPane extends GridPane {
 						}
 					}
 					currentSelectedPoint = null;
+					myBoardCell.setBackgroundTileColor(new Image(myBoardCell.getMyCell().getEntity().getSymbol()));
 					//currentSelectedMoveList = null;
 					myBoardCell.setClicked(false);
 				}
