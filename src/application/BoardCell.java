@@ -30,8 +30,10 @@ public class BoardCell extends Pane {
 		this.setPrefSize(50, 50);
 		this.setMinSize(50, 50);
 		this.setPadding(new Insets(8));
-		if (hasEntity()) this.setBackgroundTileColor(new Image(this.myCell.getEntity().getSymbol()));
-		else setBackgroundTileColor();
+		if (hasEntity())
+			this.setBackgroundTileColor(new Image(this.myCell.getEntity().getSymbol()));
+		else
+			setBackgroundTileColor();
 
 	}
 
@@ -67,12 +69,14 @@ public class BoardCell extends Pane {
 	}
 
 	public void update() {
-		if (hasEntity()) this.setBackgroundTileColor(new Image(this.myCell.getEntity().getSymbol()));
-		else setBackgroundTileColor();
+		if (hasEntity())
+			this.setBackgroundTileColor(new Image(this.myCell.getEntity().getSymbol()));
+		else
+			setBackgroundTileColor();
 		this.isClicked = false;
 		this.moveable = false;
 	}
-	
+
 	public void setMyCell(Cell myCell) {
 		this.myCell = myCell;
 	}
@@ -101,26 +105,4 @@ public class BoardCell extends Pane {
 		this.moveable = moveable;
 	}
 
-	
-	
 }
-
-
-
-
-
-
-/*
- * if (hasEntity()) { if (!isClicked) { for (BoardCell bc :
- * BoardPane.boardCellList) { if
- * (this.myCell.getEntity().moveList(GameController.getBoard()).contains(bc.getP
- * ())) if (bc.hasEntity()) bc.setBackgroundTileColor(new
- * Image(Sprites.WALKPATH)); else bc.setBackgroundTileColor(new
- * Image(Sprites.WALKPATH), new Image(bc.getMyCell().getEntity().getSymbol()));
- * } this.isClicked = true; } else { for (BoardCell bc :
- * BoardPane.boardCellList) { if
- * (this.myCell.getEntity().moveList(GameController.getBoard()).contains(bc.getP
- * ())) if (bc.hasEntity()) bc.setBackgroundTileColor(new
- * Image(bc.getMyCell().getEntity().getSymbol())); else
- * bc.setBackgroundTileColor(); } this.isClicked = false; } }
- */
