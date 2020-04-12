@@ -127,6 +127,14 @@ public class BoardPane extends GridPane {
 				}
 			}
 		}
+		
+		if(GameController.isWin()) {
+			Alert alert = new Alert(AlertType.CONFIRMATION);
+			alert.setTitle("End Game");
+			alert.setHeaderText(null);
+			alert.setContentText(GameController.getTurn().toString() + " WIN!!!");
+			alert.showAndWait();
+		}
 		this.turnText.setText(GameController.getTurn().toString() + " TURN"); 
 	}
 
