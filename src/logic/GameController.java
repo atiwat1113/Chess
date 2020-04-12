@@ -13,7 +13,7 @@ public abstract class GameController {
 	protected static Side turn;
 	protected static Point size;
 
-	public static void IntializeMap(String[][] map) {
+	public static void InitializeMap(String[][] map) {
 		turn = Side.WHITE;
 		size = new Point(map.length,map[0].length);
 		board = new NormalBoard(map);
@@ -48,8 +48,8 @@ public abstract class GameController {
 		}
 	}
 
-	public static boolean move(Point p1, Point p2, ArrayList<Point> moveList) { // move from p1 to p2
-		return board.move(p1, p2, moveList);
+	public static boolean move(Point p1, Point p2) {// move from p1 to p2
+		return board.move(p1, p2, moveList(p1));
 	}
 
 	public static Board getBoard() {
