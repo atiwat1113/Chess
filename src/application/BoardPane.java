@@ -70,11 +70,12 @@ public class BoardPane extends GridPane {
 						addOnClickHandler(bc);
 					} catch (Exception e1) {
 						// TODO Auto-generated catch block
-						Alert alert = new Alert(AlertType.WARNING);
-						alert.setTitle("Warning");
-						alert.setHeaderText(null);
-						alert.setContentText(e1.getMessage());
-						alert.showAndWait();
+						System.out.println(e1.getMessage());
+//						Alert alert = new Alert(AlertType.WARNING);
+//						alert.setTitle("Warning");
+//						alert.setHeaderText(null);
+//						alert.setContentText(e1.getMessage());
+//						alert.showAndWait();
 					}
 				}
 			});

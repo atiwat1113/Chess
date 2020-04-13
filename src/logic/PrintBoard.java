@@ -21,7 +21,7 @@ public class PrintBoard {
 		Scanner kb = new Scanner(System.in);
 		String[][] normalBoard = {blackRow, blackPawn, blank, blank, blank, blank, whitePawn, whiteRow};
 		String[][] noPawnBoard = {blackRow, blank, blank, blank, blank, blank, blank, whiteRow};
-		GameController.IntializeMap(normalBoard);// ---------------------------------
+		GameController.InitializeMap(normalBoard);// ---------------------------------
 		print(GameController.getBoard());
 		while (true) {
 			System.out.print("" + GameController.getTurn() + " turn ");
@@ -56,7 +56,7 @@ public class PrintBoard {
 				continue;
 			}
 			Point moveTo = stringToPoint(walkTo);
-			if (!GameController.move(piece, moveTo,moveList)) {
+			if (!GameController.move(piece, moveTo)) {
 				System.out.println("Pick again!!");
 				continue;
 			}

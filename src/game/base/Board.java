@@ -88,6 +88,11 @@ public abstract class Board {
 		for (Point moveablePoint : moveList) {
 			if (moveablePoint.equals(newPoint)) {
 				if (moveEntity instanceof HaveCastling) ((HaveCastling) moveEntity).setNeverMove();
+				if (moveEntity instanceof King) {
+					if (((King) moveEntity).isCastlingPoint(this, newPoint)) {
+						((King) moveEntity).moveRook(this, newPoint);
+					}
+				}
 				remove(oldPoint);
 				moveEntity.setPoint(newPoint);
 				addEntity(moveEntity, newPoint);
@@ -97,11 +102,132 @@ public abstract class Board {
 		return false;
 	}
 	//complete moveList to display
-	protected abstract ArrayList<Point> removeCannotMovePoint(Point oldPoint, ArrayList<Point> movePoint);
 	public ArrayList<Point> moveList(Point point) {
 		Entity moveEntity = getEntity(point);
 		ArrayList<Point> movePoint = moveEntity.moveList(this);
 		return removeCannotMovePoint(point, movePoint);
+	}
+	//moveList
+		protected ArrayList<Point> removeCannotMovePoint(Point oldPoint, ArrayList<Point> movePoint){
+			Side side = getEntity(oldPoint).getSide();
+			if (getEntity(oldPoint) instanceof King) {
+				for(int i = movePoint.size()-1; i>=0; i--) {
+					if (checkCannotMovePoint(oldPoint,new Point(-1,-1),movePoint.get(i),side)) movePoint.remove(i);
+				}
+				for(Point p : ((King) getEntity(oldPoint)).castingPoint(this)) {
+					movePoint.add(p);
+				} //for castling
+			}else {
+				Point kingPoint = getKing(side).getPoint();
+				for(int i = movePoint.size()-1; i>=0; i--) {
+					if (checkCannotMovePoint(oldPoint,movePoint.get(i),kingPoint,side)) movePoint.remove(i);
+				}
+			}
+			return movePoint;
+		}
+	public boolean checkCannotMovePoint(Point oldPoint, Point newPoint, Point kingPoint, Side side) {
+		//System.out.println(print(oldPoint)+"->"+print(newPoint)+"K"+print(kingPoint));
+		Point[] rookVector = { new Point(1, 0), new Point(-1, 0), new Point(0, 1), new Point(0, -1) };
+		Point[] bishopVector = { new Point(1, 1), new Point(-1, 1), new Point(1, -1), new Point(-1, -1) };
+		for(Point point : knightWalk) {
+			Point checkPoint = addPoint(kingPoint, point);
+			if(!isInBoard(checkPoint)) continue;
+			Entity interestingEntity = getEntity(checkPoint);
+			if(interestingEntity==null) continue;
+			if(interestingEntity.getSide()==getAnotherSide(side)&&interestingEntity instanceof Knight)
+				return true;
+		}
+		for(Point point : KingWalk) {
+			Point checkPoint = addPoint(kingPoint, point);
+			if(!isInBoard(checkPoint)) continue;
+			Entity interestingEntity = getEntity(checkPoint);
+			if(interestingEntity==null) continue;
+			if(interestingEntity.getSide()==getAnotherSide(side)&&interestingEntity instanceof King)
+				return true;
+		}
+		for (Point vector : rookVector) {
+			if (checkRook(kingPoint, vector, oldPoint, newPoint, side))
+				return true;
+		}
+		for (Point vector : bishopVector) {// check bishop and queen
+			if (checkBishop(kingPoint, vector, oldPoint, newPoint, side))
+				return true;
+		}
+		return false;
+	}
+	public boolean checkRook(Point point, Point vector, Point oldPoint, Point newPoint, Side side) {
+		//System.out.print(print(oldPoint)+"->"+print(newPoint));
+		//System.out.print(print(newPoint));
+		//System.out.print(":"+print(point)+"R"+print(vector));
+		Point nextPoint = addPoint(point, vector);
+		//if (vector.equals(new Point(0, 0))) {
+		//	System.out.println("return wrong vecter");
+		//	return false;
+		//}
+		if (!isInBoard(nextPoint)) {
+		//	System.out.println("out of board");
+			return false;
+		}
+		if (nextPoint.equals(newPoint)) {
+		//	System.out.println("new point protect king");
+			return false;
+		}
+		if (nextPoint.equals(oldPoint) || getEntity(nextPoint) == null) {
+		//	System.out.println("go continue");
+			return checkRook(nextPoint, vector, oldPoint, newPoint, side);
+		}
+		if (getEntity(nextPoint).getSide() != side) {
+			if (getEntity(nextPoint) instanceof Rook || getEntity(nextPoint) instanceof Queen) {
+		//		System.out.println("can eat");
+				return true;
+			}
+		//	System.out.println(""+getEntity(nextPoint));
+		//	System.out.println("Opposite side");
+		//	return false;
+		}
+		//if (getEntity(nextPoint).getSide() == side) {
+		//	System.out.println("Same side");
+		//	return false;
+		//}
+		//System.out.println("Error checkRook");
+		return false;
+	}
+	public boolean checkBishop(Point point, Point vector, Point oldPoint, Point newPoint, Side side) {
+		//System.out.print(print(oldPoint)+"->"+print(newPoint));
+		//System.out.print(print(newPoint));
+		//System.out.print(":"+print(point)+"B"+print(vector));
+		Point nextPoint = addPoint(point, vector);
+		//if (vector.equals(new Point(0, 0))) {
+		//	System.out.println("return wrong vecter");
+		//	return false;
+		//}
+		if (!isInBoard(nextPoint)) {
+		//	System.out.println("out of board");
+			return false;
+		}
+		if (nextPoint.equals(newPoint)) {
+		//	System.out.println("new point protect king");
+			return false;
+		}
+		if (nextPoint.equals(oldPoint) || getEntity(nextPoint) == null) {
+		//	System.out.println("go continue");
+			return checkBishop(nextPoint, vector, oldPoint, newPoint, side);
+		}
+		if (getEntity(nextPoint).getSide() != side) {
+			if (getEntity(nextPoint) instanceof Bishop || getEntity(nextPoint) instanceof Queen) {
+		//		System.out.println("can eat");
+				return true;
+			}
+		//	System.out.println(""+getEntity(nextPoint));
+		//	System.out.println("Opposite side");
+		//	return false;
+		}
+		//if (getEntity(nextPoint).getSide() == side) {
+		//	System.out.println("Same side");
+		//	return false;
+		//}
+		//System.out.println("Error checkBishop");
+		return false;
 	}
 	
 	//other
