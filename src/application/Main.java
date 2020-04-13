@@ -1,5 +1,6 @@
 package application;
 
+import game.base.Games;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -16,7 +17,7 @@ public class Main extends Application{
 		root.setPadding(new Insets(10));
 		root.setSpacing(10);
 		root.setPrefHeight(400);
-		BoardPane boardPane = new BoardPane();
+		BoardPane boardPane = new BoardPane(Games.NORMAL);//------------------------
 		Text turn = boardPane.getTurnText();
 		root.getChildren().addAll(turn,boardPane);
 		root.setAlignment(Pos.CENTER);	

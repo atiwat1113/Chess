@@ -18,12 +18,11 @@ import logic.*;
 import java.awt.Point;
 import java.util.ArrayList;
 
+import game.base.Games;
+
 public class BoardPane extends GridPane {
 	private ObservableList<BoardCell> boardCellList = FXCollections.observableArrayList();
-	private static String[] w_p = { "blank", "W_King.png", "W_Queen.png", "W_Bishop.png", "W_Knight.png", "W_Rook.png",
-			"W_Pawn.png" };
-	private static String[] b_p = { "blank", "B_King.png", "B_Queen.png", "B_Bishop.png", "B_Knight.png", "B_Rook.png",
-			"B_Pawn.png" };
+	
 	private Cell[][] cellMap;
 	private static final int row = 8;
 	private static final int column = 8;
@@ -34,17 +33,9 @@ public class BoardPane extends GridPane {
 	//private ArrayList<Point> currentSelectedMoveList;
 	private Text turnText;
 
-	public BoardPane() {
+	public BoardPane(String gameType) {
 		super();
-		String[][] nb = { { b_p[5], b_p[4], b_p[3], b_p[2], b_p[1], b_p[3], b_p[4], b_p[5] },
-				{ b_p[6], b_p[6], b_p[6], b_p[6], b_p[6], b_p[6], b_p[6], b_p[6] },
-				{ b_p[0], b_p[0], b_p[0], b_p[0], b_p[0], b_p[0], b_p[0], b_p[0] },
-				{ b_p[0], b_p[0], b_p[0], b_p[0], b_p[0], b_p[0], b_p[0], b_p[0] },
-				{ w_p[0], w_p[0], w_p[0], w_p[0], w_p[0], w_p[0], w_p[0], w_p[0] },
-				{ w_p[0], w_p[0], w_p[0], w_p[0], w_p[0], w_p[0], w_p[0], w_p[0] },
-				{ w_p[6], w_p[6], w_p[6], w_p[6], w_p[6], w_p[6], w_p[6], w_p[6] },
-				{ w_p[5], w_p[4], w_p[3], w_p[2], w_p[1], w_p[3], w_p[4], w_p[5] } };
-		GameController.InitializeMap(nb);
+		GameController.InitializeMap(gameType);
 		this.turnText = new Text(GameController.getTurn().toString() + " TURN");
 		turnText.setFont(Font.font("Tahoma", FontWeight.NORMAL, 25));
 		this.cellMap = GameController.getBoard().getCellMap();

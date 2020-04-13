@@ -1,4 +1,4 @@
-package game.base;
+package game;
 
 import java.awt.Point;
 import java.util.ArrayList;
@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import entity.*;
 import entity.base.Entity;
 import logic.Side;
+import game.base.*;
 
 public class NormalBoard extends Board implements CheckMateAble{
 	

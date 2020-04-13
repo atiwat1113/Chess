@@ -1,7 +1,5 @@
 package logic;
 
-import java.awt.Point;
-
 public class Sprites {
 	public static final String BLANK = "blank";
 	public static final String WALKPATH = "redDot.png";

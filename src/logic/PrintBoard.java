@@ -2,6 +2,8 @@ package logic;
 
 import java.awt.*;
 import game.base.Board;
+import game.base.Games;
+
 import java.util.ArrayList;
 import java.util.Scanner;
 import logic.*;
@@ -9,19 +11,18 @@ import entity.base.Entity;
 import myException.*;
 
 public class PrintBoard {
-	private static String[] w_p = { "--", "WK", "WQ", "WB", "WN", "WR", "WP" };
-	private static String[] b_p = { "--", "BK", "BQ", "BB", "BN", "BR", "BP" };
-	private static String[] blackRow = {Sprites.B_ROOK,Sprites.B_KNIGHT,Sprites.B_BISHOP,Sprites.B_QUEEN,Sprites.B_KING,Sprites.B_BISHOP,Sprites.B_KNIGHT,Sprites.B_ROOK};
-	private static String[] blackPawn = {Sprites.B_PAWN,Sprites.B_PAWN,Sprites.B_PAWN,Sprites.B_PAWN,Sprites.B_PAWN,Sprites.B_PAWN,Sprites.B_PAWN,Sprites.B_PAWN};
-	private static String[] blank = {Sprites.BLANK,Sprites.BLANK,Sprites.BLANK,Sprites.BLANK,Sprites.BLANK,Sprites.BLANK,Sprites.BLANK,Sprites.BLANK};
-	private static String[] whitePawn = {Sprites.W_PAWN,Sprites.W_PAWN,Sprites.W_PAWN,Sprites.W_PAWN,Sprites.W_PAWN,Sprites.W_PAWN,Sprites.W_PAWN,Sprites.W_PAWN};
-	private static String[] whiteRow = {Sprites.W_ROOK,Sprites.W_KNIGHT,Sprites.W_BISHOP,Sprites.W_QUEEN,Sprites.W_KING,Sprites.W_BISHOP,Sprites.W_KNIGHT,Sprites.W_ROOK};
-
+	
+	private static final String[] blackRow = {Sprites.B_ROOK,Sprites.B_KNIGHT,Sprites.B_BISHOP,Sprites.B_QUEEN,Sprites.B_KING,Sprites.B_BISHOP,Sprites.B_KNIGHT,Sprites.B_ROOK};
+	private static final String[] blackPawn = {Sprites.B_PAWN,Sprites.B_PAWN,Sprites.B_PAWN,Sprites.B_PAWN,Sprites.B_PAWN,Sprites.B_PAWN,Sprites.B_PAWN,Sprites.B_PAWN};
+	private static final String[] blank = {Sprites.BLANK,Sprites.BLANK,Sprites.BLANK,Sprites.BLANK,Sprites.BLANK,Sprites.BLANK,Sprites.BLANK,Sprites.BLANK};
+	private static final String[] whitePawn = {Sprites.W_PAWN,Sprites.W_PAWN,Sprites.W_PAWN,Sprites.W_PAWN,Sprites.W_PAWN,Sprites.W_PAWN,Sprites.W_PAWN,Sprites.W_PAWN};
+	private static final String[] whiteRow = {Sprites.W_ROOK,Sprites.W_KNIGHT,Sprites.W_BISHOP,Sprites.W_QUEEN,Sprites.W_KING,Sprites.W_BISHOP,Sprites.W_KNIGHT,Sprites.W_ROOK};
+	private static final String[][] normalBoard = {blackRow, blackPawn, blank, blank, blank, blank, whitePawn, whiteRow};
+	private static final String[][] noPawnBoard = {blackRow, blank, blank, blank, blank, blank, blank, whiteRow};
+	
 	public static void main(String[] args) {
 		Scanner kb = new Scanner(System.in);
-		String[][] normalBoard = {blackRow, blackPawn, blank, blank, blank, blank, whitePawn, whiteRow};
-		String[][] noPawnBoard = {blackRow, blank, blank, blank, blank, blank, blank, whiteRow};
-		GameController.InitializeMap(normalBoard);// ---------------------------------
+		GameController.InitializeMap(normalBoard, Games.NORMAL);// ---------------------------------
 		print(GameController.getBoard());
 		while (true) {
 			System.out.print("" + GameController.getTurn() + " turn ");

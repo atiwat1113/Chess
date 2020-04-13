@@ -1,7 +1,9 @@
 package logic;
 
 import entity.base.Entity;
-import game.base.*;
+import game.*;
+import game.base.Board;
+import game.base.Games;
 import myException.NullEntityException;
 import myException.NullPointException;
 import myException.WrongPieceException;
@@ -12,11 +14,52 @@ public abstract class GameController {
 	protected static Board board;
 	protected static Side turn;
 	protected static Point size;
-
-	public static void InitializeMap(String[][] map) {
+	private static final String[] blackRow = {Sprites.B_ROOK,Sprites.B_KNIGHT,Sprites.B_BISHOP,Sprites.B_QUEEN,Sprites.B_KING,Sprites.B_BISHOP,Sprites.B_KNIGHT,Sprites.B_ROOK};
+	private static final String[] blackPawn = {Sprites.B_PAWN,Sprites.B_PAWN,Sprites.B_PAWN,Sprites.B_PAWN,Sprites.B_PAWN,Sprites.B_PAWN,Sprites.B_PAWN,Sprites.B_PAWN};
+	private static final String[] blank = {Sprites.BLANK,Sprites.BLANK,Sprites.BLANK,Sprites.BLANK,Sprites.BLANK,Sprites.BLANK,Sprites.BLANK,Sprites.BLANK};
+	private static final String[] fourWhitePawn = {Sprites.BLANK,Sprites.W_PAWN,Sprites.W_PAWN,Sprites.BLANK,Sprites.BLANK,Sprites.W_PAWN,Sprites.W_PAWN,Sprites.BLANK};
+	private static final String[] whitePawn = {Sprites.W_PAWN,Sprites.W_PAWN,Sprites.W_PAWN,Sprites.W_PAWN,Sprites.W_PAWN,Sprites.W_PAWN,Sprites.W_PAWN,Sprites.W_PAWN};
+	private static final String[] whiteRow = {Sprites.W_ROOK,Sprites.W_KNIGHT,Sprites.W_BISHOP,Sprites.W_QUEEN,Sprites.W_KING,Sprites.W_BISHOP,Sprites.W_KNIGHT,Sprites.W_ROOK};
+	private static final String[][] normalBoard = {blackRow, blackPawn, blank, blank, blank, blank, whitePawn, whiteRow};
+	private static final String[][] hordeBoard = {blackRow, blackPawn, blank, fourWhitePawn, whitePawn, whitePawn, whitePawn, whitePawn};
+	
+	//private static final String[][] noPawnBoard = {blackRow, blank, blank, blank, blank, blank, blank, whiteRow};
+	
+	public static void InitializeMap(String gameType) {
+		String[][] map = normalBoard;
+		switch (gameType) {
+		case Games.NORMAL:
+			board = new NormalBoard(map);
+			break;
+		case Games.ATOMIC:
+			board = new OtherBoard(map);
+			break;
+		case Games.KINGOFTHEHILL:
+			board = new OtherBoard(map);
+			break;
+		case Games.THREECHECK:
+			board = new OtherBoard(map);
+			break;
+		case Games.ANTICHESS:
+			board = new OtherBoard(map);
+			break;
+		case Games.CHESS960:
+			String[] randomBlack, randomWhite;
+			randomBlack = randomWhite = blank;
+			//------------------------------------------------------
+			String[][] randomBoard = {randomBlack, blackPawn, blank, blank, blank, blank, whitePawn, randomWhite};
+			map = randomBoard;
+			board = new OtherBoard(map);
+			break;
+		case Games.HORDE:
+			map = hordeBoard;
+			board = new OtherBoard(map);
+			break;
+		default:
+			System.out.println("wrong game type");
+		}
 		turn = Side.WHITE;
 		size = new Point(map.length,map[0].length);
-		board = new NormalBoard(map);
 	}
 
 	public static boolean isWin() {
