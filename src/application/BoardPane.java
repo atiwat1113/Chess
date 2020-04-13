@@ -32,9 +32,12 @@ public class BoardPane extends GridPane {
 	private Point currentSelectedPoint;
 	private ArrayList<Point> currentSelectedMoveList;
 	private Text turnText;
+	private boolean rotate;
+	private boolean moved;
 
 	public BoardPane(String gameType) {
 		super();
+		this.rotate = false;
 		GameController.InitializeMap(gameType);
 		this.turnText = new Text(GameController.getTurn().toString() + " TURN");
 		turnText.setFont(Font.font("Tahoma", FontWeight.NORMAL, 25));
@@ -76,18 +79,19 @@ public class BoardPane extends GridPane {
 	private void addOnClickHandler(BoardCell myBoardCell) throws Exception {
 		// TODO Auto-generated method stub
 		// System.out.println("clicked");
-		updateBoard(myBoardCell);
 		if (myBoardCell.isMoveable()) {
 			// currentSelectedPoint = new Point(myBoardCell.getP().y,myBoardCell.getP().x);
 			// System.out.println(currentSelectedPoint.toString());
 			// System.out.println(currentSelectedMoveList.toString());
 			GameController.move(currentSelectedPoint, myBoardCell.getP());//, currentSelectedMoveList);
-			updateBoard(myBoardCell);
-			myBoardCell.update();
+			moved = true;
 			currentSelectedPoint = null;
 			//currentSelectedMoveList = null;
 			GameController.nextTurn();
+			updateBoard(myBoardCell);
+			myBoardCell.update();
 		} else {
+			updateBoard(myBoardCell);
 			currentSelectedMoveList = GameController.moveList(myBoardCell.getP(),false);//setting rotate-----
 			//GameController.printPointList(currentSelectedMoveList);
 			if (myBoardCell.hasEntity() && GameController.isTurn(myBoardCell.getP(), GameController.getTurn())) {
@@ -124,30 +128,34 @@ public class BoardPane extends GridPane {
 			}
 		}
 
-		if (GameController.isWin()) {
-			Alert alert = new Alert(AlertType.CONFIRMATION);
-			alert.setTitle("End Game");
-			alert.setHeaderText(null);
-			alert.setContentText(GameController.getTurn().toString() + " WIN!!!\nDo you want to exit?");
-			alert.showAndWait().ifPresent(response -> {
-				if (response == ButtonType.OK) {
-					System.exit(0);
-				}
-			});
-		}
+//		if (GameController.isWin()) {
+//			Alert alert = new Alert(AlertType.CONFIRMATION);
+//			alert.setTitle("End Game");
+//			alert.setHeaderText(null);
+//			alert.setContentText(GameController.getTurn().toString() + " WIN!!!\nDo you want to exit?");
+//			alert.showAndWait().ifPresent(response -> {
+//				if (response == ButtonType.OK) {
+//					System.exit(0);
+//				}
+//			});
+//		}
 		this.turnText.setText(GameController.getTurn().toString() + " TURN");
 	}
 
 	private void updateBoard(BoardCell myBoardCell) {
 		// TODO Auto-generated method stub
-		this.cellMap = GameController.getDisplayCellMap(false);//setting rotate-----------
+		if (moved) {
+			this.cellMap = GameController.getDisplayCellMap(false);//setting rotate-----------
+			for (BoardCell bc : this.getBoardCellList()) {
+				if (rotate) bc.setP(new Point(7-bc.getP().x,7-bc.getP().y));
+				bc.setMyCell(cellMap[bc.getP().x][bc.getP().y]);	
+				moved = false;
+			}
+		}
 		for (BoardCell bc : this.getBoardCellList()) {
-			if (bc.isClicked() || bc.isMoveable())
-				bc.setMyCell(cellMap[bc.getP().x][bc.getP().y]);
 			if (!bc.equals(myBoardCell))
 				bc.update();
 		}
-
 	}
 
 	public ObservableList<BoardCell> getBoardCellList() {

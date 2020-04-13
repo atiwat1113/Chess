@@ -84,6 +84,10 @@ public class BoardCell extends Pane {
 	public Cell getMyCell() {
 		return myCell;
 	}
+	
+	public void setP(Point p) {
+		this.p = p;
+	}
 
 	public Point getP() {
 		return p;
