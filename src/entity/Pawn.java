@@ -7,12 +7,10 @@ import entity.base.Updatable;
 import logic.*;
 import game.base.Board;
 
-public class Pawn extends Entity implements Updatable{
-	private boolean twoMove;
+public class Pawn extends Entity {
 
 	public Pawn(Point p, Side side) {
 		super(p, side);
-		twoMove = false;
 	}
 
 	@Override
@@ -22,14 +20,6 @@ public class Pawn extends Entity implements Updatable{
 			return Sprites.B_PAWN;
 		}
 		return Sprites.W_PAWN;
-	}
-	
-	@Override
-	public void update(Side side) {
-		// TODO Auto-generated method stub
-		if(side == this.side) {
-			twoMove=false;
-		}
 	}
 
 	@Override
@@ -62,10 +52,10 @@ public class Pawn extends Entity implements Updatable{
 		}
 		for (Point p : eatList(board)) {
 			returnPoint.add(p);
+			//System.out.println(p);
 		}
 		return returnPoint;
 	}
-
 	
 	public ArrayList<Point> eatList(Board board) {
 		ArrayList<Point> returnPoint = new ArrayList<Point>();
@@ -101,4 +91,5 @@ public class Pawn extends Entity implements Updatable{
 		}
 		return Sprites.HIGHLIGHT_W_PAWN;
 	}
+	
 }

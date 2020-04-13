@@ -10,6 +10,7 @@ import java.util.ArrayList;
 //import java.lang.Math;
 //remain: Promotion, draw, en passant
 public abstract class Board {
+	private Point twoWalkPawn;
 	private Cell[][] cellMap;
 	private Entity whiteKing, blackKing;
 	protected static final Point[] knightWalk = { new Point(1, 2), new Point(2, 1), new Point(2, -1), new Point(1, -2),
@@ -20,6 +21,7 @@ public abstract class Board {
 
 	// private Game game;//enum game
 	public Board(String[][] map) {
+		twoWalkPawn = null;
 		int column = map[0].length;
 		int row = map.length;
 		whiteKing = null;
@@ -78,6 +80,16 @@ public abstract class Board {
 			}
 		}
 	}
+	public void update(Side turn) {
+		for (int i = 0; i < 8; i++) {
+			for (int j = 0; j < 8; j++) {
+				Entity e = getEntity(new Point(i, j));
+				if (e instanceof Updatable) {
+					((Updatable) e).update(turn);
+				}
+			}
+		}
+	}
 	
 	//iswin
 	public abstract boolean isWin(Side side);
@@ -88,6 +100,15 @@ public abstract class Board {
 		for (Point moveablePoint : moveList) {
 			if (moveablePoint.equals(newPoint)) {
 				if (moveEntity instanceof HaveCastling) ((HaveCastling) moveEntity).setNeverMove();
+				if (moveEntity instanceof Pawn) {
+					if (twoWalkPawn != null && twoWalkPawn.equals(new Point(oldPoint.x,newPoint.y))){
+						remove(twoWalkPawn);
+					} else if (Math.abs(oldPoint.x-newPoint.x)==2) {
+						twoWalkPawn=newPoint;
+					}
+					else twoWalkPawn=null;
+				}
+				else twoWalkPawn=null;
 				if (moveEntity instanceof King) {
 					if (((King) moveEntity).isCastlingPoint(this, newPoint)) {
 						((King) moveEntity).moveRook(this, newPoint);
@@ -96,7 +117,6 @@ public abstract class Board {
 				remove(oldPoint);
 				moveEntity.setPoint(newPoint);
 				addEntity(moveEntity, newPoint);
-				return true;
 			}
 		}
 		return false;
@@ -105,27 +125,46 @@ public abstract class Board {
 	public ArrayList<Point> moveList(Point point) {
 		Entity moveEntity = getEntity(point);
 		ArrayList<Point> movePoint = moveEntity.moveList(this);
+		//GameController.printPointList(movePoint);
 		return removeCannotMovePoint(point, movePoint);
 	}
 	//moveList
 		protected ArrayList<Point> removeCannotMovePoint(Point oldPoint, ArrayList<Point> movePoint){
-			Side side = getEntity(oldPoint).getSide();
-			if (getEntity(oldPoint) instanceof King) {
+			Entity moveEntity = this.getEntity(oldPoint);
+			Side side = moveEntity.getSide();
+			ArrayList<Point> op = new ArrayList<Point>();
+			op.add(oldPoint);
+			if (moveEntity instanceof King) {
 				for(int i = movePoint.size()-1; i>=0; i--) {
-					if (checkCannotMovePoint(oldPoint,new Point(-1,-1),movePoint.get(i),side)) movePoint.remove(i);
+					if (checkCannotMovePoint(op,new Point(-1,-1),movePoint.get(i),side)) movePoint.remove(i);
 				}
-				for(Point p : ((King) getEntity(oldPoint)).castingPoint(this)) {
+				for(Point p : ((King) moveEntity).castingPoint(this)) {//for castling
 					movePoint.add(p);
-				} //for castling
+				} 
 			}else {
 				Point kingPoint = getKing(side).getPoint();
 				for(int i = movePoint.size()-1; i>=0; i--) {
-					if (checkCannotMovePoint(oldPoint,movePoint.get(i),kingPoint,side)) movePoint.remove(i);
+					if (checkCannotMovePoint(op,movePoint.get(i),kingPoint,side))  {
+						movePoint.remove(i);
+					}
+				}
+				if (moveEntity instanceof Pawn) {
+					if (twoWalkPawn!=null) {
+						if (oldPoint.x==twoWalkPawn.x && Math.abs(oldPoint.y-twoWalkPawn.y)==1) {
+							Point newPoint;
+							op.add(twoWalkPawn);
+							if (side == Side.BLACK) newPoint = new Point(twoWalkPawn.x+1,twoWalkPawn.y);
+							else newPoint = new Point(twoWalkPawn.x-1,twoWalkPawn.y);
+							if (!checkCannotMovePoint(op,newPoint,kingPoint,side)) {
+								movePoint.add(newPoint);
+							}
+						}
+					}
 				}
 			}
 			return movePoint;
 		}
-	public boolean checkCannotMovePoint(Point oldPoint, Point newPoint, Point kingPoint, Side side) {
+	public boolean checkCannotMovePoint(ArrayList<Point> oldPoint, Point newPoint, Point kingPoint, Side side) {
 		//System.out.println(print(oldPoint)+"->"+print(newPoint)+"K"+print(kingPoint));
 		Point[] rookVector = { new Point(1, 0), new Point(-1, 0), new Point(0, 1), new Point(0, -1) };
 		Point[] bishopVector = { new Point(1, 1), new Point(-1, 1), new Point(1, -1), new Point(-1, -1) };
@@ -155,7 +194,7 @@ public abstract class Board {
 		}
 		return false;
 	}
-	public boolean checkRook(Point point, Point vector, Point oldPoint, Point newPoint, Side side) {
+	public boolean checkRook(Point point, Point vector, ArrayList<Point> oldPoint, Point newPoint, Side side) {
 		//System.out.print(print(oldPoint)+"->"+print(newPoint));
 		//System.out.print(print(newPoint));
 		//System.out.print(":"+print(point)+"R"+print(vector));
@@ -172,7 +211,7 @@ public abstract class Board {
 		//	System.out.println("new point protect king");
 			return false;
 		}
-		if (nextPoint.equals(oldPoint) || getEntity(nextPoint) == null) {
+		if (oldPoint.contains(nextPoint) || getEntity(nextPoint) == null) {
 		//	System.out.println("go continue");
 			return checkRook(nextPoint, vector, oldPoint, newPoint, side);
 		}
@@ -192,7 +231,7 @@ public abstract class Board {
 		//System.out.println("Error checkRook");
 		return false;
 	}
-	public boolean checkBishop(Point point, Point vector, Point oldPoint, Point newPoint, Side side) {
+	public boolean checkBishop(Point point, Point vector, ArrayList<Point> oldPoint, Point newPoint, Side side) {
 		//System.out.print(print(oldPoint)+"->"+print(newPoint));
 		//System.out.print(print(newPoint));
 		//System.out.print(":"+print(point)+"B"+print(vector));
@@ -209,7 +248,7 @@ public abstract class Board {
 		//	System.out.println("new point protect king");
 			return false;
 		}
-		if (nextPoint.equals(oldPoint) || getEntity(nextPoint) == null) {
+		if (oldPoint.contains(nextPoint) || getEntity(nextPoint) == null) {
 		//	System.out.println("go continue");
 			return checkBishop(nextPoint, vector, oldPoint, newPoint, side);
 		}

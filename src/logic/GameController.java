@@ -79,6 +79,7 @@ public abstract class GameController {
 	}
 
 	public static ArrayList<Point> moveList(Point p, boolean isRotate) {
+		//GameController.printPointList(board.moveList(p));
 		if (turn == Side.WHITE || !isRotate) {
 			return board.moveList(p);
 		}
@@ -126,5 +127,21 @@ public abstract class GameController {
 		if (side == Side.WHITE)
 			return Side.BLACK;
 		return Side.WHITE;
+	}
+	public static void printPointList(ArrayList<Point> pointList) {
+		for (Point point : pointList) {
+			System.out.print(print(point));
+		}
+		System.out.println();
+	}
+	public static String print(Point p) {//for debug
+		String pp=""+p;
+		if (pp == "null") return pp;
+		int s1,s2,s3,s4;
+		s1=17;
+		s2=pp.indexOf(",",s1);
+		s3=s2+3;
+		s4=pp.indexOf("]",s3);
+		return "("+pp.substring(s1,s2)+","+pp.substring(s3,s4)+")";
 	}
 }
