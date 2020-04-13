@@ -41,7 +41,7 @@ public class BoardPane extends GridPane {
 		GameController.InitializeMap(gameType);
 		this.turnText = new Text(GameController.getTurn().toString() + " TURN");
 		turnText.setFont(Font.font("Tahoma", FontWeight.NORMAL, 25));
-		this.cellMap = GameController.getDisplayCellMap(false);//setting rotate-----
+		this.cellMap = GameController.getDisplayCellMap();//setting rotate-----
 		for (int i = 0; i < row; i++) {// Point (y,x) => (i,j)
 			for (int j = 0; j < column; j++) {
 				if ((i + j) % 2 == 0) {
@@ -92,7 +92,7 @@ public class BoardPane extends GridPane {
 			myBoardCell.update();
 		} else {
 			updateBoard(myBoardCell);
-			currentSelectedMoveList = GameController.moveList(myBoardCell.getP(),false);//setting rotate-----
+			currentSelectedMoveList = GameController.moveList(myBoardCell.getP());//setting rotate-----
 			//GameController.printPointList(currentSelectedMoveList);
 			if (myBoardCell.hasEntity() && GameController.isTurn(myBoardCell.getP(), GameController.getTurn())) {
 				if (!myBoardCell.isClicked()) {
@@ -145,7 +145,7 @@ public class BoardPane extends GridPane {
 	private void updateBoard(BoardCell myBoardCell) {
 		// TODO Auto-generated method stub
 		if (moved) {
-			this.cellMap = GameController.getDisplayCellMap(false);//setting rotate-----------
+			this.cellMap = GameController.getDisplayCellMap();//setting rotate-----------
 			for (BoardCell bc : this.getBoardCellList()) {
 				if (rotate) bc.setP(new Point(7-bc.getP().x,7-bc.getP().y));
 				bc.setMyCell(cellMap[bc.getP().x][bc.getP().y]);	

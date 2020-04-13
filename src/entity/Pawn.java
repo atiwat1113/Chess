@@ -27,32 +27,23 @@ public class Pawn extends Entity {
 		ArrayList<Point> returnPoint = new ArrayList<Point>();
 		if (side == Side.WHITE) {
 			Point nextPoint = new Point(point.x - 1, point.y);
-			if (point.x == 0) {
-				System.out.println("Error Pawn");
-				return returnPoint;
-			} else if (board.getEntity(nextPoint) != null) {
-				return returnPoint;
+			Point extraPoint = new Point(4, point.y);
+			if (board.getEntity(extraPoint) == null && point.x == 6) {
+				returnPoint.add(extraPoint);
 			}
-			if (point.x == 6) {
-				returnPoint.add(new Point(4, point.y));
-			}
-			returnPoint.add(nextPoint);
+			if (board.getEntity(nextPoint) == null)
+				returnPoint.add(nextPoint);
 		} else {
 			Point nextPoint = new Point(point.x + 1, point.y);
-			if (point.x == 7) {
-				System.out.println("Error Pawn");
-				return returnPoint;
-			} else if (board.getEntity(nextPoint) != null) {
-				return returnPoint;
+			Point extraPoint = new Point(3, point.y);
+			if (board.getEntity(extraPoint) == null && point.x == 1) {
+				returnPoint.add(extraPoint);
 			}
-			if (point.x == 1) {
-				returnPoint.add(new Point(3, point.y));
-			}
-			returnPoint.add(nextPoint);
+			if (board.getEntity(nextPoint) == null)
+				returnPoint.add(nextPoint);
 		}
 		for (Point p : eatList(board)) {
 			returnPoint.add(p);
-			//System.out.println(p);
 		}
 		return returnPoint;
 	}

@@ -61,33 +61,15 @@ public abstract class GameController {
 		turn = Side.WHITE;
 		size = new Point(map.length,map[0].length);
 	}
-	public static Cell[][] getDisplayCellMap(boolean isRotate){
-		if (turn == Side.WHITE || !isRotate) {
-			return board.getCellMap();
-		}
-		Cell[][] returnCellMap = new Cell[size.x][size.y];
-		Cell[][] normalCellMap = board.getCellMap();
-		for (int i = 0; i<size.x; i++) {
-			for(int j = 0;j<size.y; j++) {
-				returnCellMap[i][j] = normalCellMap[7-i][7-j];
-			}
-		}
-		return returnCellMap;
+	public static Cell[][] getDisplayCellMap(){
+		return board.getCellMap();
 	}
 	public static boolean isWin() {
 		return board.isWin(turn);
 	}
 
-	public static ArrayList<Point> moveList(Point p, boolean isRotate) {
-		//GameController.printPointList(board.moveList(p));
-		if (turn == Side.WHITE || !isRotate) {
-			return board.moveList(p);
-		}
-		ArrayList<Point> returnCellMap = new ArrayList<Point>();
-		for (Point point : board.moveList(p)) {
-			returnCellMap.add(new Point(7-point.x,7-point.y));
-		}
-		return returnCellMap;
+	public static ArrayList<Point> moveList(Point p) {
+		return board.moveList(p);
 	}
 
 	public static boolean isTurn(Point p, Side turn) throws Exception {
@@ -112,7 +94,7 @@ public abstract class GameController {
 	}
 
 	public static boolean move(Point p1, Point p2) {// move from p1 to p2
-		return board.move(p1, p2, moveList(p1,false));
+		return board.move(p1, p2, moveList(p1));
 	}
 
 	public static Board getBoard() {
