@@ -8,7 +8,7 @@ import entity.*;
 import java.awt.*;
 import java.util.ArrayList;
 //import java.lang.Math;
-
+//remain: Promotion, draw, en passant
 public abstract class Board {
 	private Cell[][] cellMap;
 	private Entity whiteKing, blackKing;

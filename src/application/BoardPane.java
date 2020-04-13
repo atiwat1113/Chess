@@ -30,7 +30,7 @@ public class BoardPane extends GridPane {
 	private static final Color blackTile = new Color((double) 89 / 255, (double) 89 / 255, (double) 89 / 255, 1);
 	private BoardCell bc;
 	private Point currentSelectedPoint;
-	//private ArrayList<Point> currentSelectedMoveList;
+	private ArrayList<Point> currentSelectedMoveList;
 	private Text turnText;
 
 	public BoardPane(String gameType) {
@@ -38,7 +38,7 @@ public class BoardPane extends GridPane {
 		GameController.InitializeMap(gameType);
 		this.turnText = new Text(GameController.getTurn().toString() + " TURN");
 		turnText.setFont(Font.font("Tahoma", FontWeight.NORMAL, 25));
-		this.cellMap = GameController.getBoard().getCellMap();
+		this.cellMap = GameController.getDisplayCellMap(false);//setting rotate-----
 		for (int i = 0; i < row; i++) {// Point (y,x) => (i,j)
 			for (int j = 0; j < column; j++) {
 				if ((i + j) % 2 == 0) {
@@ -88,10 +88,11 @@ public class BoardPane extends GridPane {
 			//currentSelectedMoveList = null;
 			GameController.nextTurn();
 		} else {
+			currentSelectedMoveList = GameController.moveList(myBoardCell.getP(),false);//setting rotate-----
 			if (myBoardCell.hasEntity() && GameController.isTurn(myBoardCell.getP(), GameController.getTurn())) {
 				if (!myBoardCell.isClicked()) {
 					for (BoardCell bc : this.getBoardCellList()) {
-						if (GameController.moveList(myBoardCell.getP()).contains(bc.getP())) {
+						if (currentSelectedMoveList.contains(bc.getP())) {
 							if (bc.hasEntity())
 								bc.setBackgroundTileColor(new Image(Sprites.WALKPATH),
 										new Image(bc.getMyCell().getEntity().getSymbol()));
@@ -138,7 +139,7 @@ public class BoardPane extends GridPane {
 
 	private void updateBoard(BoardCell myBoardCell) {
 		// TODO Auto-generated method stub
-		this.cellMap = GameController.getBoard().getCellMap();
+		this.cellMap = GameController.getDisplayCellMap(false);//setting rotate-----------
 		for (BoardCell bc : this.getBoardCellList()) {
 			if (bc.isClicked() || bc.isMoveable())
 				bc.setMyCell(cellMap[bc.getP().x][bc.getP().y]);

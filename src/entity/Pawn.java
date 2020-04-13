@@ -3,14 +3,16 @@ package entity;
 import java.awt.Point;
 import java.util.ArrayList;
 import entity.base.Entity;
+import entity.base.Updatable;
 import logic.*;
 import game.base.Board;
 
-public class Pawn extends Entity {
+public class Pawn extends Entity implements Updatable{
 	private boolean twoMove;
 
 	public Pawn(Point p, Side side) {
 		super(p, side);
+		twoMove = false;
 	}
 
 	@Override
@@ -20,6 +22,14 @@ public class Pawn extends Entity {
 			return Sprites.B_PAWN;
 		}
 		return Sprites.W_PAWN;
+	}
+	
+	@Override
+	public void update(Side side) {
+		// TODO Auto-generated method stub
+		if(side == this.side) {
+			twoMove=false;
+		}
 	}
 
 	@Override

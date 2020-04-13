@@ -7,7 +7,7 @@ public class Games {
 	public static final String CHESS960 = "Chess960";
 	public static final String THREECHECK = "ThreeCheck";
 	public static final String ANTICHESS = "Antichess";
-	public static final String HORDE = "Horde";//panw vs normal
+	public static final String HORDE = "Horde";//pawn vs normal
 	//public static final String CRAZYHOUSE = "Crazyhouse";//can place eaten piece to board
 	//public static final String RACINGKINGS = "RacingKings";
 }

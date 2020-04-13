@@ -22,7 +22,7 @@ public class PrintBoard {
 	
 	public static void main(String[] args) {
 		Scanner kb = new Scanner(System.in);
-		GameController.InitializeMap(normalBoard, Games.NORMAL);// ---------------------------------
+		GameController.InitializeMap(Games.NORMAL);// ---------------------------------
 		print(GameController.getBoard());
 		while (true) {
 			System.out.print("" + GameController.getTurn() + " turn ");
