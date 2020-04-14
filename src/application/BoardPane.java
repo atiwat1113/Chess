@@ -112,33 +112,25 @@ public class BoardPane extends GridPane {
 					myBoardCell.setClicked(true);
 				} else {
 					for (BoardCell bc : this.boardCellList) {
-						if (myBoardCell.getMyCell().getEntity().moveList(GameController.getBoard()).contains(bc.getP())) {
-							if (bc.hasEntity())
-								bc.setBackgroundTileColor(new Image(bc.getMyCell().getEntity().getSymbol()));
-							else
-								bc.setBackgroundTileColor();
-							bc.setMoveable(false);
-						}
+						bc.update();
 					}
 					currentSelectedPoint = null;
-					myBoardCell.setBackgroundTileColor(new Image(myBoardCell.getMyCell().getEntity().getSymbol()));
 					//currentSelectedMoveList = null;
-					myBoardCell.setClicked(false);
 				}
 			}
 		}
 
-//		if (GameController.isWin()) {
-//			Alert alert = new Alert(AlertType.CONFIRMATION);
-//			alert.setTitle("End Game");
-//			alert.setHeaderText(null);
-//			alert.setContentText(GameController.getTurn().toString() + " WIN!!!\nDo you want to exit?");
-//			alert.showAndWait().ifPresent(response -> {
-//				if (response == ButtonType.OK) {
-//					System.exit(0);
-//				}
-//			});
-//		}
+		if (GameController.isWin()) {
+			Alert alert = new Alert(AlertType.CONFIRMATION);
+			alert.setTitle("End Game");
+			alert.setHeaderText(null);
+			alert.setContentText(GameController.getTurn().toString() + " WIN!!!\nDo you want to exit?");
+			alert.showAndWait().ifPresent(response -> {
+				if (response == ButtonType.OK) {
+					System.exit(0);
+				}
+			});
+		}
 		this.turnText.setText(GameController.getTurn().toString() + " TURN");
 	}
 
