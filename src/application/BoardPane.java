@@ -43,6 +43,7 @@ public class BoardPane extends GridPane {
 		super();
 		this.rotate = false;
 		this.isPromoted = false;
+		
 		GameController.InitializeMap(gameType);
 		this.turnText = new Text(GameController.getTurn().toString() + " TURN");
 		turnText.setFont(Font.font("Tahoma", FontWeight.NORMAL, 25));
@@ -96,10 +97,15 @@ public class BoardPane extends GridPane {
 			moved = true;
 			currentSelectedPoint = null;
 			//currentSelectedMoveList = null;
-			if(!isPromoted) GameController.nextTurn();
-			updateBoard(myBoardCell);
-			myBoardCell.update();
-		} else {
+			if(!isPromoted) {
+				GameController.nextTurn();
+				updateBoard(myBoardCell);
+				myBoardCell.update();
+			}
+		} 
+		
+		
+		else {
 			updateBoard(myBoardCell);
 			currentSelectedMoveList = GameController.moveList(myBoardCell.getP());//setting rotate-----
 			//GameController.printPointList(currentSelectedMoveList);

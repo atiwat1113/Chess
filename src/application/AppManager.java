@@ -23,9 +23,7 @@ public class AppManager {
 	public static void setPromotionListener(String text) {
 		boardPane.setPromotionPiece(text);
 		GameController.promotion(boardPane.getPromotionPiece());
-		boardPane.setMoved(true);
 		boardPane.setPromoted(false);
-		boardPane.setCurrentSelectedPoint(null);
 		GameController.nextTurn();
 		boardPane.updateBoard(boardPane.getCurrenntSelectedBoardCell());
 		boardPane.getCurrenntSelectedBoardCell().update();
