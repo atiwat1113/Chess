@@ -1,5 +1,9 @@
 package logic;
 
+import entity.Bishop;
+import entity.Knight;
+import entity.Queen;
+import entity.Rook;
 import entity.base.Entity;
 import game.*;
 import game.base.Board;
@@ -14,6 +18,8 @@ public abstract class GameController {
 	protected static Board board;
 	protected static Side turn;
 	protected static Point size;
+	protected static Point promotionPoint;
+	protected static Side promotionSide;
 	private static final String[] blackRow = {Sprites.B_ROOK,Sprites.B_KNIGHT,Sprites.B_BISHOP,Sprites.B_QUEEN,Sprites.B_KING,Sprites.B_BISHOP,Sprites.B_KNIGHT,Sprites.B_ROOK};
 	private static final String[] blackPawn = {Sprites.B_PAWN,Sprites.B_PAWN,Sprites.B_PAWN,Sprites.B_PAWN,Sprites.B_PAWN,Sprites.B_PAWN,Sprites.B_PAWN,Sprites.B_PAWN};
 	private static final String[] blank = {Sprites.BLANK,Sprites.BLANK,Sprites.BLANK,Sprites.BLANK,Sprites.BLANK,Sprites.BLANK,Sprites.BLANK,Sprites.BLANK};
@@ -26,6 +32,7 @@ public abstract class GameController {
 	//private static final String[][] noPawnBoard = {blackRow, blank, blank, blank, blank, blank, blank, whiteRow};
 	
 	public static void InitializeMap(String gameType) {
+		promotionPoint = null;
 		String[][] map = normalBoard;
 		switch (gameType) {
 		case Games.NORMAL:
@@ -71,7 +78,20 @@ public abstract class GameController {
 	public static ArrayList<Point> moveList(Point p) {
 		return board.moveList(p);
 	}
-
+	
+	public static void setPromotion(Point point, Side side) {
+		promotionPoint=point;
+		promotionSide=side;
+	}
+	
+	public static boolean isPromotion() {
+		return !(promotionPoint==null);
+	}
+	
+	public static void promotion(String piece){
+		board.promotion(promotionPoint, promotionSide, piece);
+	}
+	
 	public static boolean isTurn(Point p, Side turn) throws Exception {
 		if (p == null) {
 			throw new NullPointException("Don't have this point.");

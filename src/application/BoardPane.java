@@ -14,7 +14,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import logic.*;
-
+import java.util.Scanner;
 import java.awt.Point;
 import java.util.ArrayList;
 
@@ -84,6 +84,7 @@ public class BoardPane extends GridPane {
 			// System.out.println(currentSelectedPoint.toString());
 			// System.out.println(currentSelectedMoveList.toString());
 			GameController.move(currentSelectedPoint, myBoardCell.getP());//, currentSelectedMoveList);
+			checkPromotion();
 			moved = true;
 			currentSelectedPoint = null;
 			//currentSelectedMoveList = null;
@@ -149,7 +150,15 @@ public class BoardPane extends GridPane {
 				bc.update();
 		}
 	}
-
+	
+	public void checkPromotion() {
+		if (GameController.isPromotion()){
+			String piece = "q";// q r b n
+			//----------------------------------------------------------
+			GameController.promotion(piece);
+		}
+	}
+	
 	public ObservableList<BoardCell> getBoardCellList() {
 		return boardCellList;
 	}
