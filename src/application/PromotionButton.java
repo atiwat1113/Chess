@@ -12,21 +12,17 @@ public class PromotionButton extends Button {
 	public PromotionButton(String text) {
 		super(text);
 		this.text = text;
+		this.setListener();
 	}
 	
-	public void setListener(BoardPane boardPane) {
+	public void setListener() {
 		this.setOnMouseClicked(new EventHandler<MouseEvent>() {
 
 			@Override
 			public void handle(MouseEvent arg0) {
 				// TODO Auto-generated method stub
-				boardPane.setPromotionPiece(text);
 				AppManager.hidePromotion();
-				GameController.promotion(boardPane.getPromotionPiece());
-				boardPane.setMoved(true);
-				boardPane.setCurrentSelectedPoint(null);
-				boardPane.updateBoard(boardPane.getCurrenntSelectedBoardCell());
-				boardPane.getCurrenntSelectedBoardCell().update();
+				AppManager.setPromotionListener(text);
 			}
 		});
 	}

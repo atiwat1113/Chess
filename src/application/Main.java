@@ -30,7 +30,9 @@ public class Main extends Application{
 		root.setAlignment(Pos.CENTER);	
 		
 		AppManager.setPromotionPane(promotionPane);
+		AppManager.setBoardPane(boardPane);
 		AppManager.hidePromotion();
+		
 	
 		Scene scene = new Scene(root);
 		

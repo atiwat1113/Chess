@@ -37,10 +37,12 @@ public class BoardPane extends GridPane {
 	private boolean rotate;
 	private boolean moved;
 	private String promotionPiece;
+	private boolean isPromoted;
 
 	public BoardPane(String gameType) {
 		super();
 		this.rotate = false;
+		this.isPromoted = false;
 		GameController.InitializeMap(gameType);
 		this.turnText = new Text(GameController.getTurn().toString() + " TURN");
 		turnText.setFont(Font.font("Tahoma", FontWeight.NORMAL, 25));
@@ -94,7 +96,7 @@ public class BoardPane extends GridPane {
 			moved = true;
 			currentSelectedPoint = null;
 			//currentSelectedMoveList = null;
-			GameController.nextTurn();
+			if(!isPromoted) GameController.nextTurn();
 			updateBoard(myBoardCell);
 			myBoardCell.update();
 		} else {
@@ -169,12 +171,17 @@ public class BoardPane extends GridPane {
 	
 	public void checkPromotion() {
 		if (GameController.isPromotion()){
+			setPromoted(true);
 			//String piece = "Queen";// q r b n
 			//----------------------------------------------------------
 			AppManager.showPromotion();
 		}
 	}
 	
+	public void setPromoted(boolean isPromoted) {
+		this.isPromoted = isPromoted;
+	}
+
 	public BoardCell getCurrenntSelectedBoardCell() {
 		return currenntSelectedBoardCell;
 	}

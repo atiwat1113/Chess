@@ -23,10 +23,6 @@ public class PromotionPane extends StackPane{
 		PromotionButton bishop = new PromotionButton("Bishop");
 		PromotionButton knight = new PromotionButton("Knight");
 		
-		queen.setListener(boardPane);
-		rook.setListener(boardPane);
-		bishop.setListener(boardPane);
-		knight.setListener(boardPane);
 		
 		selection.getChildren().addAll(label,queen,rook,bishop,knight);
 		
