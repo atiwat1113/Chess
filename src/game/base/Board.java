@@ -92,7 +92,7 @@ public abstract class Board {
 	
 	//iswin
 	public abstract boolean isWin(Side side);
-	
+	public abstract boolean isDraw(Side side);
 	//move
 	public boolean move(Point oldPoint, Point newPoint, ArrayList<Point> moveList) {
 		Entity moveEntity = this.getEntity(oldPoint);

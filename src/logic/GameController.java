@@ -1,10 +1,5 @@
 package logic;
 
-import entity.Bishop;
-import entity.Knight;
-import entity.Queen;
-import entity.Rook;
-import entity.base.Entity;
 import game.*;
 import game.base.Board;
 import game.base.Games;
@@ -28,14 +23,14 @@ public abstract class GameController {
 	private static final String[] whiteRow = {Sprites.W_ROOK,Sprites.W_KNIGHT,Sprites.W_BISHOP,Sprites.W_QUEEN,Sprites.W_KING,Sprites.W_BISHOP,Sprites.W_KNIGHT,Sprites.W_ROOK};
 	private static final String[][] normalBoard = {blackRow, blackPawn, blank, blank, blank, blank, whitePawn, whiteRow};
 	private static final String[][] hordeBoard = {blackRow, blackPawn, blank, fourWhitePawn, whitePawn, whitePawn, whitePawn, whitePawn};
-	
-	//private static final String[][] noPawnBoard = {blackRow, blank, blank, blank, blank, blank, blank, whiteRow};
+	private static final String[][] noPawnBoard = {blackRow, blank, blank, blank, blank, blank, blank, whiteRow};
 	
 	public static void InitializeMap(String gameType) {
 		promotionPoint = null;
 		String[][] map = normalBoard;
 		switch (gameType) {
 		case Games.NORMAL:
+			//map = noPawnBoard;
 			board = new NormalBoard(map);
 			break;
 		case Games.ATOMIC:
@@ -73,6 +68,9 @@ public abstract class GameController {
 	}
 	public static boolean isWin() {
 		return board.isWin(turn);
+	}
+	public static boolean isDraw() {
+		return board.isDraw(turn);
 	}
 
 	public static ArrayList<Point> moveList(Point p) {

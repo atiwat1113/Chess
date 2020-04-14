@@ -35,9 +35,6 @@ public class King extends Entity implements HaveCastling {
 				returnPoint.add(check);
 			}
 		}
-//		for(Point p:castingPoint(board)) {
-//			returnPoint.add(p);
-//		}
 		return returnPoint;
 	}
 	
@@ -92,11 +89,14 @@ public class King extends Entity implements HaveCastling {
 				return false;
 			}
 		}
-		try {
-			if(((HaveCastling) board.getEntity(new Point(s,7))).isNeverMove()) {
-				return true;//new Point(s,6);
-			}
-		}finally {}
+		if (board.getEntity(new Point(s,7)) != null && board.getEntity(new Point(s,7)) instanceof Rook) {
+			if(((HaveCastling) board.getEntity(new Point(s,7))).isNeverMove()) return true;
+		}
+//		try {
+//			if(((HaveCastling) board.getEntity(new Point(s,7))).isNeverMove()) {
+//				return true;//new Point(s,6);
+//			}
+//		}finally {}
 		return false;
 	}
 	public boolean isLeftCastling(Board board) {
@@ -116,11 +116,14 @@ public class King extends Entity implements HaveCastling {
 				return false;
 			}
 		}
-		try {
-			if(((HaveCastling) board.getEntity(new Point(s,0))).isNeverMove()) {
-				return true;//new Point(s,2);
-			}
-		}finally {}
+		if (board.getEntity(new Point(s,0)) != null && board.getEntity(new Point(s,7)) instanceof Rook) {
+			if(((HaveCastling) board.getEntity(new Point(s,0))).isNeverMove()) return true;
+		}
+//		try {
+//			if(((HaveCastling) board.getEntity(new Point(s,0))).isNeverMove()) {
+//				return true;//new Point(s,2);
+//			}
+//		}finally {}
 		return false;
 	}
 	public void moveRook(Board board, Point point) {

@@ -17,6 +17,7 @@ import logic.*;
 import java.util.Scanner;
 import java.awt.Point;
 import java.util.ArrayList;
+import game.base.Board;
 
 import game.base.Games;
 
@@ -62,7 +63,7 @@ public class BoardPane extends GridPane {
 					// TODO fill in this method
 					try {
 						addOnClickHandler(bc);
-					} catch (Exception e1) {
+					} catch (Exception e1) {//NullEntityException WrongPieceException
 						// TODO Auto-generated catch block
 						System.out.println(e1.getMessage());
 //						Alert alert = new Alert(AlertType.WARNING);
@@ -120,12 +121,22 @@ public class BoardPane extends GridPane {
 				}
 			}
 		}
-
+		//print(GameController.getBoard());//---------------------------------
 		if (GameController.isWin()) {
 			Alert alert = new Alert(AlertType.CONFIRMATION);
 			alert.setTitle("End Game");
 			alert.setHeaderText(null);
-			alert.setContentText(GameController.getTurn().toString() + " WIN!!!\nDo you want to exit?");
+			alert.setContentText(GameController.getAnotherSide(GameController.getTurn()).toString() + " WIN!!!\nDo you want to exit?");
+			alert.showAndWait().ifPresent(response -> {
+				if (response == ButtonType.OK) {
+					System.exit(0);
+				}
+			});
+		} else if (GameController.isDraw()) {
+			Alert alert = new Alert(AlertType.CONFIRMATION);
+			alert.setTitle("End Game");
+			alert.setHeaderText(null);
+			alert.setContentText("DRAW!!!\nDo you want to exit?");
 			alert.showAndWait().ifPresent(response -> {
 				if (response == ButtonType.OK) {
 					System.exit(0);
@@ -166,5 +177,20 @@ public class BoardPane extends GridPane {
 	public Text getTurnText() {
 		return turnText;
 	}
-
+	public static void print(Board board) {
+		System.out.println("  -a---b---c---d---e---f---g---h--");
+		for (int i = 0; i < 8; i++) {
+			System.out.print("" + (8 - i) + " ");
+			for (int j = 0; j < 8; j++) {
+				if (board.getEntity(new Point(i, j)) == null) {
+					System.out.print("---|");
+					continue;
+				}
+				String pr = board.getEntity(new Point(i, j)).getSymbol().substring(0, 4);
+				if (pr.substring(2, 4).equals("Kn")) pr=pr.substring(0, 2)+"N";
+				System.out.print(pr.substring(0, 3) + "|");
+			}
+			System.out.println();
+		}
+	}
 }
