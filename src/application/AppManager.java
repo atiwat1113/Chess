@@ -3,6 +3,7 @@ package application;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import logic.GameController;
+import logic.Side;
 
 public class AppManager {
 
@@ -29,6 +30,7 @@ public class AppManager {
 		boardPane.updateBoard(boardPane.getCurrenntSelectedBoardCell());
 		boardPane.getCurrenntSelectedBoardCell().update();
 		boardPane.getTurnText().setText(GameController.getTurn().toString() + " TURN");
+		GameController.setPromotion(null, Side.EMPTY);
 	}
 	
 	public static BoardPane getBoardPane() {
