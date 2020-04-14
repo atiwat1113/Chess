@@ -184,6 +184,10 @@ public class BoardPane extends GridPane {
 		}
 	}
 	
+	public boolean isPromoted() {
+		return isPromoted;
+	}
+
 	public void setPromoted(boolean isPromoted) {
 		this.isPromoted = isPromoted;
 	}

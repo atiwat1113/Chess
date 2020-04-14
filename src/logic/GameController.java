@@ -3,11 +3,14 @@ package logic;
 import game.*;
 import game.base.Board;
 import game.base.Games;
+import myException.IsPromotingException;
 import myException.NullEntityException;
 import myException.NullPointException;
 import myException.WrongPieceException;
 import java.awt.*;
 import java.util.*;
+
+import application.AppManager;
 
 public abstract class GameController {
 	protected static Board board;
@@ -99,6 +102,9 @@ public abstract class GameController {
 		}
 		if (board.getEntity(p).getSide() != turn) {
 			throw new WrongPieceException("It's not your piece.");
+		}
+		if (AppManager.getBoardPane().isPromoted()) {
+			throw new IsPromotingException("Please select your promotion");
 		}
 		return true;
 	}
