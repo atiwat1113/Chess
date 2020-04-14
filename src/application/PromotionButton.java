@@ -25,7 +25,6 @@ public class PromotionButton extends Button {
 				GameController.promotion(boardPane.getPromotionPiece());
 				boardPane.setMoved(true);
 				boardPane.setCurrentSelectedPoint(null);
-				GameController.nextTurn();
 				boardPane.updateBoard(boardPane.getCurrenntSelectedBoardCell());
 				boardPane.getCurrenntSelectedBoardCell().update();
 			}
