@@ -281,16 +281,16 @@ public abstract class Board {
 	}
 	public void promotion(Point point, Side side, String piece) {
 		switch (piece) {
-		case "q":
+		case "Queen":
 			addEntity(new Queen(point, side, true), point);
 			return;
-		case "r":
+		case "Rook":
 			addEntity(new Rook(point, side, true), point);
 			return;
-		case "b":
+		case "Bishop":
 			addEntity(new Bishop(point, side, true), point);
 			return;
-		case "n":
+		case "Knight":
 			addEntity(new Knight(point, side, true), point);
 			return;
 		default:

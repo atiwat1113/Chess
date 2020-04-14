@@ -30,11 +30,13 @@ public class BoardPane extends GridPane {
 	private static final Color redTile = new Color((double) 200 / 255, (double) 200 / 255, (double) 200 / 255, 1);
 	private static final Color blackTile = new Color((double) 89 / 255, (double) 89 / 255, (double) 89 / 255, 1);
 	private BoardCell bc;
+	private BoardCell currenntSelectedBoardCell;
 	private Point currentSelectedPoint;
 	private ArrayList<Point> currentSelectedMoveList;
 	private Text turnText;
 	private boolean rotate;
 	private boolean moved;
+	private String promotionPiece;
 
 	public BoardPane(String gameType) {
 		super();
@@ -80,11 +82,14 @@ public class BoardPane extends GridPane {
 	private void addOnClickHandler(BoardCell myBoardCell) throws Exception {
 		// TODO Auto-generated method stub
 		// System.out.println("clicked");
+		currenntSelectedBoardCell = myBoardCell;
 		if (myBoardCell.isMoveable()) {
 			// currentSelectedPoint = new Point(myBoardCell.getP().y,myBoardCell.getP().x);
 			// System.out.println(currentSelectedPoint.toString());
 			// System.out.println(currentSelectedMoveList.toString());
 			GameController.move(currentSelectedPoint, myBoardCell.getP());//, currentSelectedMoveList);
+			updateBoard(myBoardCell);
+			myBoardCell.update();
 			checkPromotion();
 			moved = true;
 			currentSelectedPoint = null;
@@ -146,7 +151,7 @@ public class BoardPane extends GridPane {
 		this.turnText.setText(GameController.getTurn().toString() + " TURN");
 	}
 
-	private void updateBoard(BoardCell myBoardCell) {
+	public void updateBoard(BoardCell myBoardCell) {
 		// TODO Auto-generated method stub
 		if (moved) {
 			this.cellMap = GameController.getDisplayCellMap();//setting rotate-----------
@@ -164,12 +169,32 @@ public class BoardPane extends GridPane {
 	
 	public void checkPromotion() {
 		if (GameController.isPromotion()){
-			String piece = "q";// q r b n
+			//String piece = "Queen";// q r b n
 			//----------------------------------------------------------
-			GameController.promotion(piece);
+			AppManager.showPromotion();
 		}
 	}
 	
+	public BoardCell getCurrenntSelectedBoardCell() {
+		return currenntSelectedBoardCell;
+	}
+
+	public void setCurrentSelectedPoint(Point currentSelectedPoint) {
+		this.currentSelectedPoint = currentSelectedPoint;
+	}
+
+	public void setMoved(boolean moved) {
+		this.moved = moved;
+	}
+
+	public String getPromotionPiece() {
+		return promotionPiece;
+	}
+
+	public void setPromotionPiece(String promotionPiece) {
+		this.promotionPiece = promotionPiece;
+	}
+
 	public ObservableList<BoardCell> getBoardCellList() {
 		return boardCellList;
 	}
