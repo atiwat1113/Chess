@@ -1,0 +1,1 @@
+java -jar --module-path "javafx-sdk-14\lib" --add-modules javafx.controls,javafx.fxml Chess.jar
