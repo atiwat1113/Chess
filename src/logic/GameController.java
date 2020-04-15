@@ -18,12 +18,12 @@ public abstract class GameController {
 	protected static Point size;
 	protected static Point promotionPoint;
 	protected static Side promotionSide;
-	private static final String[] blackRow = {Sprites.B_ROOK,Sprites.B_KNIGHT,Sprites.B_BISHOP,Sprites.B_QUEEN,Sprites.B_KING,Sprites.B_BISHOP,Sprites.B_KNIGHT,Sprites.B_ROOK};
-	private static final String[] blackPawn = {Sprites.B_PAWN,Sprites.B_PAWN,Sprites.B_PAWN,Sprites.B_PAWN,Sprites.B_PAWN,Sprites.B_PAWN,Sprites.B_PAWN,Sprites.B_PAWN};
+	private static final String[] blackRow = {"BRook","BKnight","BBishop","BQueen","BKing","BBishop","BKnight","BRook"};
+	private static final String[] blackPawn = {"BPawn","BPawn","BPawn","BPawn","BPawn","BPawn","BPawn","BPawn"};
 	private static final String[] blank = {Sprites.BLANK,Sprites.BLANK,Sprites.BLANK,Sprites.BLANK,Sprites.BLANK,Sprites.BLANK,Sprites.BLANK,Sprites.BLANK};
 	private static final String[] fourWhitePawn = {Sprites.BLANK,Sprites.W_PAWN,Sprites.W_PAWN,Sprites.BLANK,Sprites.BLANK,Sprites.W_PAWN,Sprites.W_PAWN,Sprites.BLANK};
-	private static final String[] whitePawn = {Sprites.W_PAWN,Sprites.W_PAWN,Sprites.W_PAWN,Sprites.W_PAWN,Sprites.W_PAWN,Sprites.W_PAWN,Sprites.W_PAWN,Sprites.W_PAWN};
-	private static final String[] whiteRow = {Sprites.W_ROOK,Sprites.W_KNIGHT,Sprites.W_BISHOP,Sprites.W_QUEEN,Sprites.W_KING,Sprites.W_BISHOP,Sprites.W_KNIGHT,Sprites.W_ROOK};
+	private static final String[] whitePawn = {"WPawn","WPawn","WPawn","WPawn","WPawn","WPawn","WPawn","WPawn"};
+	private static final String[] whiteRow = {"WRook","WKnight","WBishop","WQueen","WKing","WBishop","WKnight","WRook"};
 	private static final String[][] normalBoard = {blackRow, blackPawn, blank, blank, blank, blank, whitePawn, whiteRow};
 	private static final String[][] hordeBoard = {blackRow, blackPawn, blank, fourWhitePawn, whitePawn, whitePawn, whitePawn, whitePawn};
 	private static final String[][] noPawnBoard = {blackRow, blank, blank, blank, blank, blank, blank, whiteRow};

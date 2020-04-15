@@ -33,42 +33,42 @@ public abstract class Board {
 				Point p = new Point(i, j);
 				cellMap[i][j] = new Cell();
 				switch (map[i][j]) {// W B --- K Q R B N P --- 0
-				case Sprites.W_KING:
+				case "WKing":
 					whiteKing = new King(p, Side.WHITE);
 					addEntity(whiteKing, p);
 					break;
-				case Sprites.W_QUEEN:
+				case "WQueen":
 					addEntity(new Queen(p, Side.WHITE), p);
 					break;
-				case Sprites.W_ROOK:
+				case "WRook":
 					addEntity(new Rook(p, Side.WHITE), p);
 					break;
-				case Sprites.W_BISHOP:
+				case "WBishop":
 					addEntity(new Bishop(p, Side.WHITE), p);
 					break;
-				case Sprites.W_KNIGHT:
+				case "WKnight":
 					addEntity(new Knight(p, Side.WHITE), p);
 					break;
-				case Sprites.W_PAWN:
+				case "WPawn":
 					addEntity(new Pawn(p, Side.WHITE), p);
 					break;
-				case Sprites.B_KING:
+				case "BKing":
 					blackKing = new King(p, Side.BLACK);
 					addEntity(blackKing, p);
 					break;
-				case Sprites.B_QUEEN:
+				case "BQueen":
 					addEntity(new Queen(p, Side.BLACK), p);
 					break;
-				case Sprites.B_ROOK:
+				case "BRook":
 					addEntity(new Rook(p, Side.BLACK), p);
 					break;
-				case Sprites.B_BISHOP:
+				case "BBishop":
 					addEntity(new Bishop(p, Side.BLACK), p);
 					break;
-				case Sprites.B_KNIGHT:
+				case "BKnight":
 					addEntity(new Knight(p, Side.BLACK), p);
 					break;
-				case Sprites.B_PAWN:
+				case "BPawn":
 					addEntity(new Pawn(p, Side.BLACK), p);
 					break;
 				case Sprites.BLANK:
