@@ -174,19 +174,34 @@ public abstract class Board {
 		//System.out.println(print(oldPoint)+"->"+print(newPoint)+"K"+print(kingPoint));
 		Point[] rookVector = { new Point(1, 0), new Point(-1, 0), new Point(0, 1), new Point(0, -1) };
 		Point[] bishopVector = { new Point(1, 1), new Point(-1, 1), new Point(1, -1), new Point(-1, -1) };
+		Point[] blackPawnWalk = { new Point(1, 1), new Point(1, -1)};
+		Point[] whitePawnWalk = { new Point(-1, 1), new Point(-1, -1)};
+		Point[] pawnWalk = whitePawnWalk;
+		if (side == Side.BLACK) pawnWalk = blackPawnWalk;
+		for(Point point : pawnWalk) {
+			Point checkPoint = addPoint(kingPoint, point);
+			if(!isInBoard(checkPoint)) continue;
+			Entity interestingEntity = getEntity(checkPoint);
+			if(interestingEntity==null) continue;
+			if (checkPoint.equals(newPoint)) continue;
+			if(interestingEntity.getSide()==getAnotherSide(side)&&interestingEntity instanceof Pawn)
+				return true;
+		}
 		for(Point point : knightWalk) {
 			Point checkPoint = addPoint(kingPoint, point);
 			if(!isInBoard(checkPoint)) continue;
 			Entity interestingEntity = getEntity(checkPoint);
 			if(interestingEntity==null) continue;
+			if (checkPoint.equals(newPoint)) continue;
 			if(interestingEntity.getSide()==getAnotherSide(side)&&interestingEntity instanceof Knight)
-				return true;
+				 return true;
 		}
 		for(Point point : KingWalk) {
 			Point checkPoint = addPoint(kingPoint, point);
 			if(!isInBoard(checkPoint)) continue;
 			Entity interestingEntity = getEntity(checkPoint);
 			if(interestingEntity==null) continue;
+			if (checkPoint.equals(newPoint)) continue;
 			if(interestingEntity.getSide()==getAnotherSide(side)&&interestingEntity instanceof King)
 				return true;
 		}

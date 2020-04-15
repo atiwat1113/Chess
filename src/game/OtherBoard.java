@@ -10,4 +10,7 @@ public class OtherBoard extends Board{
 	public boolean isWin(Side side) {
 		return false;
 	}
+	public boolean isDraw(Side side) {
+		return false;
+	}
 }
