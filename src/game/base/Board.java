@@ -295,17 +295,17 @@ public abstract class Board {
 		GameController.setPromotion(point, side);
 	}
 	public void promotion(Point point, Side side, String piece) {
-		switch (piece) {
-		case "Queen":
+		switch (piece.charAt(0)) {
+		case 'Q':
 			addEntity(new Queen(point, side, true), point);
 			return;
-		case "Rook":
+		case 'R':
 			addEntity(new Rook(point, side, true), point);
 			return;
-		case "Bishop":
+		case 'B':
 			addEntity(new Bishop(point, side, true), point);
 			return;
-		case "Knight":
+		case 'K':
 			addEntity(new Knight(point, side, true), point);
 			return;
 		default:

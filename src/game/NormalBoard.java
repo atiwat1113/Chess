@@ -25,6 +25,9 @@ public class NormalBoard extends Board implements CheckMateAble{
 		}
 		return drawCannotMove(side);
 	}
+	public boolean isCheck(Side side) {
+		return false;
+	}
 	
 	public boolean isDraw(Side side) {
 		return drawCannotMove(side);

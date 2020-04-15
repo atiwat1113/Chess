@@ -2,6 +2,7 @@ package logic;
 
 import game.*;
 import game.base.Board;
+import game.base.CheckMateAble;
 import game.base.Games;
 import myException.IsPromotingException;
 import myException.NullEntityException;
@@ -75,7 +76,10 @@ public abstract class GameController {
 	public static boolean isDraw() {
 		return board.isDraw(turn);
 	}
-
+	public static boolean isCheck() {
+		if (board instanceof CheckMateAble) return ((CheckMateAble) board).isCheck(turn);
+		return false;
+	}
 	public static ArrayList<Point> moveList(Point p) {
 		return board.moveList(p);
 	}

@@ -70,6 +70,7 @@ public class BoardPane extends GridPane {
 						addOnClickHandler(bc);
 					} catch (Exception e1) {//NullEntityException WrongPieceException
 						// TODO Auto-generated catch block
+						AppManager.displayMessage(e1.getMessage());
 						System.out.println(e1.getMessage());
 //						Alert alert = new Alert(AlertType.WARNING);
 //						alert.setTitle("Warning");
@@ -93,7 +94,11 @@ public class BoardPane extends GridPane {
 			GameController.move(currentSelectedPoint, myBoardCell.getP());//, currentSelectedMoveList);
 			updateBoard(myBoardCell);
 			myBoardCell.update();
-			checkPromotion();
+			if (GameController.isPromotion()) {
+				setPromoted(true);
+				AppManager.showPromotion();
+				//AppManager.hidePromotion();
+			}
 			moved = true;
 			currentSelectedPoint = null;
 			//currentSelectedMoveList = null;
@@ -135,6 +140,9 @@ public class BoardPane extends GridPane {
 			}
 		}
 		//print(GameController.getBoard());//---------------------------------
+		if (GameController.isCheck()) {
+			AppManager.displayMessage(GameController.getAnotherSide(GameController.getTurn()).toString() + "Check");
+		}
 		if (GameController.isWin()) {
 			Alert alert = new Alert(AlertType.CONFIRMATION);
 			alert.setTitle("End Game");
@@ -175,13 +183,15 @@ public class BoardPane extends GridPane {
 		}
 	}
 	
-	public void checkPromotion() {
-		if (GameController.isPromotion()){
-			setPromoted(true);
-			//String piece = "Queen";// q r b n
-			//----------------------------------------------------------
-			AppManager.showPromotion();
-		}
+	public void promotion(String text) {
+		setPromotionPiece(text);
+		GameController.promotion(this.getPromotionPiece());
+		setPromoted(false);
+		GameController.nextTurn();
+		updateBoard(this.getCurrenntSelectedBoardCell());
+		getCurrenntSelectedBoardCell().update();
+		getTurnText().setText(GameController.getTurn().toString() + " TURN");
+		GameController.setPromotion(null, Side.EMPTY);
 	}
 	
 	public boolean isPromoted() {

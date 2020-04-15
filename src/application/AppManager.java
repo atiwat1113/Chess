@@ -1,15 +1,10 @@
 package application;
 
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import logic.GameController;
-import logic.Side;
-
 public class AppManager {
 
 	private static PromotionPane promotionPane;
 	private static BoardPane boardPane;
-	
+	private static SettingButton setting;
 	
 	
 	public static void hidePromotion() {
@@ -21,14 +16,7 @@ public class AppManager {
 	}
 
 	public static void setPromotionListener(String text) {
-		boardPane.setPromotionPiece(text);
-		GameController.promotion(boardPane.getPromotionPiece());
-		boardPane.setPromoted(false);
-		GameController.nextTurn();
-		boardPane.updateBoard(boardPane.getCurrenntSelectedBoardCell());
-		boardPane.getCurrenntSelectedBoardCell().update();
-		boardPane.getTurnText().setText(GameController.getTurn().toString() + " TURN");
-		GameController.setPromotion(null, Side.EMPTY);
+		boardPane.promotion(text);
 	}
 	
 	public static BoardPane getBoardPane() {
@@ -46,6 +34,17 @@ public class AppManager {
 	public static void setPromotionPane(PromotionPane promotionPane) {
 		AppManager.promotionPane = promotionPane;
 	}
+
+	public static SettingButton getSetting() {
+		return setting;
+	}
+
+	public static void setSetting(SettingButton setting) {
+		AppManager.setting = setting;
+	}
 	
+	public static void displayMessage(String message) {
+		//----------------------------------------------------------------------------------------
+	}
 	
 }
