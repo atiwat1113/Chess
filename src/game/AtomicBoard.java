@@ -30,7 +30,6 @@ public class AtomicBoard extends Board implements CheckMateAble{
 	}
 	
 	public boolean winByLosingKing(Side side) {
-		Entity king = getKing(side);
 		for (Entity entity : getAllPieces(side)) {
 			if (entity instanceof King) return false;
 		}
@@ -38,7 +37,11 @@ public class AtomicBoard extends Board implements CheckMateAble{
 	}
 	
 	public boolean isCheck(Side side) {
-		return false;
+		Point kingPoint = getKing(side).getPoint();
+		Point anotherKingPoint = getKing(getAnotherSide(side)).getPoint();
+		if (Math.abs(anotherKingPoint.x-kingPoint.x)<=1 && Math.abs(anotherKingPoint.y-kingPoint.y)<=1)
+			return false;
+		return isEatenPoint(kingPoint, side);
 	}
 	
 	public boolean isDraw(Side side) {
@@ -154,10 +157,7 @@ public class AtomicBoard extends Board implements CheckMateAble{
 		}
 		return movePoint;
 	}
-	public boolean checkCannotMovePoint(ArrayList<Point> oldPoint, Point newPoint, Point kingPoint, Side side) {
-		//System.out.println(print(oldPoint)+"->"+print(newPoint)+"K"+print(kingPoint));
-		Point[] rookVector = { new Point(1, 0), new Point(-1, 0), new Point(0, 1), new Point(0, -1) };
-		Point[] bishopVector = { new Point(1, 1), new Point(-1, 1), new Point(1, -1), new Point(-1, -1) };
+	public boolean checkOther(Point newPoint, Point kingPoint, Side side) {
 		Point[] blackPawnWalk = { new Point(1, 1), new Point(1, -1)};
 		Point[] whitePawnWalk = { new Point(-1, 1), new Point(-1, -1)};
 		Point[] pawnWalk = whitePawnWalk;
@@ -179,23 +179,6 @@ public class AtomicBoard extends Board implements CheckMateAble{
 			if (checkPoint.equals(newPoint)) continue;
 			if(interestingEntity.getSide()==getAnotherSide(side)&&interestingEntity instanceof Knight)
 				 return true;
-		}
-		for(Point point : KingWalk) {
-			Point checkPoint = addPoint(kingPoint, point);
-			if(!isInBoard(checkPoint)) continue;
-			Entity interestingEntity = getEntity(checkPoint);
-			if(interestingEntity==null) continue;
-			if (checkPoint.equals(newPoint)) continue;
-			if(interestingEntity.getSide()==getAnotherSide(side)&&interestingEntity instanceof King)
-				return true;
-		}
-		for (Point vector : rookVector) {
-			if (checkRook(kingPoint, vector, oldPoint, newPoint, side))
-				return true;
-		}
-		for (Point vector : bishopVector) {// check bishop and queen
-			if (checkBishop(kingPoint, vector, oldPoint, newPoint, side))
-				return true;
 		}
 		return false;
 	}

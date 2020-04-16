@@ -24,7 +24,7 @@ public class Main extends Application{
 		root.setPadding(new Insets(10));
 		root.setSpacing(10);
 		root.setPrefHeight(400);
-		BoardPane boardPane = new BoardPane(Games.KINGOFTHEHILL);//------------------------
+		BoardPane boardPane = new BoardPane(Games.NORMAL);//------------------------
 		PromotionPane promotionPane = new PromotionPane();
 		SettingButton setting = new SettingButton();
 		root.getChildren().addAll(boardPane,getConsole(boardPane, promotionPane, setting));

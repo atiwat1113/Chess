@@ -83,6 +83,7 @@ public abstract class Board {
 	//iswin
 	public abstract boolean isWin(Side side);//opposite side win
 	public abstract boolean isDraw(Side side);
+	public abstract boolean isCheck(Side side);
 	//move
 	public abstract boolean move(Point oldPoint, Point newPoint, ArrayList<Point> moveList);
 	//complete moveList to display
@@ -94,7 +95,55 @@ public abstract class Board {
 	}
 	//moveList
 	protected abstract ArrayList<Point> removeCannotMovePoint(Point oldPoint, ArrayList<Point> movePoint);
-	public abstract boolean checkCannotMovePoint(ArrayList<Point> oldPoint, Point newPoint, Point kingPoint, Side side);
+	public boolean checkCannotMovePoint(ArrayList<Point> oldPoint, Point newPoint, Point kingPoint, Side side) {
+		//System.out.println(print(oldPoint)+"->"+print(newPoint)+"K"+print(kingPoint));
+		Point[] rookVector = { new Point(1, 0), new Point(-1, 0), new Point(0, 1), new Point(0, -1) };
+		Point[] bishopVector = { new Point(1, 1), new Point(-1, 1), new Point(1, -1), new Point(-1, -1) };
+		if (checkOther(newPoint, kingPoint, side)) return true;
+		for (Point vector : rookVector) {
+			if (checkRook(kingPoint, vector, oldPoint, newPoint, side))
+				return true;
+		}
+		for (Point vector : bishopVector) {// check bishop and queen
+			if (checkBishop(kingPoint, vector, oldPoint, newPoint, side))
+				return true;
+		}
+		return false;
+	}
+	public boolean checkOther(Point newPoint, Point kingPoint, Side side) {
+		Point[] blackPawnWalk = { new Point(1, 1), new Point(1, -1)};
+		Point[] whitePawnWalk = { new Point(-1, 1), new Point(-1, -1)};
+		Point[] pawnWalk = whitePawnWalk;
+		if (side == Side.BLACK) pawnWalk = blackPawnWalk;
+		for(Point point : pawnWalk) {
+			Point checkPoint = addPoint(kingPoint, point);
+			if(!isInBoard(checkPoint)) continue;
+			Entity interestingEntity = getEntity(checkPoint);
+			if(interestingEntity==null) continue;
+			if (checkPoint.equals(newPoint)) continue;
+			if(interestingEntity.getSide()==getAnotherSide(side)&&interestingEntity instanceof Pawn)
+				return true;
+		}
+		for(Point point : knightWalk) {
+			Point checkPoint = addPoint(kingPoint, point);
+			if(!isInBoard(checkPoint)) continue;
+			Entity interestingEntity = getEntity(checkPoint);
+			if(interestingEntity==null) continue;
+			if (checkPoint.equals(newPoint)) continue;
+			if(interestingEntity.getSide()==getAnotherSide(side)&&interestingEntity instanceof Knight)
+				 return true;
+		}
+		for(Point point : KingWalk) {
+			Point checkPoint = addPoint(kingPoint, point);
+			if(!isInBoard(checkPoint)) continue;
+			Entity interestingEntity = getEntity(checkPoint);
+			if(interestingEntity==null) continue;
+			if (checkPoint.equals(newPoint)) continue;
+			if(interestingEntity.getSide()==getAnotherSide(side)&&interestingEntity instanceof King)
+				return true;
+		}
+		return false;
+	}
 	public boolean checkRook(Point point, Point vector, ArrayList<Point> oldPoint, Point newPoint, Side side) {
 		//System.out.print(print(oldPoint)+"->"+print(newPoint));
 		//System.out.print(print(newPoint));

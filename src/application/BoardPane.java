@@ -140,9 +140,6 @@ public class BoardPane extends GridPane {
 			}
 		}
 		//print(GameController.getBoard());//---------------------------------
-		if (GameController.isCheck()) {
-			AppManager.displayMessage(GameController.getAnotherSide(GameController.getTurn()).toString() + "Check");
-		}
 		if (GameController.isWin()) {
 			Alert alert = new Alert(AlertType.CONFIRMATION);
 			alert.setTitle("End Game");
@@ -163,6 +160,10 @@ public class BoardPane extends GridPane {
 					System.exit(0);
 				}
 			});
+		}
+		if (GameController.isCheck()) {
+			System.out.println(GameController.getAnotherSide(GameController.getTurn()).toString() + " Check");
+			AppManager.displayMessage(GameController.getAnotherSide(GameController.getTurn()).toString() + " Check");
 		}
 		this.turnText.setText(GameController.getTurn().toString() + " TURN");
 	}

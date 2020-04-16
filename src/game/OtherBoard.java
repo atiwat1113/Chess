@@ -16,6 +16,10 @@ public class OtherBoard extends Board{
 	public boolean isDraw(Side side) {
 		return false;
 	}
+	public boolean isCheck(Side side) {
+		// TODO Auto-generated method stub
+		return false;
+	}
 	@Override
 	public boolean move(Point oldPoint, Point newPoint, ArrayList<Point> moveList) {
 		// TODO Auto-generated method stub
