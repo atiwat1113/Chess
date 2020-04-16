@@ -38,7 +38,7 @@ public abstract class GameController {
 			board = new NormalBoard(map);
 			break;
 		case Games.ATOMIC:
-			board = new OtherBoard(map);
+			board = new AtomicBoard(map);
 			break;
 		case Games.KINGOFTHEHILL:
 			board = new OtherBoard(map);

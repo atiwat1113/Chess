@@ -28,19 +28,21 @@ public class Pawn extends Entity {
 		if (side == Side.WHITE) {
 			Point nextPoint = new Point(point.x - 1, point.y);
 			Point extraPoint = new Point(4, point.y);
-			if (board.getEntity(extraPoint) == null && point.x == 6) {
-				returnPoint.add(extraPoint);
-			}
-			if (board.getEntity(nextPoint) == null)
+			if (board.getEntity(nextPoint) == null) {
+				if (board.getEntity(extraPoint) == null && point.x == 6) {
+					returnPoint.add(extraPoint);
+				}
 				returnPoint.add(nextPoint);
+			}
 		} else {
 			Point nextPoint = new Point(point.x + 1, point.y);
 			Point extraPoint = new Point(3, point.y);
-			if (board.getEntity(extraPoint) == null && point.x == 1) {
-				returnPoint.add(extraPoint);
-			}
-			if (board.getEntity(nextPoint) == null)
+			if (board.getEntity(nextPoint) == null) {
+				if (board.getEntity(extraPoint) == null && point.x == 1) {
+					returnPoint.add(extraPoint);
+				}
 				returnPoint.add(nextPoint);
+			}
 		}
 		for (Point p : eatList(board)) {
 			returnPoint.add(p);
