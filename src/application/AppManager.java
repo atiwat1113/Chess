@@ -5,6 +5,7 @@ public class AppManager {
 	private static PromotionPane promotionPane;
 	private static BoardPane boardPane;
 	private static SettingButton setting;
+	private static SelectModePane selectModePane;
 	
 	
 	public static void hidePromotion() {
@@ -43,6 +44,14 @@ public class AppManager {
 		AppManager.setting = setting;
 	}
 	
+	public static SelectModePane getSelectModePane() {
+		return selectModePane;
+	}
+
+	public static void setSelectModePane(SelectModePane selectModePane) {
+		AppManager.selectModePane = selectModePane;
+	}
+
 	public static void displayMessage(String message) {
 		//----------------------------------------------------------------------------------------
 	}
