@@ -10,6 +10,7 @@ public class MyButton extends Button{
 	
 	public MyButton(String text) { // decorate button here.
 		super(text);
+		this.setPrefSize(200, 50);
 		this.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
 		setListener();
 	}
