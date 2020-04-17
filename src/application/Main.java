@@ -24,12 +24,18 @@ public class Main extends Application{
 		root.setPadding(new Insets(10));
 		root.setSpacing(10);
 		root.setPrefHeight(400);
+		
+		
+		MenuPane menu = new MenuPane();
+		SelectModePane selectMode = new SelectModePane();
 		BoardPane boardPane = new BoardPane(Games.NORMAL);//------------------------
 		PromotionPane promotionPane = new PromotionPane();
 		SettingButton setting = new SettingButton();
+		
 		root.getChildren().addAll(boardPane,getConsole(boardPane, promotionPane, setting));
 		root.setAlignment(Pos.CENTER);	
 		
+		AppManager.setSelectModePane(selectMode);
 		AppManager.setPromotionPane(promotionPane);
 		AppManager.setBoardPane(boardPane);
 		//AppManager.setSetting(setting);---------------------------------------------
@@ -38,6 +44,7 @@ public class Main extends Application{
 	
 		Scene scene = new Scene(root);
 		
+		AppManager.setScene(scene);
 	
 		primaryStage.setTitle("Chess");
 		primaryStage.setScene(scene);

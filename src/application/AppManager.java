@@ -1,11 +1,15 @@
 package application;
 
+import javafx.scene.Scene;
+
 public class AppManager {
 
+	private static Scene scene;
 	private static PromotionPane promotionPane;
 	private static BoardPane boardPane;
 	private static SettingButton setting;
 	private static SelectModePane selectModePane;
+	private static String gameType;
 	
 	
 	public static void hidePromotion() {
@@ -14,6 +18,22 @@ public class AppManager {
 	
 	public static void showPromotion() {
 		AppManager.promotionPane.showPromotionPane();
+	}
+
+	public static String getGameType() {
+		return gameType;
+	}
+
+	public static void setGameType(String gameType) {
+		AppManager.gameType = gameType;
+	}
+
+	public static void showSelectMode() {
+		scene.setRoot(selectModePane);
+	}
+
+	public static void setScene(Scene scene) {
+		AppManager.scene = scene;
 	}
 
 	public static void setPromotionListener(String text) {
