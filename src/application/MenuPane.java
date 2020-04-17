@@ -15,7 +15,7 @@ import javafx.scene.text.FontWeight;
 public class MenuPane extends VBox{
 	
 	public MenuPane() {
-		this.setPrefSize(400, 400);
+		this.setPrefSize(750, 500);
 		this.setAlignment(Pos.CENTER);
 		this.setSpacing(20);
 		

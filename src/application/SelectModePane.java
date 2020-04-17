@@ -11,6 +11,7 @@ public class SelectModePane extends VBox{
 		public SelectModePane() {
 			this.setAlignment(Pos.CENTER);
 			this.setSpacing(7);
+			this.setPrefSize(750, 500);
 			
 			Label select = new Label("Select Mode");
 			select.setFont(Font.font("Tahoma", FontWeight.NORMAL, 25));

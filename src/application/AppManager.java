@@ -42,6 +42,7 @@ public class AppManager {
 	
 	public static void showSelectMode() {
 		scene.setRoot(selectModePane);
+		stage.sizeToScene();
 	}
 	
 	public static void showGamePane() {

@@ -27,8 +27,8 @@ public class BoardCell extends Pane {
 		this.color = color;
 		this.isClicked = false;
 		this.moveable = false;
-		this.setPrefSize(50, 50);
-		this.setMinSize(50, 50);
+		this.setPrefSize(60, 60);
+		this.setMinSize(60, 60);
 		this.setPadding(new Insets(8));
 		if (hasEntity())
 			this.setBackgroundTileColor(new Image(this.myCell.getEntity().getSymbol()));
@@ -51,7 +51,7 @@ public class BoardCell extends Pane {
 		// TODO Auto-generated method stub
 		BackgroundFill bgFill = new BackgroundFill(this.color, CornerRadii.EMPTY, Insets.EMPTY);
 		BackgroundFill[] bgFillA = { bgFill };
-		BackgroundSize bgSize = new BackgroundSize(50, 50, false, false, false, false);
+		BackgroundSize bgSize = new BackgroundSize(60, 60, false, false, false, false);
 		BackgroundImage bgImg = new BackgroundImage(image, null, null, null, bgSize);
 		BackgroundImage[] bgImgA = { bgImg };
 		this.setBackground(new Background(bgFillA, bgImgA));
@@ -61,7 +61,7 @@ public class BoardCell extends Pane {
 		// TODO Auto-generated method stub
 		BackgroundFill bgFill = new BackgroundFill(this.color, CornerRadii.EMPTY, Insets.EMPTY);
 		BackgroundFill[] bgFillA = { bgFill };
-		BackgroundSize bgSize = new BackgroundSize(50, 50, false, false, false, false);
+		BackgroundSize bgSize = new BackgroundSize(60, 60, false, false, false, false);
 		BackgroundImage redDotImg = new BackgroundImage(redDot, null, null, null, bgSize);
 		BackgroundImage entityImg = new BackgroundImage(entity, null, null, null, bgSize);
 		BackgroundImage[] bgImgA = { entityImg, redDotImg };
