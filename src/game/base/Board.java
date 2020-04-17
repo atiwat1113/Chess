@@ -91,10 +91,10 @@ public abstract class Board {
 		Entity moveEntity = getEntity(point);
 		ArrayList<Point> movePoint = moveEntity.moveList(this);
 		//GameController.printPointList(movePoint);
-		return removeCannotMovePoint(point, movePoint);
+		return editMovePoint(point, movePoint);
 	}
 	//moveList
-	protected abstract ArrayList<Point> removeCannotMovePoint(Point oldPoint, ArrayList<Point> movePoint);
+	protected abstract ArrayList<Point> editMovePoint(Point oldPoint, ArrayList<Point> movePoint);
 	public boolean checkCannotMovePoint(ArrayList<Point> oldPoint, Point newPoint, Point kingPoint, Side side) {
 		//System.out.println(print(oldPoint)+"->"+print(newPoint)+"K"+print(kingPoint));
 		Point[] rookVector = { new Point(1, 0), new Point(-1, 0), new Point(0, 1), new Point(0, -1) };
@@ -326,5 +326,102 @@ public abstract class Board {
 	}
 	public Cell[][] getCellMap() {
 		return cellMap;
+	}
+	
+	
+	
+	//castling
+	public ArrayList<Point> castingPoint(Side side) {//White 7,4 7,0 7,7 // Black 0,4 0,0 0,7
+		ArrayList<Point> returnPoint = new ArrayList<Point>();
+		Entity king = getKing(side);
+		Point kingPoint = king.getPoint();
+		int s=7;
+		if (side == Side.BLACK) {
+			s=0;
+		}
+		if(!kingPoint.equals(new Point(s,4))||!((King) king).isNeverMove()) {
+			return returnPoint;
+		}
+		if (isRightCastling(side)) returnPoint.add(new Point(s,6));
+		if (isLeftCastling(side)) returnPoint.add(new Point(s,2));
+		return returnPoint;
+	}
+	public boolean isCastlingPoint(Side side, Point point) {
+		int s = (side == Side.BLACK)? 0 : 7;
+		if (isRightCastling(side) && point.equals(new Point(s,6))) return true;
+		if (isLeftCastling(side) && point.equals(new Point(s,2))) return true;
+		return false;
+	}
+	public boolean isRightCastling(Side side) {
+		int s = (side == Side.BLACK)? 0 : 7;
+		int[] s1 = {4,5,6};
+		int[] s2 = {5,6};
+		for(int e : s1) {
+			if(isEatenPoint(new Point(s,e), side)) {
+				return false;
+			}
+		}
+		for(int e : s2) {
+			if(getEntity(new Point(s,e))!=null) {
+				return false;
+			}
+		}
+		if (getEntity(new Point(s,7)) != null && getEntity(new Point(s,7)) instanceof Rook) {
+			if(((HaveCastling) getEntity(new Point(s,7))).isNeverMove()) return true;
+		}
+//		try {
+//			if(((HaveCastling) board.getEntity(new Point(s,7))).isNeverMove()) {
+//				return true;//new Point(s,6);
+//			}
+//		}finally {}
+		return false;
+	}
+	public boolean isLeftCastling(Side side) {
+		int s = (side == Side.BLACK)? 0 : 7;
+		int[] s1 = {2,3,4};
+		int[] s2 = {1,2,3};
+		for(int e : s1) {
+			if(isEatenPoint(new Point(s,e), side)) {
+				return false;
+			}
+		}
+		for(int e : s2) {
+			if(getEntity(new Point(s,e))!=null) {
+				return false;
+			}
+		}
+		if (getEntity(new Point(s,0)) != null && getEntity(new Point(s,0)) instanceof Rook) {
+			if(((HaveCastling) getEntity(new Point(s,0))).isNeverMove()) return true;
+		}
+//		try {
+//			if(((HaveCastling) board.getEntity(new Point(s,0))).isNeverMove()) {
+//				return true;//new Point(s,2);
+//			}
+//		}finally {}
+		return false;
+	}
+	public void castling(Side side, Point oldPoint, Point newPoint) {
+		Entity moveEntity = this.getEntity(oldPoint);
+		remove(oldPoint);
+		moveEntity.setPoint(newPoint);
+		addEntity(moveEntity, newPoint);
+		moveRook(newPoint);
+	}
+	
+	public void moveRook(Point point) {//kingpoint
+		ArrayList<Point> moveList = new ArrayList<Point>();
+		if (point.equals(new Point(0,2))) {
+			moveList.add(new Point(0,3));
+			move(new Point(0,0),new Point(0,3),moveList);
+		}else if (point.equals(new Point(0,6))) {
+			moveList.add(new Point(0,5));
+			move(new Point(0,7),new Point(0,5),moveList);
+		}else if (point.equals(new Point(7,2))) {
+			moveList.add(new Point(7,3));
+			move(new Point(7,0),new Point(7,3),moveList);
+		}else if (point.equals(new Point(7,6))) {
+			moveList.add(new Point(7,5));
+			move(new Point(7,7),new Point(7,5),moveList);
+		}
 	}
 }

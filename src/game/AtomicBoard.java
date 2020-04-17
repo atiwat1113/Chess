@@ -77,19 +77,18 @@ public class AtomicBoard extends Board implements CheckMateAble{
 					else twoWalkPawn=null;
 				}
 				else twoWalkPawn=null;
-				if (moveEntity instanceof King) {
-					if (((King) moveEntity).isCastlingPoint(this, newPoint)) {
-						((King) moveEntity).moveRook(this, newPoint);
-					}
-				}
-				remove(oldPoint);
-				if (getEntity(newPoint)==null) {
-					moveEntity.setPoint(newPoint);
-					addEntity(moveEntity, newPoint);
+				if (moveEntity instanceof King && isCastlingPoint(moveEntity.getSide(), newPoint)) {
+					castling(moveEntity.getSide(), oldPoint, newPoint);
 				}else {
-					remove(newPoint);
-					for(Point vector: KingWalk) {
-						explosion(addPoint(newPoint, vector));
+					remove(oldPoint);
+					if (getEntity(newPoint)==null) {
+						moveEntity.setPoint(newPoint);
+						addEntity(moveEntity, newPoint);
+					}else {
+						remove(newPoint);
+						for(Point vector: KingWalk) {
+							explosion(addPoint(newPoint, vector));
+						}
 					}
 				}
 			}
@@ -104,7 +103,7 @@ public class AtomicBoard extends Board implements CheckMateAble{
 		return false;
 	}
 	
-	protected ArrayList<Point> removeCannotMovePoint(Point oldPoint, ArrayList<Point> movePoint){
+	protected ArrayList<Point> editMovePoint(Point oldPoint, ArrayList<Point> movePoint){
 		Entity moveEntity = this.getEntity(oldPoint);
 		Side side = moveEntity.getSide();
 		ArrayList<Point> op = new ArrayList<Point>();
@@ -126,7 +125,7 @@ public class AtomicBoard extends Board implements CheckMateAble{
 				if (oppositeKingPoints.contains(movePoint.get(i))) continue;
 				if (checkCannotMovePoint(op,new Point(-1,-1),movePoint.get(i),side)) movePoint.remove(i);
 			}
-			for(Point p : ((King) moveEntity).castingPoint(this)) {//for castling
+			for(Point p : castingPoint(side)) {//for castling
 				movePoint.add(p);
 			} 
 		}else {

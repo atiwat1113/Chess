@@ -26,7 +26,7 @@ public class OtherBoard extends Board{
 		return false;
 	}
 	@Override
-	protected ArrayList<Point> removeCannotMovePoint(Point oldPoint, ArrayList<Point> movePoint) {
+	protected ArrayList<Point> editMovePoint(Point oldPoint, ArrayList<Point> movePoint) {
 		// TODO Auto-generated method stub
 		return null;
 	}

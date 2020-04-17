@@ -59,27 +59,23 @@ public class NormalBoard extends Board implements CheckMateAble{
 					else twoWalkPawn=null;
 				}
 				else twoWalkPawn=null;
-				if (moveEntity instanceof King) {
-					if (((King) moveEntity).isCastlingPoint(this, newPoint)) {
-						((King) moveEntity).moveRook(this, newPoint);
-					}
+				if (moveEntity instanceof King && isCastlingPoint(moveEntity.getSide(), newPoint)) {
+					castling(moveEntity.getSide(), oldPoint, newPoint);
+				}else {
+					remove(oldPoint);
+					moveEntity.setPoint(newPoint);
+					addEntity(moveEntity, newPoint);
 				}
-				remove(oldPoint);
-				moveEntity.setPoint(newPoint);
-				addEntity(moveEntity, newPoint);
 			}
 		}
-		int s = 0;
-		if (moveEntity.getSide() == Side.BLACK) {
-			s = 7;
-		}
+		int s = (moveEntity.getSide() == Side.BLACK)? 0 : 7;
 		if (moveEntity instanceof Pawn && newPoint.x == s) {
 			havePromotion(newPoint, moveEntity.getSide());
 		}
 		return false;
 	}
 	//moveList
-	protected ArrayList<Point> removeCannotMovePoint(Point oldPoint, ArrayList<Point> movePoint){
+	protected ArrayList<Point> editMovePoint(Point oldPoint, ArrayList<Point> movePoint){
 		Entity moveEntity = this.getEntity(oldPoint);
 		Side side = moveEntity.getSide();
 		ArrayList<Point> op = new ArrayList<Point>();
@@ -88,7 +84,7 @@ public class NormalBoard extends Board implements CheckMateAble{
 			for(int i = movePoint.size()-1; i>=0; i--) {
 				if (checkCannotMovePoint(op,new Point(-1,-1),movePoint.get(i),side)) movePoint.remove(i);
 			}
-			for(Point p : ((King) moveEntity).castingPoint(this)) {//for castling
+			for(Point p : castingPoint(side)) {//for castling
 				movePoint.add(p);
 			} 
 		}else {
