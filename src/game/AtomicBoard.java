@@ -63,44 +63,36 @@ public class AtomicBoard extends Board implements CheckMateAble{
 	}
 	
 	//move
-	public boolean move(Point oldPoint, Point newPoint, ArrayList<Point> moveList) {
+	public void move(Point oldPoint, Point newPoint) {
 		Entity moveEntity = this.getEntity(oldPoint);
-		for (Point moveablePoint : moveList) {
-			if (moveablePoint.equals(newPoint)) {
-				if (moveEntity instanceof HaveCastling) ((HaveCastling) moveEntity).setNeverMove();
-				if (moveEntity instanceof Pawn) {
-					if (twoWalkPawn != null && twoWalkPawn.equals(new Point(oldPoint.x,newPoint.y))){
-						remove(twoWalkPawn);
-					} else if (Math.abs(oldPoint.x-newPoint.x)==2) {
-						twoWalkPawn=newPoint;
-					}
-					else twoWalkPawn=null;
-				}
-				else twoWalkPawn=null;
-				if (moveEntity instanceof King && isCastlingPoint(moveEntity.getSide(), newPoint)) {
-					castling(moveEntity.getSide(), oldPoint, newPoint);
-				}else {
-					remove(oldPoint);
-					if (getEntity(newPoint)==null) {
-						moveEntity.setPoint(newPoint);
-						addEntity(moveEntity, newPoint);
-					}else {
-						remove(newPoint);
-						for(Point vector: KingWalk) {
-							explosion(addPoint(newPoint, vector));
-						}
-					}
+		if (moveEntity instanceof HaveCastling) ((HaveCastling) moveEntity).setNeverMove();
+		if (moveEntity instanceof Pawn) {
+			if (twoWalkPawn != null && twoWalkPawn.equals(new Point(oldPoint.x,newPoint.y))){
+				remove(twoWalkPawn);
+			} else if (Math.abs(oldPoint.x-newPoint.x)==2) {
+				twoWalkPawn=newPoint;
+			}
+			else twoWalkPawn=null;
+		}
+		else twoWalkPawn=null;
+		if (moveEntity instanceof King && isCastlingPoint(moveEntity.getSide(), newPoint)) {
+			castling(moveEntity.getSide(), oldPoint, newPoint);
+		}else {
+			remove(oldPoint);
+			if (getEntity(newPoint)==null) {
+				moveEntity.setPoint(newPoint);
+				addEntity(moveEntity, newPoint);
+			}else {
+				remove(newPoint);
+				for(Point vector: KingWalk) {
+					explosion(addPoint(newPoint, vector));
 				}
 			}
 		}
-		int s = 0;
-		if (moveEntity.getSide() == Side.BLACK) {
-			s = 7;
-		}
+		int s = (moveEntity.getSide() == Side.BLACK)? 0 : 7;
 		if (moveEntity instanceof Pawn && newPoint.x == s) {
 			havePromotion(newPoint, moveEntity.getSide());
 		}
-		return false;
 	}
 	
 	protected ArrayList<Point> editMovePoint(Point oldPoint, ArrayList<Point> movePoint){

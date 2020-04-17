@@ -85,7 +85,7 @@ public abstract class Board {
 	public abstract boolean isDraw(Side side);
 	public abstract boolean isCheck(Side side);
 	//move
-	public abstract boolean move(Point oldPoint, Point newPoint, ArrayList<Point> moveList);
+	public abstract void move(Point oldPoint, Point newPoint);
 	//complete moveList to display
 	public ArrayList<Point> moveList(Point point) {
 		Entity moveEntity = getEntity(point);
@@ -405,23 +405,21 @@ public abstract class Board {
 		remove(oldPoint);
 		moveEntity.setPoint(newPoint);
 		addEntity(moveEntity, newPoint);
-		moveRook(newPoint);
+		if (newPoint.equals(new Point(0,2))) {
+			moveRook(new Point(0,0), new Point(0,3));
+		}else if (newPoint.equals(new Point(0,6))) {
+			moveRook(new Point(0,7), new Point(0,5));
+		}else if (newPoint.equals(new Point(7,2))) {
+			moveRook(new Point(7,0), new Point(7,3));
+		}else if (newPoint.equals(new Point(7,6))) {
+			moveRook(new Point(7,7), new Point(7,5));
+		}
 	}
 	
-	public void moveRook(Point point) {//kingpoint
-		ArrayList<Point> moveList = new ArrayList<Point>();
-		if (point.equals(new Point(0,2))) {
-			moveList.add(new Point(0,3));
-			move(new Point(0,0),new Point(0,3),moveList);
-		}else if (point.equals(new Point(0,6))) {
-			moveList.add(new Point(0,5));
-			move(new Point(0,7),new Point(0,5),moveList);
-		}else if (point.equals(new Point(7,2))) {
-			moveList.add(new Point(7,3));
-			move(new Point(7,0),new Point(7,3),moveList);
-		}else if (point.equals(new Point(7,6))) {
-			moveList.add(new Point(7,5));
-			move(new Point(7,7),new Point(7,5),moveList);
-		}
+	public void moveRook(Point oldPoint, Point newPoint) {//kingpoint
+		Entity rook = getEntity(oldPoint);
+		remove(oldPoint);
+		rook.setPoint(newPoint);
+		addEntity(rook, newPoint);
 	}
 }

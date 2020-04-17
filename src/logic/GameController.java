@@ -121,8 +121,12 @@ public abstract class GameController {
 		}
 	}
 
-	public static boolean move(Point p1, Point p2) {// move from p1 to p2
-		return board.move(p1, p2, moveList(p1));
+	public static void move(Point p1, Point p2) {// move from p1 to p2
+		for (Point movePoint : moveList(p1)) {
+			if (movePoint.equals(p2)) {
+				board.move(p1, p2);
+			}
+		}
 	}
 
 	public static Board getBoard() {
