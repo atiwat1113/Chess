@@ -23,7 +23,7 @@ public abstract class GameController {
 	private static final String[] blackRow = {"BRook","BKnight","BBishop","BQueen","BKing","BBishop","BKnight","BRook"};
 	private static final String[] blackPawn = {"BPawn","BPawn","BPawn","BPawn","BPawn","BPawn","BPawn","BPawn"};
 	private static final String[] blank = {Sprites.BLANK,Sprites.BLANK,Sprites.BLANK,Sprites.BLANK,Sprites.BLANK,Sprites.BLANK,Sprites.BLANK,Sprites.BLANK};
-	private static final String[] fourWhitePawn = {Sprites.BLANK,Sprites.W_PAWN,Sprites.W_PAWN,Sprites.BLANK,Sprites.BLANK,Sprites.W_PAWN,Sprites.W_PAWN,Sprites.BLANK};
+	private static final String[] fourWhitePawn = {Sprites.BLANK,"WPawn","WPawn",Sprites.BLANK,Sprites.BLANK,"WPawn","WPawn",Sprites.BLANK};
 	private static final String[] whitePawn = {"WPawn","WPawn","WPawn","WPawn","WPawn","WPawn","WPawn","WPawn"};
 	private static final String[] whiteRow = {"WRook","WKnight","WBishop","WQueen","WKing","WBishop","WKnight","WRook"};
 	private static final String[][] normalBoard = {blackRow, blackPawn, blank, blank, blank, blank, whitePawn, whiteRow};
