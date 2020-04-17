@@ -49,6 +49,11 @@ public class BoardPane extends GridPane {
 		this.turnText = new Text(GameController.getTurn().toString() + " TURN");
 		turnText.setFont(Font.font("Tahoma", FontWeight.NORMAL, 25));
 		this.cellMap = GameController.getDisplayCellMap();//setting rotate-----
+		createBoardCell();
+		setBoardCellListener();
+	}
+
+	private void createBoardCell() {
 		for (int i = 0; i < row; i++) {// Point (y,x) => (i,j)
 			for (int j = 0; j < column; j++) {
 				if ((i + j) % 2 == 0) {
@@ -61,7 +66,9 @@ public class BoardPane extends GridPane {
 
 			}
 		}
-
+	}
+	
+	private void setBoardCellListener() {
 		for (BoardCell bc : boardCellList) {
 			bc.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
 				@Override
@@ -83,7 +90,7 @@ public class BoardPane extends GridPane {
 			});
 		}
 	}
-
+	
 	private void addOnClickHandler(BoardCell myBoardCell) throws Exception {
 		// TODO Auto-generated method stub
 		// System.out.println("clicked");
@@ -110,23 +117,13 @@ public class BoardPane extends GridPane {
 			}
 		} 
 		
-		
 		else {
 			updateBoard(myBoardCell);
 			currentSelectedMoveList = GameController.moveList(myBoardCell.getP());//setting rotate-----
 			//GameController.printPointList(currentSelectedMoveList);
 			if (myBoardCell.hasEntity() && GameController.isTurn(myBoardCell.getP(), GameController.getTurn())) {
 				if (!myBoardCell.isClicked()) {
-					for (BoardCell bc : this.getBoardCellList()) {
-						if (currentSelectedMoveList.contains(bc.getP())) {
-							if (bc.hasEntity())
-								bc.setBackgroundTileColor(new Image(Sprites.WALKPATH),
-										new Image(bc.getMyCell().getEntity().getSymbol()));
-							else
-								bc.setBackgroundTileColor(new Image(Sprites.WALKPATH));
-							bc.setMoveable(true);
-						}
-					}
+					showWalkPath();
 					currentSelectedPoint = myBoardCell.getP();
 					myBoardCell.setBackgroundTileColor(new Image(myBoardCell.getMyCell().getEntity().getHighlightSymbol()));
 					//currentSelectedMoveList = myBoardCell.getMyCell().getEntity().moveList(GameController.getBoard());
@@ -141,40 +138,47 @@ public class BoardPane extends GridPane {
 			}
 		}
 		//print(GameController.getBoard());//---------------------------------
-		if (GameController.isWin()) {
-			Alert alert = new Alert(AlertType.CONFIRMATION);
-			alert.setTitle("End Game");
-			alert.setHeaderText(null);
-			alert.setContentText(GameController.getAnotherSide(GameController.getTurn()).toString() + " WIN!!!\nDo you want to exit?");
-			alert.showAndWait().ifPresent(response -> {
-				if (response == ButtonType.OK) {
-					System.exit(0);
-				}
-				else {
-					AppManager.showMenu();
-				}
-			});
-		} else if (GameController.isDraw()) {
-			Alert alert = new Alert(AlertType.CONFIRMATION);
-			alert.setTitle("End Game");
-			alert.setHeaderText(null);
-			alert.setContentText("DRAW!!!\nDo you want to exit?");
-			alert.showAndWait().ifPresent(response -> {
-				if (response == ButtonType.OK) {
-					System.exit(0);
-				}
-				else {
-					AppManager.showMenu();
-				}
-			});
-		}
+		if (GameController.isWin()) 
+			showEndGameWindow(GameController.getAnotherSide(GameController.getTurn()).toString() + " WIN!!!\nDo you want to exit?");
+		else if (GameController.isDraw()) 
+			showEndGameWindow("DRAW!!!\nDo you want to exit?");
+		
 		if (GameController.isCheck()) {
 			System.out.println(GameController.getAnotherSide(GameController.getTurn()).toString() + " Check");
 			AppManager.displayMessage(GameController.getAnotherSide(GameController.getTurn()).toString() + " Check");
 		}
+		
 		this.turnText.setText(GameController.getTurn().toString() + " TURN");
 	}
 
+	private void showWalkPath() {
+		for (BoardCell bc : this.getBoardCellList()) {
+			if (currentSelectedMoveList.contains(bc.getP())) {
+				if (bc.hasEntity())
+					bc.setBackgroundTileColor(new Image(Sprites.WALKPATH),
+							new Image(bc.getMyCell().getEntity().getSymbol()));
+				else
+					bc.setBackgroundTileColor(new Image(Sprites.WALKPATH));
+				bc.setMoveable(true);
+			}
+		}
+	}
+	
+	public void showEndGameWindow(String text) {
+		Alert alert = new Alert(AlertType.CONFIRMATION);
+		alert.setTitle("End Game");
+		alert.setHeaderText(null);
+		alert.setContentText(text);
+		alert.showAndWait().ifPresent(response -> {
+			if (response == ButtonType.OK) {
+				System.exit(0);
+			}
+			else {
+				AppManager.showMenu();
+			}
+		});
+	}
+	
 	public void updateBoard(BoardCell myBoardCell) {
 		// TODO Auto-generated method stub
 		if (moved) {
