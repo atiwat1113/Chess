@@ -94,7 +94,7 @@ public class AppManager {
 	}
 
 	public static void displayMessage(String message) {
-		//----------------------------------------------------------------------------------------
+		promotionPane.setMessage(message);
 	}
 	
 }

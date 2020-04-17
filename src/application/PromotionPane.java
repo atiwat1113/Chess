@@ -8,21 +8,31 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
+import javafx.scene.text.Text;
 import javafx.scene.layout.*;
-import javafx.geometry.Insets;;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;;
 
 public class PromotionPane extends StackPane{
 	
-	private static final Color color = new Color((double)1,(double)1,(double)1,0.5);
-			//new Color((double)200/255,(double)200/255,(double)200/255,0.5);
-	private Canvas canvas;
-	VBox promotion;
+	private Text text;
+	private VBox promotion;
 	
 	public PromotionPane() {
-		this.setPrefSize(110,40);
+		this.setPrefSize(160,80);
 		this.setBackground(new Background(new BackgroundFill(Color.GRAY, CornerRadii.EMPTY, Insets.EMPTY)));
+		this.setAlignment(Pos.CENTER);
+		
 		promotion = new VBox();
+		promotion.setAlignment(Pos.TOP_CENTER);
+		promotion.setSpacing(2);
+		
 		HBox selection = new HBox();
+		selection.setAlignment(Pos.CENTER);
+		selection.setSpacing(2);
+		
 		Label label = new Label("Select promotion");
 		//change color label
 		PromotionButton queen = new PromotionButton("Q");
@@ -30,13 +40,18 @@ public class PromotionPane extends StackPane{
 		PromotionButton bishop = new PromotionButton("B");
 		PromotionButton knight = new PromotionButton("K");
 		
+		text = new Text();
+		text.setFont(Font.font("Tahoma", FontWeight.NORMAL, 15));
+		text.setFill(Color.RED.darker());
+		
 		selection.getChildren().addAll(queen,rook,bishop,knight);
 		promotion.getChildren().addAll(label,selection);
-		this.getChildren().add(promotion);
+		
+		this.getChildren().add(text);
 	}
 	
 	public void hidePromotionPane() {
-		this.getChildren().remove(0);
+		this.getChildren().remove(this.getChildren().indexOf(promotion));
 //		canvas = new Canvas(150,150);
 //		GraphicsContext gc = canvas.getGraphicsContext2D();
 //		gc.setFill(color);
@@ -45,7 +60,15 @@ public class PromotionPane extends StackPane{
 	}
 	
 	public void showPromotionPane() {
+		this.getChildren().remove(this.getChildren().indexOf(text));
+		promotion.getChildren().add(text);
 		this.getChildren().add(promotion);
 		//this.getChildren().remove(1);
 	}
+
+	public void setMessage(String message) {
+		this.text.setText(message);
+	}
+	
+	
 }

@@ -21,7 +21,6 @@ public class Main extends Application{
 		AppManager.setPromotionPane(promotionPane);
 		AppManager.setSetting(setting);
 		AppManager.setStage(primaryStage);
-		AppManager.hidePromotion();
 		
 	
 		Scene scene = new Scene(menu);

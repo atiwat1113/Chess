@@ -14,7 +14,7 @@ import javafx.scene.paint.Color;
 public class SettingButton extends Button{
 	public SettingButton() {
 		super();
-		setPrefSize(45, 45);
+		setPrefSize(65, 65);
 		this.setBackground(new Background(new BackgroundFill(Color.BLACK, CornerRadii.EMPTY, Insets.EMPTY)));
 		this.setBorder(new Border(new BorderStroke(Color.GRAY, BorderStrokeStyle.SOLID, 
 				CornerRadii.EMPTY, BorderWidths.DEFAULT)));

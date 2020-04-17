@@ -108,7 +108,7 @@ public abstract class GameController {
 			throw new WrongPieceException("It's not your piece.");
 		}
 		if (AppManager.getBoardPane().isPromoted()) {
-			throw new IsPromotingException("Please select your promotion");
+			throw new IsPromotingException("Select your promotion");
 		}
 		return true;
 	}

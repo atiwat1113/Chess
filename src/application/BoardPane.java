@@ -188,6 +188,7 @@ public class BoardPane extends GridPane {
 			if (!bc.equals(myBoardCell))
 				bc.update();
 		}
+		AppManager.displayMessage("");
 	}
 	
 	public void promotion(String text) {

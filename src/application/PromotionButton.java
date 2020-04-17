@@ -21,6 +21,7 @@ public class PromotionButton extends Button {
 	public PromotionButton(String text) {
 		super(text);
 		this.text = text;
+		this.setPrefSize(30, 30);
 		this.setBackground(new Background(new BackgroundFill(Color.WHITE, CornerRadii.EMPTY, Insets.EMPTY)));
 		this.setBorder(new Border(new BorderStroke(Color.GRAY, BorderStrokeStyle.SOLID, 
 				CornerRadii.EMPTY, BorderWidths.DEFAULT)));
