@@ -19,30 +19,22 @@ import javafx.stage.Stage;
 public class Main extends Application{
 	public void start(Stage primaryStage) {
 		
-		HBox root = new HBox();
-		root.setBackground(new Background(new BackgroundFill(Color.GRAY, CornerRadii.EMPTY, Insets.EMPTY)));
-		root.setPadding(new Insets(10));
-		root.setSpacing(10);
-		root.setPrefHeight(400);
-		
-		
 		MenuPane menu = new MenuPane();
 		SelectModePane selectMode = new SelectModePane();
-		BoardPane boardPane = new BoardPane(Games.NORMAL);//------------------------
+		GamePane gamePane = new GamePane();
 		PromotionPane promotionPane = new PromotionPane();
-		SettingButton setting = new SettingButton();
+		SettingButton setting = new SettingButton();		
 		
-		root.getChildren().addAll(boardPane,getConsole(boardPane, promotionPane, setting));
-		root.setAlignment(Pos.CENTER);	
-		
+		AppManager.setMenuPane(menu);
 		AppManager.setSelectModePane(selectMode);
+		AppManager.setGamePane(gamePane);
 		AppManager.setPromotionPane(promotionPane);
-		AppManager.setBoardPane(boardPane);
-		//AppManager.setSetting(setting);---------------------------------------------
+		AppManager.setSetting(setting);
+		AppManager.setStage(primaryStage);
 		AppManager.hidePromotion();
 		
 	
-		Scene scene = new Scene(root);
+		Scene scene = new Scene(menu);
 		
 		AppManager.setScene(scene);
 	
@@ -56,12 +48,5 @@ public class Main extends Application{
 	public static void main(String[] args) {
 		launch(args);
 	}
-	private static VBox getConsole(BoardPane boardPane, PromotionPane promotionPane, SettingButton setting) {
-		Text turn = boardPane.getTurnText();
-		VBox console = new VBox();
-		HBox topBox = new HBox();
-		topBox.getChildren().addAll(promotionPane, setting);
-		console.getChildren().addAll(topBox,turn);
-		return console;
-	}
+	
 }

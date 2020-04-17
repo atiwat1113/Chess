@@ -149,6 +149,9 @@ public class BoardPane extends GridPane {
 				if (response == ButtonType.OK) {
 					System.exit(0);
 				}
+				else {
+					AppManager.showMenu();
+				}
 			});
 		} else if (GameController.isDraw()) {
 			Alert alert = new Alert(AlertType.CONFIRMATION);
@@ -158,6 +161,9 @@ public class BoardPane extends GridPane {
 			alert.showAndWait().ifPresent(response -> {
 				if (response == ButtonType.OK) {
 					System.exit(0);
+				}
+				else {
+					AppManager.showMenu();
 				}
 			});
 		}

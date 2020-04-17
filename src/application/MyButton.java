@@ -10,6 +10,7 @@ public class MyButton extends Button{
 	
 	public MyButton(String text) { // decorate button here.
 		super(text);
+		this.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
 		setListener();
 	}
 	
@@ -34,10 +35,10 @@ public class MyButton extends Button{
 	}
 	
 	private void setMouseEnteredTextFont() {
-		this.setFont(Font.font("Tahoma", FontWeight.BOLD, 25));
+		this.setFont(Font.font("Tahoma", FontWeight.BOLD, 20));
 	}
 	
 	private void setMouseExitedTextFont() {
-		this.setFont(Font.font("Tahoma", FontWeight.NORMAL, 25));
+		this.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
 	}
 }

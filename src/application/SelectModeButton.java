@@ -1,6 +1,8 @@
 package application;
 
 import game.base.Games;
+import javafx.event.EventHandler;
+import javafx.scene.input.MouseEvent;
 
 public class SelectModeButton extends MyButton{
 
@@ -30,7 +32,23 @@ public class SelectModeButton extends MyButton{
 			break;
 		case "Horde" :
 			this.gameType = Games.HORDE;
+			break;
+		default :
 		}
+		
+		setListener();
 	}
 
+	private void setListener() {
+		this.setOnMouseClicked(new EventHandler<MouseEvent>() {
+
+			@Override
+			public void handle(MouseEvent arg0) {
+				// TODO Auto-generated method stub
+				AppManager.setBoardPane(new BoardPane(gameType));	
+				AppManager.setGamePaneNode();
+				AppManager.showGamePane();
+			}
+		});
+	}
 }

@@ -1,11 +1,15 @@
 package application;
 
+import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 
 public class SelectModePane extends VBox{
 
 		public SelectModePane() {
+			this.setAlignment(Pos.CENTER);
+			this.setSpacing(5);
+			
 			Label select = new Label("Select Mode");
 			
 			SelectModeButton normal = new SelectModeButton("Normal");
@@ -15,6 +19,8 @@ public class SelectModePane extends VBox{
 			SelectModeButton antiChess = new SelectModeButton("Anti chess");
 			SelectModeButton chess960 = new SelectModeButton("Chess960");
 			SelectModeButton horde = new SelectModeButton("Horde");
+			
+			this.getChildren().addAll(normal,atomic,kingOfTheHill,threeCheck,antiChess,chess960,horde);
 			
 		}
 }

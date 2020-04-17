@@ -1,15 +1,18 @@
 package application;
 
 import javafx.scene.Scene;
+import javafx.stage.Stage;
 
 public class AppManager {
 
 	private static Scene scene;
+	private static Stage stage;
+	private static MenuPane menuPane;
 	private static PromotionPane promotionPane;
 	private static BoardPane boardPane;
 	private static SettingButton setting;
 	private static SelectModePane selectModePane;
-	private static String gameType;
+	private static GamePane gamePane;
 	
 	
 	public static void hidePromotion() {
@@ -20,16 +23,34 @@ public class AppManager {
 		AppManager.promotionPane.showPromotionPane();
 	}
 
-	public static String getGameType() {
-		return gameType;
+	public static void setGamePaneNode() {
+		gamePane.getChildren().addAll(boardPane,gamePane.getConsole(boardPane, promotionPane, setting));
 	}
-
-	public static void setGameType(String gameType) {
-		AppManager.gameType = gameType;
+	
+	public static void showMenu() {
+		scene.setRoot(menuPane);
+		stage.sizeToScene();
 	}
-
+	
 	public static void showSelectMode() {
 		scene.setRoot(selectModePane);
+	}
+	
+	public static void showGamePane() {
+		scene.setRoot(gamePane);
+		stage.sizeToScene();
+	}
+
+	public static void setMenuPane(MenuPane menuPane) {
+		AppManager.menuPane = menuPane;
+	}
+
+	public static void setStage(Stage stage) {
+		AppManager.stage = stage;
+	}
+
+	public static void setGamePane(GamePane gamePane) {
+		AppManager.gamePane = gamePane;
 	}
 
 	public static void setScene(Scene scene) {
