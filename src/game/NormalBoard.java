@@ -63,10 +63,10 @@ public class NormalBoard extends Board implements CheckMateAble{
 			remove(oldPoint);
 			moveEntity.setPoint(newPoint);
 			addEntity(moveEntity, newPoint);
-		}
-		int s = (moveEntity.getSide() == Side.BLACK)? 0 : 7;
-		if (moveEntity instanceof Pawn && newPoint.x == s) {
-			havePromotion(newPoint, moveEntity.getSide());
+			int s = (moveEntity.getSide() == Side.BLACK)? 7 : 0;
+			if (moveEntity instanceof Pawn && newPoint.x == s) {
+				havePromotion(newPoint, moveEntity.getSide());
+			}
 		}
 	}
 	//moveList

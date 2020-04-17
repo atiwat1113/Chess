@@ -334,12 +334,8 @@ public abstract class Board {
 	public ArrayList<Point> castingPoint(Side side) {//White 7,4 7,0 7,7 // Black 0,4 0,0 0,7
 		ArrayList<Point> returnPoint = new ArrayList<Point>();
 		Entity king = getKing(side);
-		Point kingPoint = king.getPoint();
-		int s=7;
-		if (side == Side.BLACK) {
-			s=0;
-		}
-		if(!kingPoint.equals(new Point(s,4))||!((King) king).isNeverMove()) {
+		int s = (side == Side.BLACK)? 0 : 7;
+		if(!((King) king).isNeverMove()) {
 			return returnPoint;
 		}
 		if (isRightCastling(side)) returnPoint.add(new Point(s,6));

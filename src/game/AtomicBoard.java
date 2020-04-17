@@ -90,7 +90,7 @@ public class AtomicBoard extends Board implements CheckMateAble{
 				}
 			}
 		}
-		int s = (moveEntity.getSide() == Side.BLACK)? 0 : 7;
+		int s = (moveEntity.getSide() == Side.BLACK)? 7 : 0;
 		if (moveEntity instanceof Pawn && newPoint.x == s) {
 			havePromotion(newPoint, moveEntity.getSide());
 		}
