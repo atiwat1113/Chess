@@ -10,6 +10,7 @@ import myException.NullPointException;
 import myException.WrongPieceException;
 import java.awt.*;
 import java.util.*;
+import java.util.Random;
 
 import application.AppManager;
 
@@ -50,8 +51,9 @@ public abstract class GameController {
 			board = new OtherBoard(map);
 			break;
 		case Games.CHESS960:
-			String[] randomBlack, randomWhite;
-			randomBlack = randomWhite = blank;
+			int[] key = randomKey();
+			String[] randomBlack = {blackRow[key[0]], blackRow[key[1]], blackRow[key[2]], blackRow[key[3]], blackRow[key[4]], blackRow[key[5]], blackRow[key[6]], blackRow[key[7]]};
+			String[] randomWhite = {whiteRow[key[0]], whiteRow[key[1]], whiteRow[key[2]], whiteRow[key[3]], whiteRow[key[4]], whiteRow[key[5]], whiteRow[key[6]], whiteRow[key[7]]};
 			//write random pieces--------------------------------------------
 			String[][] randomBoard = {randomBlack, blackPawn, blank, blank, blank, blank, whitePawn, randomWhite};
 			map = randomBoard;
@@ -66,6 +68,33 @@ public abstract class GameController {
 		}
 		turn = Side.WHITE;
 		size = new Point(map.length,map[0].length);
+	}
+	public static int[] randomKey() {//"BRook","BKnight","BBishop","BQueen","BKing"
+		int[] returnKey = {-1,-1,-1,-1,-1,-1,-1,-1};
+		Random ran = new Random();
+		int ranInt;
+		ranInt = ran.nextInt(4);
+		returnKey[ranInt*2]=2;
+		ranInt = ran.nextInt(4);
+		returnKey[ranInt*2+1]=2;
+		ranInt = ran.nextInt(6);
+		put(returnKey,3,ranInt);
+		ranInt = ran.nextInt(5);
+		put(returnKey,1,ranInt);
+		ranInt = ran.nextInt(4);
+		put(returnKey,1,ranInt);
+		put(returnKey,0,0);
+		put(returnKey,4,0);
+		put(returnKey,0,0);
+		return returnKey;
+	}
+	public static int[] put(int[] l, int value, int index) {
+		int c = -1;
+		for (int i = 0; i<size.y; i++) {
+			if (l[i]==-1) c++;
+			if (c==index) l[i]=value;
+		}
+		return l;
 	}
 	public static Cell[][] getDisplayCellMap(){
 		return board.getCellMap();

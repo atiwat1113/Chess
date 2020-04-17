@@ -59,6 +59,7 @@ public class AtomicBoard extends Board implements CheckMateAble{
 	}
 	
 	public boolean drawByLosing2King() {
+		System.out.println("Error");
 		return winByLosingKing(Side.WHITE) && winByLosingKing(Side.BLACK);
 	}
 	
