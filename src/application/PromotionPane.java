@@ -1,5 +1,6 @@
 package application;
 
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
@@ -18,6 +19,7 @@ public class PromotionPane extends VBox{
 	
 	private Text text;
 	private VBox promotion;
+	private HBox selection;
 	
 	public PromotionPane() {
 		this.setPrefSize(160,80);
@@ -28,7 +30,7 @@ public class PromotionPane extends VBox{
 		promotion.setAlignment(Pos.TOP_LEFT);
 		promotion.setSpacing(2);
 		
-		HBox selection = new HBox();
+		selection = new HBox();
 		selection.setAlignment(Pos.CENTER_LEFT);
 		selection.setSpacing(2);
 		
@@ -61,6 +63,9 @@ public class PromotionPane extends VBox{
 	
 	public void showPromotionPane() {
 		this.getChildren().add(promotion);
+		for (Node pb : selection.getChildren()) {
+			((PromotionButton) pb).setBackgroundWithImage();
+		}
 		//this.getChildren().remove(1);
 	}
 

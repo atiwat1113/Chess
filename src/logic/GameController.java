@@ -57,7 +57,7 @@ public abstract class GameController {
 			//write random pieces--------------------------------------------
 			String[][] randomBoard = {randomBlack, blackPawn, blank, blank, blank, blank, whitePawn, randomWhite};
 			map = randomBoard;
-			board = new OtherBoard(map);
+			board = new Chess960Board(map);
 			break;
 		case Games.HORDE:
 			map = hordeBoard;
