@@ -1,5 +1,8 @@
 package application;
 
+import gameBoard.BoardPane;
+import gameConsole.PromotionPane;
+import gameConsole.SettingButton;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
@@ -13,6 +16,7 @@ public class AppManager {
 	private static BoardPane boardPane;
 	private static PromotionPane promotionPane;
 	private static SettingButton setting;
+	private static String gameType;
 	
 	
 	public static void setStage(Stage stage) {
@@ -97,5 +101,14 @@ public class AppManager {
 	public static void displayMessage(String message) {
 		promotionPane.setMessage(message);
 	}
+
+	public static String getGameType() {
+		return gameType;
+	}
+
+	public static void setGameType(String gameType) {
+		AppManager.gameType = gameType;
+	}
+	
 	
 }

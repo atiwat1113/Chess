@@ -1,4 +1,4 @@
-package application;
+package gameConsole;
 
 import javafx.scene.Node;
 import javafx.scene.Parent;

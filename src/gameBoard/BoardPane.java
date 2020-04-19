@@ -1,4 +1,4 @@
-package application;
+package gameBoard;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -16,6 +16,9 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import logic.*;
 import java.util.Scanner;
+
+import application.AppManager;
+
 import java.awt.Point;
 import java.util.ArrayList;
 import game.base.Board;

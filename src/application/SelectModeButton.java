@@ -1,6 +1,7 @@
 package application;
 
 import game.base.Games;
+import gameBoard.BoardPane;
 import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
 
@@ -45,7 +46,8 @@ public class SelectModeButton extends MyButton{
 			@Override
 			public void handle(MouseEvent arg0) {
 				// TODO Auto-generated method stub
-				AppManager.setBoardPane(new BoardPane(gameType));	
+				AppManager.setGameType(gameType);
+				AppManager.setBoardPane(new BoardPane(gameType));
 				AppManager.setGamePaneNode();
 				AppManager.showGamePane();
 			}

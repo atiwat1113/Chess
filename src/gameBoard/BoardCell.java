@@ -1,13 +1,19 @@
-package application;
+package gameBoard;
 
 import java.awt.Point;
 
+import application.AppManager;
+import game.base.Games;
 import javafx.geometry.Insets;
 import javafx.scene.image.Image;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.BackgroundImage;
 import javafx.scene.layout.BackgroundSize;
+import javafx.scene.layout.Border;
+import javafx.scene.layout.BorderStroke;
+import javafx.scene.layout.BorderStrokeStyle;
+import javafx.scene.layout.BorderWidths;
 import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
@@ -34,6 +40,12 @@ public class BoardCell extends Pane {
 			this.setBackgroundTileColor(new Image(this.myCell.getEntity().getSymbol()));
 		else
 			setBackgroundTileColor();
+		if(AppManager.getGameType() == Games.KINGOFTHEHILL) {
+			if ((p.x==3 && p.y==3) || (p.x==4 && p.y==3) || (p.x==3 && p.y==4) || (p.x==4 && p.y==4)) {
+				this.setBorder(new Border(
+						new BorderStroke(Color.RED, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
+			}
+		}
 
 	}
 

@@ -1,5 +1,8 @@
 package application;
 
+import gameBoard.BoardPane;
+import gameConsole.PromotionPane;
+import gameConsole.SettingButton;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.layout.Background;

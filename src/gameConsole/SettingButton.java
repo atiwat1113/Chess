@@ -1,4 +1,4 @@
-package application;
+package gameConsole;
 
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
