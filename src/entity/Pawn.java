@@ -27,18 +27,18 @@ public class Pawn extends Entity {
 		ArrayList<Point> returnPoint = new ArrayList<Point>();
 		if (side == Side.WHITE) {
 			Point nextPoint = new Point(point.x - 1, point.y);
-			Point extraPoint = new Point(4, point.y);
+			Point extraPoint = new Point(point.x-2, point.y);
 			if (board.getEntity(nextPoint) == null) {
-				if (board.getEntity(extraPoint) == null && point.x == 6) {
+				if (board.getEntity(extraPoint) == null && point.x >= 6) {
 					returnPoint.add(extraPoint);
 				}
 				returnPoint.add(nextPoint);
 			}
 		} else {
 			Point nextPoint = new Point(point.x + 1, point.y);
-			Point extraPoint = new Point(3, point.y);
+			Point extraPoint = new Point(point.x+2, point.y);
 			if (board.getEntity(nextPoint) == null) {
-				if (board.getEntity(extraPoint) == null && point.x == 1) {
+				if (board.getEntity(extraPoint) == null && point.x <= 1) {
 					returnPoint.add(extraPoint);
 				}
 				returnPoint.add(nextPoint);

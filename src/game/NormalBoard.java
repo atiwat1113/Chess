@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import entity.*;
 import entity.base.Entity;
 import entity.base.HaveCastling;
+import logic.GameController;
 import logic.Side;
 import game.base.*;
 
@@ -21,20 +22,15 @@ public class NormalBoard extends Board implements CheckMateAble{
 	
 	public boolean winByCheckmate(Side side) {
 		Entity king = getKing(side);
+		if (king == null) return false;
 		if (!isEatenPoint(king.getPoint(), side)) {
 			return false;
 		}
 		return drawCannotMove(side);
 	}
-	public boolean isCheck(Side side) {
-		Point kingPoint = getKing(side).getPoint();
-		return isEatenPoint(kingPoint, side);
-	}
-	
 	public boolean isDraw(Side side) {
 		return drawCannotMove(side);
 	}
-	
 	public boolean drawCannotMove(Side side) {
 		ArrayList<Entity> allEntity = getAllPieces(side);
 		for(Entity entity : allEntity) {
@@ -43,6 +39,10 @@ public class NormalBoard extends Board implements CheckMateAble{
 			if (moveList.size() != 0) return false;
 		}
 		return true;
+	}
+	public boolean isCheck(Side side) {
+		Point kingPoint = getKing(side).getPoint();
+		return isEatenPoint(kingPoint, side);
 	}
 	//move
 	public void move(Point oldPoint, Point newPoint) {

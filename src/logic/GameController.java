@@ -28,6 +28,7 @@ public abstract class GameController {
 	private static final String[] whiteRow = {"WRook","WKnight","WBishop","WQueen","WKing","WBishop","WKnight","WRook"};
 	private static final String[][] normalBoard = {blackRow, blackPawn, blank, blank, blank, blank, whitePawn, whiteRow};
 	private static final String[][] hordeBoard = {blackRow, blackPawn, blank, fourWhitePawn, whitePawn, whitePawn, whitePawn, whitePawn};
+	private static final String[][] hordeCheck = {blackRow, blackPawn, blank, fourWhitePawn, blank, blank, blank, blank};
 	private static final String[][] noPawnBoard = {blackRow, blank, blank, blank, blank, blank, blank, whiteRow};
 	
 	public static void InitializeMap(String gameType) {
@@ -63,7 +64,7 @@ public abstract class GameController {
 			break;
 		case Games.HORDE:
 			map = hordeBoard;
-			board = new OtherBoard(map);
+			board = new HordeBoard(map);
 			break;
 		default:
 			System.out.println("wrong game type");

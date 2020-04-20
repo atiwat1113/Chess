@@ -145,7 +145,6 @@ public class BoardPane extends GridPane {
 			showEndGameWindow(GameController.getAnotherSide(GameController.getTurn()).toString() + " WIN!!!\nDo you want to exit?");
 		else if (GameController.isDraw()) 
 			showEndGameWindow("DRAW!!!\nDo you want to exit?");
-		
 		if (GameController.isCheck()) {
 			System.out.println(GameController.getAnotherSide(GameController.getTurn()).toString() + " Check");
 			AppManager.displayMessage(GameController.getAnotherSide(GameController.getTurn()).toString() + " Check");
