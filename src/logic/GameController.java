@@ -50,9 +50,6 @@ public abstract class GameController {
 		case Games.THREECHECK:
 			board = new ThreeCheckBoard(map);
 			break;
-		case Games.ANTICHESS:
-			board = new OtherBoard(map);
-			break;
 		case Games.CHESS960:
 			int[] key = randomKey();
 			String[] randomBlack = {blackRow[key[0]], blackRow[key[1]], blackRow[key[2]], blackRow[key[3]], blackRow[key[4]], blackRow[key[5]], blackRow[key[6]], blackRow[key[7]]};
