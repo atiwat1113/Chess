@@ -1,8 +1,8 @@
 package application;
 
-import gameBoard.BoardPane;
-import gameConsole.PromotionPane;
-import gameConsole.SettingButton;
+import application.menu.*;
+import application.board.*;
+import application.console.*;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 

@@ -1,4 +1,4 @@
-package gameBoard;
+package application.board;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;

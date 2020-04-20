@@ -1,7 +1,6 @@
-package gameBoard;
+package application.board;
 
 import java.awt.Point;
-
 import application.AppManager;
 import game.base.Games;
 import javafx.geometry.Insets;

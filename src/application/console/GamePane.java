@@ -1,8 +1,7 @@
-package application;
+package application.console;
 
-import gameBoard.BoardPane;
-import gameConsole.PromotionPane;
-import gameConsole.SettingButton;
+import application.board.*;
+import application.console.*;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.layout.Background;

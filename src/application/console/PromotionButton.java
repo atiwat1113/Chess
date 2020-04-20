@@ -1,4 +1,4 @@
-package gameConsole;
+package application.console;
 
 import application.AppManager;
 import javafx.event.EventHandler;

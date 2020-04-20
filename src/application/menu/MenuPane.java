@@ -1,5 +1,6 @@
-package application;
+package application.menu;
 
+import application.*;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.control.Alert;

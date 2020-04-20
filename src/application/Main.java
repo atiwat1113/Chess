@@ -1,8 +1,7 @@
 package application;
 
-
-import gameConsole.PromotionPane;
-import gameConsole.SettingButton;
+import application.menu.*;
+import application.console.*;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;

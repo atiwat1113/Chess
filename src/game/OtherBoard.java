@@ -21,9 +21,8 @@ public class OtherBoard extends Board{
 		return false;
 	}
 	@Override
-	public boolean move(Point oldPoint, Point newPoint, ArrayList<Point> moveList) {
+	public void move(Point oldPoint, Point newPoint) {
 		// TODO Auto-generated method stub
-		return false;
 	}
 	@Override
 	protected ArrayList<Point> editMovePoint(Point oldPoint, ArrayList<Point> movePoint) {

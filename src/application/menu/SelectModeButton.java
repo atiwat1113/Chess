@@ -1,7 +1,8 @@
-package application;
+package application.menu;
 
+import application.*;
 import game.base.Games;
-import gameBoard.BoardPane;
+import application.board.*;
 import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
 

@@ -1,4 +1,4 @@
-package gameConsole;
+package application.console;
 
 import javafx.scene.Node;
 import javafx.scene.Parent;
@@ -72,6 +72,4 @@ public class PromotionPane extends VBox{
 	public void setMessage(String message) {
 		this.text.setText(message);
 	}
-	
-	
 }

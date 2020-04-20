@@ -1,4 +1,4 @@
-package application;
+package application.menu;
 
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;

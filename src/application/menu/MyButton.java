@@ -1,4 +1,4 @@
-package application;
+package application.menu;
 
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;

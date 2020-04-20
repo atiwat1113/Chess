@@ -33,6 +33,8 @@ public abstract class GameController {
 	public static void InitializeMap(String gameType) {
 		promotionPoint = null;
 		String[][] map = normalBoard;
+		turn = Side.WHITE;
+		size = new Point(map.length,map[0].length);
 		switch (gameType) {
 		case Games.NORMAL:
 			//map = noPawnBoard;
@@ -66,8 +68,6 @@ public abstract class GameController {
 		default:
 			System.out.println("wrong game type");
 		}
-		turn = Side.WHITE;
-		size = new Point(map.length,map[0].length);
 	}
 	public static int[] randomKey() {//"BRook","BKnight","BBishop","BQueen","BKing"
 		int[] returnKey = {-1,-1,-1,-1,-1,-1,-1,-1};
@@ -78,21 +78,24 @@ public abstract class GameController {
 		ranInt = ran.nextInt(4);
 		returnKey[ranInt*2+1]=2;
 		ranInt = ran.nextInt(6);
-		put(returnKey,3,ranInt);
+		returnKey = put(returnKey,3,ranInt);
 		ranInt = ran.nextInt(5);
-		put(returnKey,1,ranInt);
+		returnKey = put(returnKey,1,ranInt);
 		ranInt = ran.nextInt(4);
-		put(returnKey,1,ranInt);
-		put(returnKey,0,0);
-		put(returnKey,4,0);
-		put(returnKey,0,0);
+		returnKey = put(returnKey,1,ranInt);
+		returnKey = put(returnKey,0,0);
+		returnKey = put(returnKey,4,0);
+		returnKey = put(returnKey,0,0);
 		return returnKey;
 	}
 	public static int[] put(int[] l, int value, int index) {
 		int c = -1;
 		for (int i = 0; i<size.y; i++) {
 			if (l[i]==-1) c++;
-			if (c==index) l[i]=value;
+			if (c==index) {
+				l[i]=value;
+				break;
+			}
 		}
 		return l;
 	}
@@ -174,6 +177,12 @@ public abstract class GameController {
 	public static void printPointList(ArrayList<Point> pointList) {
 		for (Point point : pointList) {
 			System.out.print(print(point));
+		}
+		System.out.println();
+	}
+	public static void printArray(int[] pointList) {
+		for (int i : pointList) {
+			System.out.print(i + " ");
 		}
 		System.out.println();
 	}
