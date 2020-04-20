@@ -48,7 +48,7 @@ public abstract class GameController {
 			board = new KingOfTheHillBoard(map);
 			break;
 		case Games.THREECHECK:
-			board = new OtherBoard(map);
+			board = new ThreeCheckBoard(map);
 			break;
 		case Games.ANTICHESS:
 			board = new OtherBoard(map);
@@ -196,5 +196,11 @@ public abstract class GameController {
 		s3=s2+3;
 		s4=pp.indexOf("]",s3);
 		return "("+pp.substring(s1,s2)+","+pp.substring(s3,s4)+")";
+	}
+	public int[] getCheckNumber() {
+		if (board instanceof ThreeCheckBoard) {
+			return ((ThreeCheckBoard) board).getCheckNumber();
+		}
+		return null;
 	}
 }

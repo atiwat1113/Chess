@@ -16,7 +16,6 @@ public class HordeBoard extends NormalBoard{
 	}
 	public boolean winByEatenAll(Side side) {
 		ArrayList<Entity> allPieces=getAllPieces(side);
-		System.out.println(allPieces.size());
 		return allPieces.size()==0;
 	}
 	public boolean isCheck(Side side) {
