@@ -1,5 +1,8 @@
 package application.menu;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+
 import Resource.Resource;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -10,18 +13,27 @@ import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
-import javafx.scene.text.FontWeight;
+
 
 public class MyButton extends Button{
 	
 	private static final Color color = new Color((double) 180 / 255, (double) 180 / 255, (double) 180 / 255, 1);
+	private String font;
 	
 	public MyButton(String text) { // decorate button here.
 		super(text);
-		this.setPrefSize(200, 50);
-		//this.setFont(Font.loadFont(Resource.ROMAN_FONT, 20));
+		this.setPrefSize(300, 50);
 		this.setBackground(new Background(new BackgroundFill(color, CornerRadii.EMPTY, Insets.EMPTY)));
 		setListener();
+		
+		try {
+			font = URLDecoder.decode(Resource.ROMAN_FONT,"UTF-8");
+			} catch (UnsupportedEncodingException e) {
+				e.printStackTrace();
+			}
+		
+		this.setFont(Font.loadFont(font, 20));
+		this.setTextFill(Color.BLACK);
 	}
 	
 	private void setListener() {
@@ -45,11 +57,11 @@ public class MyButton extends Button{
 	}
 	
 	private void setMouseEnteredTextFont() {
-		//this.setFont(Font.loadFont(Resource.ROMAN_FONT, 30));
-		System.out.println(Resource.ROMAN_FONT);
+		this.setFont(Font.loadFont(font, 23));
+		//System.out.println(Resource.ROMAN_FONT);
 	}
 	
 	private void setMouseExitedTextFont() {
-		//this.setFont(Font.loadFont(Resource.ROMAN_FONT, 20));
+		this.setFont(Font.loadFont(font, 20));
 	}
 }

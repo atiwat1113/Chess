@@ -46,6 +46,9 @@ public class MenuPane extends StackPane{
 		MyButton playButton = new MyButton("Play");
 		MyButton exitButton = new MyButton("Exit");
 		
+		playButton.setPrefWidth(200);
+		exitButton.setPrefWidth(200);
+		
 		setPlayButtonListener(playButton);
 		setExitButtonListener(exitButton);
 		

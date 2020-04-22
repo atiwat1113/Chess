@@ -1,8 +1,5 @@
 package Resource;
 
-import java.io.File;
-import java.net.URL;
-import java.net.URLDecoder;
 
 public class Resource {
 	//background and icon
@@ -15,5 +12,5 @@ public class Resource {
 	
 	//font
 	public static final String ROMAN_FONT = ClassLoader.getSystemResource("Font/Roman.ttf").toString();
-	URL url = Paths.get("Font/Roman.ttf").toURI().toURL());
+	
 }

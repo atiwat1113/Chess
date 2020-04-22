@@ -1,19 +1,27 @@
 package application.menu;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+
 import Resource.Resource;
+import application.AppManager;
+import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundImage;
 import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 
 public class SelectModePane extends VBox{
 
 	private static final Image background = new Image(Resource.BACKGROUND);
+	private String font;
 	
 		public SelectModePane() {
 			this.setAlignment(Pos.CENTER);
@@ -21,8 +29,15 @@ public class SelectModePane extends VBox{
 			this.setPrefSize(750, 500);
 			setBackgroundWithImage();
 			
+			try {
+				font = URLDecoder.decode(Resource.ROMAN_FONT,"UTF-8");
+				} catch (UnsupportedEncodingException e) {
+					e.printStackTrace();
+				}
+			
 			Label select = new Label("Select Mode");
-			//select.setFont(Font.loadFont(Resource.ROMAN_FONT, 20));
+			select.setFont(Font.loadFont(font, 30));
+			select.setTextFill(Color.BLACK);
 			
 			SelectModeButton normal = new SelectModeButton("Normal");
 			SelectModeButton atomic = new SelectModeButton("Atomic");
@@ -30,8 +45,10 @@ public class SelectModePane extends VBox{
 			SelectModeButton threeCheck = new SelectModeButton("Three check");
 			SelectModeButton chess960 = new SelectModeButton("Chess960");
 			SelectModeButton horde = new SelectModeButton("Horde");
+			MyButton returnBtn = new MyButton("Return to Menu");
+			setReturnBtnListener(returnBtn);
 			
-			this.getChildren().addAll(select,normal,atomic,kingOfTheHill,threeCheck,chess960,horde);
+			this.getChildren().addAll(select,normal,atomic,kingOfTheHill,threeCheck,chess960,horde,returnBtn);
 			
 		}
 		
@@ -40,5 +57,16 @@ public class SelectModePane extends VBox{
 			BackgroundImage bgImg = new BackgroundImage(background, null, null, null, bgSize);
 			BackgroundImage[] bgImgA = { bgImg };
 			this.setBackground(new Background(bgImgA));
+		}
+		
+		private void setReturnBtnListener(MyButton returnBtn) {
+			returnBtn.setOnMouseClicked(new EventHandler<MouseEvent>() {
+
+				@Override
+				public void handle(MouseEvent arg0) {
+					// TODO Auto-generated method stub
+					AppManager.showMenu();
+				}
+			});
 		}
 }
