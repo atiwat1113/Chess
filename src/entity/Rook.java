@@ -2,6 +2,8 @@ package entity;
 
 import java.awt.Point;
 import java.util.ArrayList;
+
+import Resource.Sprites;
 import entity.base.*;
 import logic.*;
 import game.base.Board;

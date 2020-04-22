@@ -6,6 +6,8 @@ import entity.*;
 import java.awt.*;
 import java.util.ArrayList;
 
+import Resource.Sprites;
+
 //import java.lang.Math;
 //remain: win, draw
 public abstract class Board {

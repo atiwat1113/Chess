@@ -2,6 +2,8 @@ package entity;
 
 import java.awt.Point;
 import java.util.ArrayList;
+
+import Resource.Sprites;
 import entity.base.Entity;
 import entity.base.Updatable;
 import logic.*;

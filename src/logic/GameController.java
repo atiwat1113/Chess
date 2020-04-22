@@ -12,6 +12,7 @@ import java.awt.*;
 import java.util.*;
 import java.util.Random;
 
+import Resource.Sprites;
 import application.AppManager;
 
 public abstract class GameController {

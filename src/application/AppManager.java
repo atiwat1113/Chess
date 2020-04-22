@@ -27,6 +27,10 @@ public class AppManager {
 		AppManager.scene = scene;
 	}
 	
+	public static void setMenuPane(MenuPane menuPane) {
+		AppManager.menuPane = menuPane;
+	}
+
 	public static void showMenu() {
 		scene.setRoot(menuPane);
 		stage.sizeToScene();
@@ -52,10 +56,6 @@ public class AppManager {
 	public static void showGamePane() {
 		scene.setRoot(gamePane);
 		stage.sizeToScene();
-	}
-
-	public static void setMenuPane(MenuPane menuPane) {
-		AppManager.menuPane = menuPane;
 	}
 
 	public static void setGamePane(GamePane gamePane) {

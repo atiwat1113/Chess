@@ -1,27 +1,47 @@
 package application.menu;
 
+import Resource.BackgroundSprites;
 import application.*;
 import javafx.event.EventHandler;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.canvas.Canvas;
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
-import javafx.scene.control.Label;
+
+import javafx.scene.image.Image;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundImage;
+import javafx.scene.layout.BackgroundSize;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
-import javafx.scene.text.Font;
-import javafx.scene.text.FontWeight;
 
 
-public class MenuPane extends VBox{
+
+public class MenuPane extends StackPane{
+	
+	private static final Image background = new Image(BackgroundSprites.BACKGROUND);
+	private static final Image icon = new Image(BackgroundSprites.ICON);
 	
 	public MenuPane() {
 		this.setPrefSize(750, 500);
-		this.setAlignment(Pos.CENTER);
-		this.setSpacing(20);
+		setBackgroundWithImage();
 		
-		Label title = new Label("Chess Game");
-		title.setFont(Font.font("Tahoma", FontWeight.NORMAL, 30));
+		VBox menu = new VBox();
+		menu.setAlignment(Pos.CENTER);
+		menu.setSpacing(15);
+		menu.setTranslateY(-30);
+		
+		Canvas title = new Canvas();
+		title.setHeight(250);
+		title.setWidth(250);
+		GraphicsContext gc = title.getGraphicsContext2D();
+		setTitleImage(gc);
 		
 		MyButton playButton = new MyButton("Play");
 		MyButton exitButton = new MyButton("Exit");
@@ -29,7 +49,19 @@ public class MenuPane extends VBox{
 		setPlayButtonListener(playButton);
 		setExitButtonListener(exitButton);
 		
-		this.getChildren().addAll(title,playButton,exitButton);
+		menu.getChildren().addAll(title,playButton,exitButton);
+		this.getChildren().add(menu);
+	}
+	
+	private void setTitleImage(GraphicsContext gc) {
+		gc.drawImage(icon, 0, 0, 250, 250);
+	}
+	
+	private void setBackgroundWithImage() {
+		BackgroundSize bgSize = new BackgroundSize(750, 500, false, false, false, false);
+		BackgroundImage bgImg = new BackgroundImage(background, null, null, null, bgSize);
+		BackgroundImage[] bgImgA = { bgImg };
+		this.setBackground(new Background(bgImgA));
 	}
 	
 	private void setExitButtonListener(MyButton exitButton) {

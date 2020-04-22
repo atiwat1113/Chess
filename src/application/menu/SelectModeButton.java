@@ -26,9 +26,6 @@ public class SelectModeButton extends MyButton{
 		case "Three check" :
 			this.gameType = Games.THREECHECK;
 			break;
-		case "Anti chess" :
-			this.gameType = Games.ANTICHESS;
-			break;
 		case "Chess960" :
 			this.gameType = Games.CHESS960;
 			break;

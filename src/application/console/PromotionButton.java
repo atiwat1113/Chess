@@ -1,5 +1,6 @@
 package application.console;
 
+import Resource.Sprites;
 import application.AppManager;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -18,7 +19,6 @@ import javafx.scene.layout.CornerRadii;
 import javafx.scene.paint.Color;
 import logic.GameController;
 import logic.Side;
-import logic.Sprites;
 
 public class PromotionButton extends Button {
 	
@@ -31,8 +31,6 @@ public class PromotionButton extends Button {
 		this.setPrefSize(30, 30);
 		//this.setBackground(new Background(new BackgroundFill(Color.WHITE, CornerRadii.EMPTY, Insets.EMPTY)));
 		setBackgroundWithImage();
-		this.setBorder(new Border(new BorderStroke(Color.GRAY, BorderStrokeStyle.SOLID, 
-				CornerRadii.EMPTY, BorderWidths.DEFAULT)));
 		this.setListener();
 	}
 	
@@ -45,6 +43,34 @@ public class PromotionButton extends Button {
 				AppManager.setPromotionListener(text);
 			}
 		});
+		
+		this.setOnMouseEntered(new EventHandler<MouseEvent>() {
+
+			@Override
+			public void handle(MouseEvent arg0) {
+				// TODO Auto-generated method stub
+				highlightButton();
+			}
+		});
+		
+		this.setOnMouseExited(new EventHandler<MouseEvent>() {
+
+			@Override
+			public void handle(MouseEvent arg0) {
+				// TODO Auto-generated method stub
+				unhighlightButton();
+			}
+		});
+	}
+	
+	private void highlightButton() {
+		this.setBorder(new Border(new BorderStroke(Color.RED, BorderStrokeStyle.SOLID, 
+				CornerRadii.EMPTY, BorderWidths.DEFAULT)));
+	}
+	
+	private void unhighlightButton() {
+		this.setBorder(new Border(new BorderStroke(Color.GRAY, BorderStrokeStyle.SOLID, 
+				CornerRadii.EMPTY, BorderWidths.DEFAULT)));
 	}
 	
 	public void setBackgroundWithImage() {

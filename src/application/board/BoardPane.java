@@ -17,6 +17,7 @@ import javafx.scene.text.Text;
 import logic.*;
 import java.util.Scanner;
 
+import Resource.Sprites;
 import application.AppManager;
 
 import java.awt.Point;

@@ -3,6 +3,7 @@ package entity;
 import java.awt.Point;
 import java.util.ArrayList;
 
+import Resource.Sprites;
 import entity.base.Entity;
 import logic.*;
 import game.base.Board;
