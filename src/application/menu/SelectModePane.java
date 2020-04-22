@@ -1,6 +1,6 @@
 package application.menu;
 
-import Resource.BackgroundSprites;
+import Resource.Resource;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
@@ -13,7 +13,7 @@ import javafx.scene.text.FontWeight;
 
 public class SelectModePane extends VBox{
 
-	private static final Image background = new Image(BackgroundSprites.BACKGROUND);
+	private static final Image background = new Image(Resource.BACKGROUND);
 	
 		public SelectModePane() {
 			this.setAlignment(Pos.CENTER);
@@ -22,7 +22,7 @@ public class SelectModePane extends VBox{
 			setBackgroundWithImage();
 			
 			Label select = new Label("Select Mode");
-			select.setFont(Font.font("Tahoma", FontWeight.NORMAL, 25));
+			//select.setFont(Font.loadFont(Resource.ROMAN_FONT, 20));
 			
 			SelectModeButton normal = new SelectModeButton("Normal");
 			SelectModeButton atomic = new SelectModeButton("Atomic");

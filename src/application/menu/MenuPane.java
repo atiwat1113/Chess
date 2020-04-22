@@ -1,6 +1,6 @@
 package application.menu;
 
-import Resource.BackgroundSprites;
+import Resource.Resource;
 import application.*;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -25,8 +25,8 @@ import javafx.scene.layout.VBox;
 
 public class MenuPane extends StackPane{
 	
-	private static final Image background = new Image(BackgroundSprites.BACKGROUND);
-	private static final Image icon = new Image(BackgroundSprites.ICON);
+	private static final Image background = new Image(Resource.BACKGROUND);
+	private static final Image icon = new Image(Resource.ICON);
 	
 	public MenuPane() {
 		this.setPrefSize(750, 500);

@@ -1,0 +1,19 @@
+package Resource;
+
+import java.io.File;
+import java.net.URL;
+import java.net.URLDecoder;
+
+public class Resource {
+	//background and icon
+	public static final String BACKGROUND = ClassLoader.getSystemResource("Image\\background.jpg").toString();
+	public static final String ICON = ClassLoader.getSystemResource("Image\\icon.png").toString();
+	
+	//sound
+	public static final String BUTTON_CLICK = ClassLoader.getSystemResource("Sound\\buttonClick.mp3").toString();
+	public static final String CLOCK_TICKING = ClassLoader.getSystemResource("Sound\\clockTicking.mp3").toString();
+	
+	//font
+	public static final String ROMAN_FONT = ClassLoader.getSystemResource("Font/Roman.ttf").toString();
+	URL url = Paths.get("Font/Roman.ttf").toURI().toURL());
+}

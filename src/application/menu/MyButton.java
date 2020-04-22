@@ -1,5 +1,6 @@
 package application.menu;
 
+import Resource.Resource;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
@@ -18,7 +19,7 @@ public class MyButton extends Button{
 	public MyButton(String text) { // decorate button here.
 		super(text);
 		this.setPrefSize(200, 50);
-		this.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
+		//this.setFont(Font.loadFont(Resource.ROMAN_FONT, 20));
 		this.setBackground(new Background(new BackgroundFill(color, CornerRadii.EMPTY, Insets.EMPTY)));
 		setListener();
 	}
@@ -44,10 +45,11 @@ public class MyButton extends Button{
 	}
 	
 	private void setMouseEnteredTextFont() {
-		this.setFont(Font.font("Tahoma", FontWeight.BOLD, 20));
+		//this.setFont(Font.loadFont(Resource.ROMAN_FONT, 30));
+		System.out.println(Resource.ROMAN_FONT);
 	}
 	
 	private void setMouseExitedTextFont() {
-		this.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
+		//this.setFont(Font.loadFont(Resource.ROMAN_FONT, 20));
 	}
 }
