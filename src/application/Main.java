@@ -14,7 +14,7 @@ public class Main extends Application{
 		SelectModePane selectMode = new SelectModePane();
 		GamePane gamePane = new GamePane();
 		PromotionPane promotionPane = new PromotionPane();
-		SettingButton setting = new SettingButton();		
+		SettingPane setting = new SettingPane();		
 		
 		AppManager.setMenuPane(menu);
 		AppManager.setSelectModePane(selectMode);

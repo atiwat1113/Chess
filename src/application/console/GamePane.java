@@ -22,7 +22,7 @@ public class GamePane extends HBox{
 		this.setAlignment(Pos.CENTER);
 	}
 	
-	public static VBox getConsole(BoardPane boardPane, PromotionPane promotionPane, SettingButton setting) {
+	public static VBox getConsole(BoardPane boardPane, PromotionPane promotionPane, SettingPane setting) {
 		Text turn = boardPane.getTurnText();
 		VBox console = new VBox();
 		HBox topBox = new HBox();

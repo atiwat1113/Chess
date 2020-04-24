@@ -15,7 +15,7 @@ public class AppManager {
 	private static GamePane gamePane;
 	private static BoardPane boardPane;
 	private static PromotionPane promotionPane;
-	private static SettingButton setting;
+	private static SettingPane setting;
 	private static String gameType;
 	
 	
@@ -82,11 +82,11 @@ public class AppManager {
 		AppManager.promotionPane = promotionPane;
 	}
 
-	public static SettingButton getSetting() {
+	public static SettingPane getSetting() {
 		return setting;
 	}
 
-	public static void setSetting(SettingButton setting) {
+	public static void setSetting(SettingPane setting) {
 		AppManager.setting = setting;
 	}
 	

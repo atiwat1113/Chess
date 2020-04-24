@@ -13,17 +13,18 @@ import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 
 
 public class MyButton extends Button{
 	
-	private static final Color color = new Color((double) 180 / 255, (double) 180 / 255, (double) 180 / 255, 1);
+	private static final Color color = new Color((double) 195 / 255, (double) 195 / 255, (double) 195 / 255, 1);
 	private String font;
 	
 	public MyButton(String text) { // decorate button here.
 		super(text);
 		this.setPrefSize(300, 50);
-		this.setBackground(new Background(new BackgroundFill(color, CornerRadii.EMPTY, Insets.EMPTY)));
+		this.setBackground(new Background(new BackgroundFill(color, CornerRadii.EMPTY, new Insets(3))));
 		setListener();
 		
 		try {
@@ -57,11 +58,13 @@ public class MyButton extends Button{
 	}
 	
 	private void setMouseEnteredTextFont() {
-		this.setFont(Font.loadFont(font, 23));
+		this.setFont(Font.loadFont(font, 22));
+		this.setBackground(new Background(new BackgroundFill(color, CornerRadii.EMPTY, Insets.EMPTY)));
 		//System.out.println(Resource.ROMAN_FONT);
 	}
 	
 	private void setMouseExitedTextFont() {
 		this.setFont(Font.loadFont(font, 20));
+		this.setBackground(new Background(new BackgroundFill(color, CornerRadii.EMPTY, new Insets(3))));
 	}
 }
