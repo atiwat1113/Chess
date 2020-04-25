@@ -20,7 +20,7 @@ public class Main extends Application{
 		AppManager.setPromotionPane(promotionPane);
 		AppManager.setSetting(setting);
 		AppManager.setStage(primaryStage);
-		
+		AppManager.setClickSoundStatus(true);
 	
 		Scene scene = new Scene(menu);
 		

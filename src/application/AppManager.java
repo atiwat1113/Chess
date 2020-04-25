@@ -17,6 +17,7 @@ public class AppManager {
 	private static PromotionPane promotionPane;
 	private static SettingPane setting;
 	private static String gameType;
+	private static boolean clickSoundStatus;
 	
 	
 	public static void setStage(Stage stage) {
@@ -117,5 +118,14 @@ public class AppManager {
 	public static void rotateBoard() {
 		boardPane.rotateBoard();
 	}
+
+	public static boolean isClickSoundStatus() {
+		return clickSoundStatus;
+	}
+
+	public static void setClickSoundStatus(boolean clickSoundStatus) {
+		AppManager.clickSoundStatus = clickSoundStatus;
+	}
+	
 	
 }

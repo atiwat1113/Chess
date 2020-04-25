@@ -5,6 +5,7 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 
 import Resource.Resource;
+import application.AppManager;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -49,30 +50,31 @@ public class MyButton extends Button{
 		
 		sound = new Media(soundUrl);
 		clickingSound = new MediaPlayer(sound);
-		clickingSound.setVolume(0.7);
+		clickingSound.setVolume(0.6);
 		
 	}
 	
 	public void playClickingSound() {
-		Thread thread = new Thread(() -> {
-			try {
-				Platform.runLater(new Runnable(){
-					@Override
-					public void run() {
-						// TODO Auto-generated method stub
-						
-						clickingSound.play();
-						//clickingSound = new MediaPlayer(sound);
-						clickingSound.seek(new Duration(0));
-					}
-				});
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		});
-		thread.start();
-		
+		if (AppManager.isClickSoundStatus()) {
+			Thread thread = new Thread(() -> {
+				try {
+					Platform.runLater(new Runnable(){
+						@Override
+						public void run() {
+							// TODO Auto-generated method stub
+							
+							clickingSound.play();
+							//clickingSound = new MediaPlayer(sound);
+							clickingSound.seek(new Duration(0));
+						}
+					});
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			});
+			thread.start();
+		}
 	}
 	
 	private void setListener() {
