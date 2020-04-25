@@ -73,6 +73,7 @@ public class MenuPane extends StackPane{
 			@Override
 			public void handle(MouseEvent arg0) {
 				// TODO Auto-generated method stub
+				exitButton.playClickingSound();
 				Alert alert = new Alert(AlertType.CONFIRMATION);
 				alert.setTitle("Exit");
 				alert.setHeaderText(null);
@@ -93,6 +94,7 @@ public class MenuPane extends StackPane{
 			@Override
 			public void handle(MouseEvent arg0) {
 				// TODO Auto-generated method stub
+				playButton.playClickingSound();
 				AppManager.showSelectMode();
 			}
 		});

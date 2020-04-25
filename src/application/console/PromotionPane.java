@@ -22,13 +22,13 @@ public class PromotionPane extends VBox{
 	private HBox selection;
 	
 	public PromotionPane() {
-		this.setPrefSize(160,80);
+		this.setPrefSize(160,100);
 		this.setBackground(new Background(new BackgroundFill(Color.GRAY, CornerRadii.EMPTY, Insets.EMPTY)));
 		this.setAlignment(Pos.TOP_LEFT);
 		
 		promotion = new VBox();
 		promotion.setAlignment(Pos.TOP_LEFT);
-		promotion.setSpacing(2);
+		promotion.setSpacing(5);
 		
 		selection = new HBox();
 		selection.setAlignment(Pos.CENTER_LEFT);

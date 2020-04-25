@@ -187,16 +187,39 @@ public class BoardPane extends GridPane {
 		if (moved) {
 			this.cellMap = GameController.getDisplayCellMap();//setting rotate-----------
 			for (BoardCell bc : this.getBoardCellList()) {
-				if (rotate) bc.setP(new Point(7-bc.getP().x,7-bc.getP().y));
 				bc.setMyCell(cellMap[bc.getP().x][bc.getP().y]);	
 				moved = false;
 			}
+			if(rotate) rotateBoard();
 		}
 		for (BoardCell bc : this.getBoardCellList()) {
 			if (!bc.equals(myBoardCell))
 				bc.update();
 		}
 		AppManager.displayMessage("");
+	}
+	
+	public void updateBoard() {
+		// TODO Auto-generated method stub
+		if (moved) {
+			this.cellMap = GameController.getDisplayCellMap();//setting rotate-----------
+			for (BoardCell bc : this.getBoardCellList()) {
+				bc.setMyCell(cellMap[bc.getP().x][bc.getP().y]);	
+				moved = false;
+			}
+			if(rotate) rotateBoard();
+		}
+		for (BoardCell bc : this.getBoardCellList()) {
+				bc.update();
+		}
+		AppManager.displayMessage("");
+	}
+	
+	public void rotateBoard() {
+		for (BoardCell bc : this.getBoardCellList()) {
+			bc.setP(new Point(7-bc.getP().x,7-bc.getP().y));
+			bc.setMyCell(cellMap[bc.getP().x][bc.getP().y]);
+		}
 	}
 	
 	public void promotion(String text) {
@@ -240,6 +263,14 @@ public class BoardPane extends GridPane {
 
 	public ObservableList<BoardCell> getBoardCellList() {
 		return boardCellList;
+	}
+
+	public boolean isRotate() {
+		return rotate;
+	}
+
+	public void setRotate(boolean rotate) {
+		this.rotate = rotate;
 	}
 
 	public Text getTurnText() {

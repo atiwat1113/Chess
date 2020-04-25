@@ -17,7 +17,7 @@ public class GamePane extends HBox{
 	public GamePane() {
 		this.setBackground(new Background(new BackgroundFill(Color.GRAY, CornerRadii.EMPTY, Insets.EMPTY)));
 		this.setPadding(new Insets(10));
-		this.setPrefSize(750, 500);
+		this.setPrefHeight(500);
 		this.setSpacing(10);	
 		this.setAlignment(Pos.CENTER);
 	}
@@ -27,8 +27,11 @@ public class GamePane extends HBox{
 		VBox console = new VBox();
 		HBox topBox = new HBox();
 		topBox.getChildren().addAll(promotionPane, setting);
+		topBox.setSpacing(10);
+		
 		console.getChildren().addAll(topBox,turn);
 		console.setPrefHeight(500);
+		console.setSpacing(10);
 		return console;
 	}
 }

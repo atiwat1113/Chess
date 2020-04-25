@@ -3,6 +3,7 @@ package application.menu;
 import application.*;
 import game.base.Games;
 import application.board.*;
+import application.console.GamePane;
 import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
 
@@ -44,11 +45,18 @@ public class SelectModeButton extends MyButton{
 			@Override
 			public void handle(MouseEvent arg0) {
 				// TODO Auto-generated method stub
-				AppManager.setGameType(gameType);
-				AppManager.setBoardPane(new BoardPane(gameType));
-				AppManager.setGamePaneNode();
-				AppManager.showGamePane();
+				startGame();
 			}
 		});
+	}
+	
+	private void startGame() {
+		this.playClickingSound();
+		GamePane gamePane = new GamePane();
+		AppManager.setGamePane(gamePane);
+		AppManager.setGameType(gameType);
+		AppManager.setBoardPane(new BoardPane(gameType));
+		AppManager.setGamePaneNode();
+		AppManager.showGamePane();
 	}
 }

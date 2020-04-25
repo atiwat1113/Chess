@@ -110,5 +110,12 @@ public class AppManager {
 		AppManager.gameType = gameType;
 	}
 	
+	public static void setRotate(boolean rotate) {
+		boardPane.setRotate(rotate);
+	}
+	
+	public static void rotateBoard() {
+		boardPane.rotateBoard();
+	}
 	
 }
