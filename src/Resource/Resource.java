@@ -11,6 +11,7 @@ public class Resource {
 	public static final String CLOCK_TICKING = ClassLoader.getSystemResource("Sound/clockTicking.mp3").toString();
 	public static final String ENTITY_SELECTED = ClassLoader.getSystemResource("Sound/selectedSound.mp3").toString();
 	public static final String WRONG_SELECTED = ClassLoader.getSystemResource("Sound/wrongPieceSelectedSound.mp3").toString();
+	public static final String GAME_MENU = ClassLoader.getSystemResource("Sound/gameMenuLoop.mp3").toString();
 	
 	//font
 	public static final String ROMAN_FONT = ClassLoader.getSystemResource("Font/Roman.ttf").toString();

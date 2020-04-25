@@ -1,10 +1,16 @@
 package application;
 
 import application.menu.*;
+
 import application.board.*;
 import application.console.*;
+import javafx.application.Platform;
 import javafx.scene.Scene;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
+import javafx.util.Duration;
+import Resource.Resource;
 
 public class AppManager {
 
@@ -18,6 +24,7 @@ public class AppManager {
 	private static SettingPane setting;
 	private static String gameType;
 	private static boolean clickSoundStatus;
+	private static MediaPlayer bgm = new MediaPlayer(new Media(Resource.GAME_MENU));
 	
 	
 	public static void setStage(Stage stage) {
@@ -127,5 +134,31 @@ public class AppManager {
 		AppManager.clickSoundStatus = clickSoundStatus;
 	}
 	
+	public static void playMenuBgm() {
+		Thread thread = new Thread(() -> {
+			try {
+				Platform.runLater(new Runnable(){
+					@Override
+					public void run() {
+						// TODO Auto-generated method stub
+						bgm.play();
+						bgm.setCycleCount(-1);
+					}
+				});
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		});
+		thread.start();
+	}
 	
+	
+	public static void stopMenuBgm() {
+		bgm.stop();
+	}
+	
+	public static void setMenuBgmVolume(double volume) {
+		bgm.setVolume(volume);
+	}
 }

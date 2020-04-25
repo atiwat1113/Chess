@@ -38,17 +38,17 @@ public class MyButton extends Button{
 		this.setBackground(new Background(new BackgroundFill(color, CornerRadii.EMPTY, new Insets(3))));
 		setListener();
 		
-		try {
-			font = URLDecoder.decode(Resource.ROMAN_FONT,"UTF-8");
-			soundUrl = URLDecoder.decode(Resource.BUTTON_CLICK,"UTF-8");
-			} catch (UnsupportedEncodingException e) {
-				e.printStackTrace();
-			}
+//		try {
+//			font = URLDecoder.decode(Resource.ROMAN_FONT,"UTF-8");
+//			soundUrl = URLDecoder.decode(Resource.BUTTON_CLICK,"UTF-8");
+//			} catch (UnsupportedEncodingException e) {
+//				e.printStackTrace();
+//			}
 		
-		this.setFont(Font.loadFont(font, fontSize));
+		this.setFont(Font.loadFont(Resource.ROMAN_FONT, fontSize));
 		this.setTextFill(Color.BLACK);
 		
-		sound = new Media(soundUrl);
+		sound = new Media(Resource.BUTTON_CLICK);
 		clickingSound = new MediaPlayer(sound);
 		clickingSound.setVolume(0.6);
 		
@@ -98,13 +98,13 @@ public class MyButton extends Button{
 	}
 	
 	private void setMouseEnteredTextFont() {
-		this.setFont(Font.loadFont(font, fontSize+2));
+		this.setFont(Font.loadFont(Resource.ROMAN_FONT, fontSize+2));
 		this.setBackground(new Background(new BackgroundFill(color, CornerRadii.EMPTY, Insets.EMPTY)));
 		//System.out.println(Resource.ROMAN_FONT);
 	}
 	
 	private void setMouseExitedTextFont() {
-		this.setFont(Font.loadFont(font, fontSize));
+		this.setFont(Font.loadFont(Resource.ROMAN_FONT, fontSize));
 		this.setBackground(new Background(new BackgroundFill(color, CornerRadii.EMPTY, new Insets(2))));
 	}
 

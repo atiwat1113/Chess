@@ -58,5 +58,6 @@ public class SelectModeButton extends MyButton{
 		AppManager.setBoardPane(new BoardPane(gameType));
 		AppManager.setGamePaneNode();
 		AppManager.showGamePane();
+		AppManager.stopMenuBgm();
 	}
 }

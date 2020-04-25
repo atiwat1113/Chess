@@ -1,5 +1,6 @@
 package application.console;
 
+import Resource.Resource;
 import application.AppManager;
 import application.menu.MyButton;
 import javafx.event.EventHandler;
@@ -61,7 +62,7 @@ public class SettingPane extends VBox {
 		public ReturnButton(String text) {
 			super(text);
 			this.setFontSize(14);
-			this.setFont(Font.loadFont(this.font, 14));
+			this.setFont(Font.loadFont(Resource.ROMAN_FONT, 14));
 			this.setPrefWidth(250);
 			
 		}
@@ -123,6 +124,7 @@ public class SettingPane extends VBox {
 				alert.showAndWait().ifPresent(response -> {
 					if (response == ButtonType.OK) {
 						AppManager.showMenu();
+						AppManager.playMenuBgm();
 					}
 				});
 			}

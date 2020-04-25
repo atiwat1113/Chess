@@ -21,6 +21,9 @@ public class Main extends Application{
 		AppManager.setSetting(setting);
 		AppManager.setStage(primaryStage);
 		AppManager.setClickSoundStatus(true);
+		AppManager.setMenuBgmVolume(0.3);
+		AppManager.playMenuBgm();
+		
 	
 		Scene scene = new Scene(menu);
 		
