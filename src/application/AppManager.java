@@ -9,7 +9,6 @@ import javafx.scene.Scene;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
-import javafx.util.Duration;
 import Resource.Resource;
 
 public class AppManager {
@@ -24,6 +23,7 @@ public class AppManager {
 	private static SettingPane setting;
 	private static String gameType;
 	private static boolean clickSoundStatus;
+	private static boolean rotateStatus;
 	private static MediaPlayer bgm = new MediaPlayer(new Media(Resource.GAME_MENU));
 	
 	
@@ -118,15 +118,12 @@ public class AppManager {
 		AppManager.gameType = gameType;
 	}
 	
-	public static void setRotate(boolean rotate) {
-		boardPane.setRotate(rotate);
-	}
 	
 	public static void rotateBoard() {
 		boardPane.rotateBoard();
 	}
 
-	public static boolean isClickSoundStatus() {
+	public static boolean getClickSoundStatus() {
 		return clickSoundStatus;
 	}
 
@@ -134,6 +131,14 @@ public class AppManager {
 		AppManager.clickSoundStatus = clickSoundStatus;
 	}
 	
+	public static boolean getRotateStatus() {
+		return rotateStatus;
+	}
+
+	public static void setRotateStatus(boolean rotateStatus) {
+		AppManager.rotateStatus = rotateStatus;
+	}
+
 	public static void playMenuBgm() {
 		Thread thread = new Thread(() -> {
 			try {

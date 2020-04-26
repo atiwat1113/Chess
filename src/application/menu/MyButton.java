@@ -55,7 +55,7 @@ public class MyButton extends Button{
 	}
 	
 	public void playClickingSound() {
-		if (AppManager.isClickSoundStatus()) {
+		if (AppManager.getClickSoundStatus()) {
 			Thread thread = new Thread(() -> {
 				try {
 					Platform.runLater(new Runnable(){

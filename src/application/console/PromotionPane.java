@@ -28,7 +28,7 @@ public class PromotionPane extends VBox{
 		
 		promotion = new VBox();
 		promotion.setAlignment(Pos.TOP_LEFT);
-		promotion.setSpacing(5);
+		promotion.setSpacing(7);
 		
 		selection = new HBox();
 		selection.setAlignment(Pos.CENTER_LEFT);

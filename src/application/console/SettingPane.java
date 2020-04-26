@@ -50,7 +50,7 @@ public class SettingPane extends VBox {
 
 		public MyCheckBox(String text) {
 			super(text);
-			this.setFont(new Font(18));
+			this.setFont(Font.loadFont(Resource.ROMAN_FONT, 15));
 
 		}
 	}
@@ -79,10 +79,10 @@ public class SettingPane extends VBox {
 				// TODO Auto-generated method stub
 				if (rotation.isSelected()) {
 					// System.out.println("selected");
-					AppManager.setRotate(true);
+					AppManager.setRotateStatus(true);
 				} else {
 					// System.out.println("deselected");
-					AppManager.setRotate(false);
+					AppManager.setRotateStatus(false);
 				}
 				if (GameController.getTurn() == Side.BLACK) {
 					// System.out.println(GameController.getTurn());
@@ -123,6 +123,7 @@ public class SettingPane extends VBox {
 				alert.setContentText("Do you want to return to menu?");
 				alert.showAndWait().ifPresent(response -> {
 					if (response == ButtonType.OK) {
+						AppManager.displayMessage("");
 						AppManager.showMenu();
 						AppManager.playMenuBgm();
 					}

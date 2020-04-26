@@ -39,14 +39,12 @@ public class BoardPane extends GridPane {
 	private Point currentSelectedPoint;
 	private ArrayList<Point> currentSelectedMoveList;
 	private Text turnText;
-	private boolean rotate;
 	private boolean moved;
 	private String promotionPiece;
 	private boolean isPromoted;
 
 	public BoardPane(String gameType) {
 		super();
-		this.rotate = false;
 		this.isPromoted = false;
 		
 		GameController.InitializeMap(gameType);
@@ -190,7 +188,7 @@ public class BoardPane extends GridPane {
 				bc.setMyCell(cellMap[bc.getP().x][bc.getP().y]);	
 				moved = false;
 			}
-			if(rotate) rotateBoard();
+			if(AppManager.getRotateStatus()) rotateBoard();
 		}
 		for (BoardCell bc : this.getBoardCellList()) {
 			if (!bc.equals(myBoardCell))
@@ -207,7 +205,7 @@ public class BoardPane extends GridPane {
 				bc.setMyCell(cellMap[bc.getP().x][bc.getP().y]);	
 				moved = false;
 			}
-			if(rotate) rotateBoard();
+			if(AppManager.getRotateStatus()) rotateBoard();
 		}
 		for (BoardCell bc : this.getBoardCellList()) {
 				bc.update();
@@ -265,14 +263,6 @@ public class BoardPane extends GridPane {
 		return boardCellList;
 	}
 
-	public boolean isRotate() {
-		return rotate;
-	}
-
-	public void setRotate(boolean rotate) {
-		this.rotate = rotate;
-	}
-
 	public Text getTurnText() {
 		return turnText;
 	}
@@ -292,4 +282,5 @@ public class BoardPane extends GridPane {
 			System.out.println();
 		}
 	}
+
 }
