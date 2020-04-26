@@ -53,11 +53,10 @@ public class SelectModeButton extends MyButton{
 	
 	private void startGame() {
 		this.playClickingSound();
-		GamePane gamePane = new GamePane();
-		AppManager.setGamePane(gamePane);
 		AppManager.setGameType(gameType);
 		AppManager.setBoardPane(new BoardPane(gameType));
-		AppManager.setGamePaneNode();
+		GamePane gamePane = new GamePane(AppManager.getBoardPane());
+		AppManager.setGamePane(gamePane);
 		AppManager.showGamePane();
 		AppManager.getStatusDisplay(Side.WHITE).startTurn();
 		AppManager.stopMenuBgm();

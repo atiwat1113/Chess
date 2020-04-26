@@ -7,24 +7,28 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import logic.GameController;
+import logic.Side;
 
 public class PlayerStatusDisplay extends VBox{
 		
 		private Label turn;
+		private Side side;
 		private int timePerTurn;
 		private int spareTime;
 		private Thread timerThread;
 		private Text spareTimeText;
 		private Text timePerTurnText;
+		private HBox timePane;
 		
-		public PlayerStatusDisplay(String text) {
-			turn = new Label(text);
+		public PlayerStatusDisplay(Side side) {
+			turn = new Label(side.toString());
+			this.side = side;
 			spareTime = 60;
 			timePerTurn = 30;
 			spareTimeText = new Text("01:00");
 			timePerTurnText = new Text("00:" + timePerTurn);
 			
-			HBox timePane = new HBox();
+			timePane = new HBox();
 			timePane.getChildren().addAll(spareTimeText,timePerTurnText);
 			timePane.setSpacing(25);
 			
@@ -32,11 +36,12 @@ public class PlayerStatusDisplay extends VBox{
 		}
 		
 		public void rotateDisplay() {
+			this.getChildren().add(this.getChildren().remove(0));
 			
 		}
 		
 		public void startTurn() {
-			turn.setText(GameController.getTurn()+" TURN");
+			setTurnText(true);
 			timerThread = new Thread(() -> {
 				while(true) {
 					try {
@@ -76,7 +81,7 @@ public class PlayerStatusDisplay extends VBox{
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			turn.setText(GameController.getTurn().toString());
+			setTurnText(false);
 			timePerTurn = 30;
 			update();
 		}
@@ -99,6 +104,9 @@ public class PlayerStatusDisplay extends VBox{
 				timePerTurnText.setText("00:0" + timePerTurn);
 		}
 		
-		
+		public void setTurnText(boolean isTurn) {
+			if(isTurn) turn.setText(this.side + " TURN");
+			else turn.setText(this.side.toString());
+		}
 	
 }

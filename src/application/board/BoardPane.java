@@ -38,7 +38,6 @@ public class BoardPane extends GridPane {
 	private BoardCell currenntSelectedBoardCell;
 	private Point currentSelectedPoint;
 	private ArrayList<Point> currentSelectedMoveList;
-	private Text turnText;
 	private boolean moved;
 	private String promotionPiece;
 	private boolean isPromoted;
@@ -48,8 +47,6 @@ public class BoardPane extends GridPane {
 		this.isPromoted = false;
 		
 		GameController.InitializeMap(gameType);
-		this.turnText = new Text(GameController.getTurn().toString() + " TURN");
-		turnText.setFont(Font.font("Tahoma", FontWeight.NORMAL, 25));
 		this.cellMap = GameController.getDisplayCellMap();//setting rotate-----
 		createBoardCell();
 		setBoardCellListener();
@@ -151,7 +148,7 @@ public class BoardPane extends GridPane {
 			AppManager.displayMessage(GameController.getAnotherSide(GameController.getTurn()).toString() + " Check");
 		}
 		
-		this.turnText.setText(GameController.getTurn().toString() + " TURN");
+
 	}
 
 	private void showWalkPath() {
@@ -188,7 +185,7 @@ public class BoardPane extends GridPane {
 				bc.setMyCell(cellMap[bc.getP().x][bc.getP().y]);	
 				moved = false;
 			}
-			if(AppManager.getRotateStatus()) rotateBoard();
+			if(AppManager.getRotateStatus()) AppManager.rotateBoard();
 		}
 		for (BoardCell bc : this.getBoardCellList()) {
 			if (!bc.equals(myBoardCell))
@@ -205,7 +202,7 @@ public class BoardPane extends GridPane {
 				bc.setMyCell(cellMap[bc.getP().x][bc.getP().y]);	
 				moved = false;
 			}
-			if(AppManager.getRotateStatus()) rotateBoard();
+			if(AppManager.getRotateStatus()) AppManager.rotateBoard();
 		}
 		for (BoardCell bc : this.getBoardCellList()) {
 				bc.update();
@@ -229,7 +226,6 @@ public class BoardPane extends GridPane {
 		AppManager.getStatusDisplay(GameController.getTurn()).startTurn();
 		updateBoard(this.getCurrenntSelectedBoardCell());
 		getCurrenntSelectedBoardCell().update();
-		getTurnText().setText(GameController.getTurn().toString() + " TURN");
 		GameController.setPromotion(null, Side.EMPTY);
 	}
 	
@@ -265,9 +261,6 @@ public class BoardPane extends GridPane {
 		return boardCellList;
 	}
 
-	public Text getTurnText() {
-		return turnText;
-	}
 	public static void print(Board board) {
 		System.out.println("  -a---b---c---d---e---f---g---h--");
 		for (int i = 0; i < 8; i++) {

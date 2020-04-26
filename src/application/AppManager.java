@@ -8,7 +8,11 @@ import javafx.application.Platform;
 import javafx.scene.Scene;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import logic.GameController;
 import logic.Side;
 import Resource.Resource;
 
@@ -53,10 +57,6 @@ public class AppManager {
 	
 	public static void showPromotion() {
 		AppManager.promotionPane.showPromotionPane();
-	}
-
-	public static void setGamePaneNode() {
-		gamePane.getChildren().addAll(boardPane,GamePane.getConsole(boardPane, promotionPane, setting));
 	}
 	
 	public static void showSelectMode() {
@@ -124,6 +124,9 @@ public class AppManager {
 	
 	public static void rotateBoard() {
 		boardPane.rotateBoard();
+		whiteDisplay.rotateDisplay();
+		blackDisplay.rotateDisplay();
+		gamePane.rotateStatusDisplay();
 	}
 
 	public static boolean getClickSoundStatus() {

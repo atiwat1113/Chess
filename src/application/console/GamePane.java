@@ -4,6 +4,7 @@ import Resource.Resource;
 import application.AppManager;
 import application.board.*;
 import application.console.*;
+import application.console.GamePane.Console;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
@@ -17,39 +18,54 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import logic.GameController;
+import logic.Side;
 
 public class GamePane extends HBox{
 	
-	public GamePane() {
+	private Console console;
+	
+	public GamePane(BoardPane boardPane) {
 		this.setBackground(new Background(new BackgroundFill(Color.GRAY, CornerRadii.EMPTY, Insets.EMPTY)));
 		this.setPadding(new Insets(10));
 		this.setPrefHeight(500);
 		this.setSpacing(20);	
-		this.setAlignment(Pos.CENTER);
+		this.setAlignment(Pos.CENTER);		
+		
+		console = new Console();
+		
+		this.getChildren().addAll(boardPane,console);
 	}
 	
-	public static VBox getConsole(BoardPane boardPane, PromotionPane promotionPane, SettingPane setting) {
-		Label gameMode = new Label("Game mode : " + AppManager.getGameType());
-		Text turn = boardPane.getTurnText();
-		VBox console = new VBox();
-		HBox topBox = new HBox();
-		PlayerStatusDisplay whiteDisplay = new PlayerStatusDisplay("WHITE");
-		PlayerStatusDisplay blackDisplay = new PlayerStatusDisplay("BLACK");
+	class Console extends VBox {
+		public Console() {
+			Label gameMode = new Label("Game mode : " + AppManager.getGameType());
+			HBox topBox = new HBox();
+			PlayerStatusDisplay whiteDisplay = new PlayerStatusDisplay(Side.WHITE);
+			PlayerStatusDisplay blackDisplay = new PlayerStatusDisplay(Side.BLACK);
+			
+			whiteDisplay.rotateDisplay();
+			
+			AppManager.setWhiteDisplay(whiteDisplay);
+			AppManager.setBlackDisplay(blackDisplay);
+			
+			gameMode.setFont(Font.loadFont(Resource.ROMAN_FONT, 20));
+			gameMode.setTextFill(Color.BLACK);
+			
+			topBox.getChildren().addAll(AppManager.getPromotionPane(), AppManager.getSetting());
+			topBox.setSpacing(10);
+			
+			this.getChildren().addAll(topBox,gameMode,blackDisplay,whiteDisplay);
+			this.setPrefHeight(500);
+			this.setSpacing(15);
+		}
 		
-		AppManager.setWhiteDisplay(whiteDisplay);
-		AppManager.setBlackDisplay(blackDisplay);
-		
-		gameMode.setFont(Font.loadFont(Resource.ROMAN_FONT, 20));
-		gameMode.setTextFill(Color.BLACK);
-		
-		topBox.getChildren().addAll(promotionPane, setting);
-		topBox.setSpacing(10);
-		
-		console.getChildren().addAll(topBox,gameMode,turn,whiteDisplay,blackDisplay);
-		console.setPrefHeight(500);
-		console.setSpacing(15);
-		return console;
+		public void rotateStatusDisplay() {
+			this.getChildren().add(this.getChildren().remove(2));
+			//System.out.println("rotate");
+		}
 	}
 	
-	
+	public void rotateStatusDisplay() {
+		console.rotateStatusDisplay();
+	}
 }
