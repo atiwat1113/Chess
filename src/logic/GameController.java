@@ -102,7 +102,7 @@ public abstract class GameController {
 		return board.getCellMap();
 	}
 	public static boolean isWin() {
-		return board.isWin(turn);
+		return board.isWin(turn) ;
 	}
 	public static boolean isDraw() {
 		return board.isDraw(turn);

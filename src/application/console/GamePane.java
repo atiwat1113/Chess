@@ -42,8 +42,27 @@ public class GamePane extends HBox{
 		
 		console.getChildren().addAll(topBox,gameMode,turn);
 		console.setPrefHeight(500);
-		console.setSpacing(10);
+		console.setSpacing(15);
 		return console;
+	}
+	
+	class PlayerStatusDisplay extends VBox {
+		
+		private Label turn;
+		private int timePerTurn;
+		private int spareTime;
+		
+		public PlayerStatusDisplay() {
+			this.spareTime = 60;
+		}
+		
+		public void rotateDisplay() {
+			
+		}
+		
+		public void update() {
+			this.timePerTurn = 30;
+		}
 	}
 	
 }

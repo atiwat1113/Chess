@@ -12,6 +12,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.scene.layout.*;
+import Resource.Resource;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;;
 
@@ -22,20 +23,21 @@ public class PromotionPane extends VBox{
 	private HBox selection;
 	
 	public PromotionPane() {
-		this.setPrefSize(160,100);
+		this.setPrefSize(200,100);
 		this.setBackground(new Background(new BackgroundFill(Color.GRAY, CornerRadii.EMPTY, Insets.EMPTY)));
 		this.setAlignment(Pos.TOP_LEFT);
+		this.setSpacing(15);
 		
 		promotion = new VBox();
 		promotion.setAlignment(Pos.TOP_LEFT);
-		promotion.setSpacing(7);
+		promotion.setSpacing(10);
 		
 		selection = new HBox();
 		selection.setAlignment(Pos.CENTER_LEFT);
 		selection.setSpacing(2);
 		
 		Label label = new Label("Select promotion");
-		label.setFont(Font.font("Tahoma", FontWeight.NORMAL, 16));
+		label.setFont(Font.loadFont(Resource.ROMAN_FONT, 14));
 		//change color label
 		PromotionButton queen = new PromotionButton("Q");
 		PromotionButton rook = new PromotionButton("R");
@@ -43,8 +45,8 @@ public class PromotionPane extends VBox{
 		PromotionButton knight = new PromotionButton("K");
 		
 		text = new Text();
-		text.setFont(Font.font("Tahoma", FontWeight.NORMAL, 16));
-		text.setFill(Color.RED.darker());
+		text.setFont(Font.loadFont(Resource.ROMAN_FONT, 15));
+		text.setFill(Color.DARKRED);
 		
 		selection.getChildren().addAll(queen,rook,bishop,knight);
 		promotion.getChildren().addAll(label,selection);

@@ -9,6 +9,7 @@ import javafx.scene.Scene;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
+import logic.Side;
 import Resource.Resource;
 
 public class AppManager {
@@ -22,6 +23,8 @@ public class AppManager {
 	private static PromotionPane promotionPane;
 	private static SettingPane setting;
 	private static String gameType;
+	private static PlayerStatusDisplay whiteDisplay;
+	private static PlayerStatusDisplay blackDisplay;
 	private static boolean clickSoundStatus;
 	private static boolean rotateStatus;
 	private static MediaPlayer bgm = new MediaPlayer(new Media(Resource.GAME_MENU));
@@ -135,6 +138,20 @@ public class AppManager {
 		return rotateStatus;
 	}
 
+	public static void setWhiteDisplay(PlayerStatusDisplay whiteDisplay) {
+		AppManager.whiteDisplay = whiteDisplay;
+	}
+
+	public static void setBlackDisplay(PlayerStatusDisplay blackDisplay) {
+		AppManager.blackDisplay = blackDisplay;
+	}
+
+	public static PlayerStatusDisplay getStatusDisplay(Side side) {
+		if(side == Side.BLACK) return blackDisplay;
+		else return whiteDisplay;
+		
+	}
+	
 	public static void setRotateStatus(boolean rotateStatus) {
 		AppManager.rotateStatus = rotateStatus;
 	}

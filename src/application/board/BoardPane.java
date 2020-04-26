@@ -53,6 +53,7 @@ public class BoardPane extends GridPane {
 		this.cellMap = GameController.getDisplayCellMap();//setting rotate-----
 		createBoardCell();
 		setBoardCellListener();
+		AppManager.getStatusDisplay(Side.WHITE).startTurn();
 	}
 
 	private void createBoardCell() {
@@ -113,9 +114,11 @@ public class BoardPane extends GridPane {
 			currentSelectedPoint = null;
 			//currentSelectedMoveList = null;
 			if(!isPromoted) {
+				AppManager.getStatusDisplay(GameController.getTurn()).endTurn();
 				GameController.nextTurn();
 				updateBoard(myBoardCell);
 				myBoardCell.update();
+				AppManager.getStatusDisplay(GameController.getTurn()).startTurn();
 			}
 		} 
 		
@@ -224,7 +227,9 @@ public class BoardPane extends GridPane {
 		setPromotionPiece(text);
 		GameController.promotion(this.getPromotionPiece());
 		setPromoted(false);
+		AppManager.getStatusDisplay(GameController.getTurn()).endTurn();
 		GameController.nextTurn();
+		AppManager.getStatusDisplay(GameController.getTurn()).startTurn();
 		updateBoard(this.getCurrenntSelectedBoardCell());
 		getCurrenntSelectedBoardCell().update();
 		getTurnText().setText(GameController.getTurn().toString() + " TURN");
