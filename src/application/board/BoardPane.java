@@ -53,7 +53,6 @@ public class BoardPane extends GridPane {
 		this.cellMap = GameController.getDisplayCellMap();//setting rotate-----
 		createBoardCell();
 		setBoardCellListener();
-		AppManager.getStatusDisplay(Side.WHITE).startTurn();
 	}
 
 	private void createBoardCell() {
@@ -144,9 +143,9 @@ public class BoardPane extends GridPane {
 		}
 		//print(GameController.getBoard());//---------------------------------
 		if (GameController.isWin()) 
-			showEndGameWindow(GameController.getAnotherSide(GameController.getTurn()).toString() + " WIN!!!\nDo you want to exit?");
+			showEndGameWindow(GameController.getAnotherSide(GameController.getTurn()).toString() + " WIN!!!\nReturn to Menu");
 		else if (GameController.isDraw()) 
-			showEndGameWindow("DRAW!!!\nDo you want to exit?");
+			showEndGameWindow("DRAW!!!\nReturn to Menu");
 		if (GameController.isCheck()) {
 			System.out.println(GameController.getAnotherSide(GameController.getTurn()).toString() + " Check");
 			AppManager.displayMessage(GameController.getAnotherSide(GameController.getTurn()).toString() + " Check");
@@ -169,16 +168,14 @@ public class BoardPane extends GridPane {
 	}
 	
 	public void showEndGameWindow(String text) {
-		Alert alert = new Alert(AlertType.CONFIRMATION);
+		Alert alert = new Alert(AlertType.INFORMATION);
 		alert.setTitle("End Game");
 		alert.setHeaderText(null);
 		alert.setContentText(text);
 		alert.showAndWait().ifPresent(response -> {
 			if (response == ButtonType.OK) {
-				System.exit(0);
-			}
-			else {
 				AppManager.showMenu();
+				AppManager.playMenuBgm();
 			}
 		});
 	}

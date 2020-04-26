@@ -1,6 +1,7 @@
 package application.console;
 
 import application.AppManager;
+import javafx.application.Platform;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -17,7 +18,7 @@ public class PlayerStatusDisplay extends VBox{
 		private Text timePerTurnText;
 		
 		public PlayerStatusDisplay(String text) {
-			turn.setText(text);
+			turn = new Label(text);
 			spareTime = 60;
 			timePerTurn = 30;
 			spareTimeText = new Text("01:00");
@@ -25,6 +26,7 @@ public class PlayerStatusDisplay extends VBox{
 			
 			HBox timePane = new HBox();
 			timePane.getChildren().addAll(spareTimeText,timePerTurnText);
+			timePane.setSpacing(25);
 			
 			this.getChildren().addAll(turn,timePane);
 		}
@@ -38,10 +40,6 @@ public class PlayerStatusDisplay extends VBox{
 			timerThread = new Thread(() -> {
 				while(true) {
 					try {
-						if (spareTime == 0 && timePerTurn == 0) {
-							AppManager.getBoardPane().showEndGameWindow(GameController.getTurn() + "time out!\n" + GameController.getAnotherSide(GameController.getTurn()) + "Win!!!");
-							stop();
-						}
 						
 						Thread.sleep(1000);
 						
@@ -49,9 +47,21 @@ public class PlayerStatusDisplay extends VBox{
 							spareTime -= 1;
 						else 
 							timePerTurn -= 1;
-						update();
+						if (spareTime < 0) {
+							Platform.runLater(new Runnable(){
+								@Override
+								public void run() {
+									// TODO Auto-generated method stub
+									AppManager.getBoardPane().showEndGameWindow(GameController.getTurn() + " time out!\n" + GameController.getAnotherSide(GameController.getTurn()) + " Win!!!\nReturn to Menu");
+								}
+							});
+							stop();
+						}
+						
+						else 
+							update();
 					} catch (Exception e) {
-						e.printStackTrace();
+						//e.printStackTrace();
 						break;
 					}
 				}
@@ -78,9 +88,15 @@ public class PlayerStatusDisplay extends VBox{
 		
 		public void update() {
 			if(spareTime < 60) {
-				spareTimeText.setText("0:" + spareTime);
+				if(spareTime >= 10)
+					spareTimeText.setText("00:" + spareTime);
+				else
+					spareTimeText.setText("00:0" + spareTime);
 			}
-			timePerTurnText.setText("00:" + timePerTurn);
+			if(timePerTurn >= 10)
+				timePerTurnText.setText("00:" + timePerTurn);
+			else
+				timePerTurnText.setText("00:0" + timePerTurn);
 		}
 		
 		

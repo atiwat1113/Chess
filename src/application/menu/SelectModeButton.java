@@ -6,6 +6,7 @@ import application.board.*;
 import application.console.GamePane;
 import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
+import logic.Side;
 
 public class SelectModeButton extends MyButton{
 
@@ -58,6 +59,7 @@ public class SelectModeButton extends MyButton{
 		AppManager.setBoardPane(new BoardPane(gameType));
 		AppManager.setGamePaneNode();
 		AppManager.showGamePane();
+		AppManager.getStatusDisplay(Side.WHITE).startTurn();
 		AppManager.stopMenuBgm();
 	}
 }

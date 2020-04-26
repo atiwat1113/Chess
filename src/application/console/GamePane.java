@@ -33,6 +33,11 @@ public class GamePane extends HBox{
 		Text turn = boardPane.getTurnText();
 		VBox console = new VBox();
 		HBox topBox = new HBox();
+		PlayerStatusDisplay whiteDisplay = new PlayerStatusDisplay("WHITE");
+		PlayerStatusDisplay blackDisplay = new PlayerStatusDisplay("BLACK");
+		
+		AppManager.setWhiteDisplay(whiteDisplay);
+		AppManager.setBlackDisplay(blackDisplay);
 		
 		gameMode.setFont(Font.loadFont(Resource.ROMAN_FONT, 20));
 		gameMode.setTextFill(Color.BLACK);
@@ -40,29 +45,11 @@ public class GamePane extends HBox{
 		topBox.getChildren().addAll(promotionPane, setting);
 		topBox.setSpacing(10);
 		
-		console.getChildren().addAll(topBox,gameMode,turn);
+		console.getChildren().addAll(topBox,gameMode,turn,whiteDisplay,blackDisplay);
 		console.setPrefHeight(500);
 		console.setSpacing(15);
 		return console;
 	}
 	
-	class PlayerStatusDisplay extends VBox {
-		
-		private Label turn;
-		private int timePerTurn;
-		private int spareTime;
-		
-		public PlayerStatusDisplay() {
-			this.spareTime = 60;
-		}
-		
-		public void rotateDisplay() {
-			
-		}
-		
-		public void update() {
-			this.timePerTurn = 30;
-		}
-	}
 	
 }
