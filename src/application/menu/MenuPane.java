@@ -35,11 +35,11 @@ public class MenuPane extends StackPane{
 		VBox menu = new VBox();
 		menu.setAlignment(Pos.CENTER);
 		menu.setSpacing(15);
-		menu.setTranslateY(-30);
+		menu.setTranslateY(-50);
 		
 		Canvas title = new Canvas();
-		title.setHeight(250);
-		title.setWidth(250);
+		title.setHeight(300);
+		title.setWidth(300);
 		GraphicsContext gc = title.getGraphicsContext2D();
 		setTitleImage(gc);
 		
@@ -59,7 +59,7 @@ public class MenuPane extends StackPane{
 	}
 	
 	private void setTitleImage(GraphicsContext gc) {
-		gc.drawImage(icon, 0, 0, 250, 250);
+		gc.drawImage(icon, 0, 0, 300, 300);
 	}
 	
 	private void setBackgroundWithImage() {

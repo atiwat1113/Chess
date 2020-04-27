@@ -64,6 +64,8 @@ public class PlayerStatusDisplay extends VBox {
 		this.setSpacing(5);
 		this.setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, new CornerRadii(15), BorderWidths.DEFAULT)));
 		this.getChildren().addAll(turn, timePane);
+		
+		AppManager.setSoundEffectVolume(0.5);
 	}
 
 	public void rotateDisplay() {
@@ -79,9 +81,12 @@ public class PlayerStatusDisplay extends VBox {
 					try {
 	
 						Thread.sleep(1000);
-	
-						if (timePerTurn == 0)
+						if(spareTime <= 30 || timePerTurn == 10)
+							AppManager.playClockTick();
+						if (timePerTurn == 0) {
+							if(spareTime > 30) AppManager.stopClockTick();
 							spareTime -= 1;
+						}
 						else
 							timePerTurn -= 1;
 						if (spareTime < 0) {
@@ -102,6 +107,7 @@ public class PlayerStatusDisplay extends VBox {
 							update();
 					} catch (Exception e) {
 						// e.printStackTrace();
+						AppManager.stopClockTick();
 						break;
 					}
 				}

@@ -34,6 +34,7 @@ public class AppManager {
 	private static boolean clickSoundStatus;
 	private static boolean rotateStatus;
 	private static MediaPlayer bgm = new MediaPlayer(new Media(Resource.GAME_MENU));
+	private static MediaPlayer clockTick = new MediaPlayer(new Media(Resource.CLOCK_TICKING));
 
 	public static void setStage(Stage stage) {
 		AppManager.stage = stage;
@@ -175,6 +176,7 @@ public class AppManager {
 	}
 
 	public static void playMenuBgm() {
+		bgm.setCycleCount(-1);
 		Thread thread = new Thread(() -> {
 			try {
 				Platform.runLater(new Runnable() {
@@ -182,7 +184,6 @@ public class AppManager {
 					public void run() {
 						// TODO Auto-generated method stub
 						bgm.play();
-						bgm.setCycleCount(-1);
 					}
 				});
 			} catch (Exception e) {
@@ -199,5 +200,33 @@ public class AppManager {
 
 	public static void setMenuBgmVolume(double volume) {
 		bgm.setVolume(volume);
+	}
+	
+	public static void playClockTick() {
+		clockTick.setCycleCount(-1);
+		Thread thread = new Thread(() -> {
+			try {
+				Platform.runLater(new Runnable() {
+					@Override
+					public void run() {
+						// TODO Auto-generated method stub
+						clockTick.play();
+					}
+				});
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		});
+		thread.start();
+	}
+	
+	public static void stopClockTick() {
+		if(clockTick.getStatus().equals(MediaPlayer.Status.PLAYING))
+			clockTick.stop();
+	}
+	
+	public static void setSoundEffectVolume(double volume) {
+		clockTick.setVolume(volume);
 	}
 }

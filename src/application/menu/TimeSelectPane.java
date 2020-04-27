@@ -18,12 +18,12 @@ public class TimeSelectPane extends VBox {
 	
 	public TimeSelectPane() {
 		this.setPrefSize(750, 600);
-		this.setSpacing(12);
+		this.setSpacing(14);
 		this.setAlignment(Pos.CENTER);
 		setBackgroundWithImage();
 		
 		Label select = new Label("Select Time Limit");
-		select.setFont(Font.loadFont(Resource.ROMAN_FONT, 30));
+		select.setFont(Font.loadFont(Resource.ROMAN_FONT, 35));
 		select.setTextFill(Color.BLACK);
 		
 		TimeSelectButton thirtyMin = new TimeSelectButton("30 Minutes",20);

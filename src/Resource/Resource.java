@@ -10,7 +10,7 @@ public class Resource {
 	
 	//sound
 	public static final String BUTTON_CLICK = ClassLoader.getSystemResource("Sound/buttonClick.mp3").toString();
-	public static final String CLOCK_TICKING = ClassLoader.getSystemResource("Sound/clockTicking.mp3").toString();
+	public static final String CLOCK_TICKING = ClassLoader.getSystemResource("Sound/clockTicking.wav").toString();
 	public static final String ENTITY_SELECTED = ClassLoader.getSystemResource("Sound/selectedSound.mp3").toString();
 	public static final String WRONG_SELECTED = ClassLoader.getSystemResource("Sound/wrongPieceSelectedSound.mp3").toString();
 	public static final String GAME_MENU = ClassLoader.getSystemResource("Sound/gameMenuLoop.mp3").toString();

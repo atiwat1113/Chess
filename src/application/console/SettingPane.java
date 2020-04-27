@@ -139,6 +139,7 @@ public class SettingPane extends VBox {
 				alert.showAndWait().ifPresent(response -> {
 					if (response == ButtonType.OK) {
 						AppManager.displayMessage("");
+						AppManager.stopClockTick();
 						AppManager.showMenu();
 						AppManager.playMenuBgm();
 					}

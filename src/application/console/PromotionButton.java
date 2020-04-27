@@ -28,7 +28,7 @@ public class PromotionButton extends Button {
 	public PromotionButton(String text) {
 		super();
 		this.text = text;
-		this.setPrefSize(30, 30);
+		this.setPrefSize(40, 40);
 		//this.setBackground(new Background(new BackgroundFill(Color.WHITE, CornerRadii.EMPTY, Insets.EMPTY)));
 		setBackgroundWithImage();
 		this.setListener();
@@ -95,7 +95,7 @@ public class PromotionButton extends Button {
 		}
 		BackgroundFill bgFill = new BackgroundFill(Color.WHITE, CornerRadii.EMPTY, Insets.EMPTY);
 		BackgroundFill[] bgFillA = { bgFill };
-		BackgroundSize bgSize = new BackgroundSize(30, 30, false, false, false, false);
+		BackgroundSize bgSize = new BackgroundSize(40, 40, false, false, false, false);
 		BackgroundImage bgImg = new BackgroundImage(new Image(imgURL), null, null, null, bgSize);
 		BackgroundImage[] bgImgA = { bgImg };
 		this.setBackground(new Background(bgFillA, bgImgA));

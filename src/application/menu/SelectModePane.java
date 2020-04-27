@@ -42,7 +42,7 @@ public class SelectModePane extends VBox{
 			right.setSpacing(12);
 			
 			Label select = new Label("Select Mode");
-			select.setFont(Font.loadFont(Resource.ROMAN_FONT, 30));
+			select.setFont(Font.loadFont(Resource.ROMAN_FONT, 35));
 			select.setTextFill(Color.BLACK);
 			
 			SelectModeButton normal = new SelectModeButton("Normal",20);
