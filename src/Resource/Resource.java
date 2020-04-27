@@ -5,6 +5,8 @@ public class Resource {
 	//background and icon
 	public static final String BACKGROUND = ClassLoader.getSystemResource("Image\\background.jpg").toString();
 	public static final String ICON = ClassLoader.getSystemResource("Image\\icon.png").toString();
+	public static final String BUTTON_FRAME = ClassLoader.getSystemResource("Image\\buttonFrame.png").toString();
+	public static final String HIGHLIGHT_BUTTON_FRAME = ClassLoader.getSystemResource("Image\\highlightButtonFrame.png").toString();
 	
 	//sound
 	public static final String BUTTON_CLICK = ClassLoader.getSystemResource("Sound/buttonClick.mp3").toString();

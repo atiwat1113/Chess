@@ -11,6 +11,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
@@ -63,9 +64,24 @@ public class SettingPane extends VBox {
 			super(text,fontSize);
 			this.setFont(Font.loadFont(Resource.ROMAN_FONT, 14));
 			this.setPrefWidth(250);
-			
+			this.setBackground(new Background(new BackgroundFill(color,new CornerRadii(10), Insets.EMPTY)));
+			this.setBorder(new Border(
+					new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, new CornerRadii(10), BorderWidths.DEFAULT)));
+			setListener();
 		}
 		
+		@Override
+		protected void setMouseEnteredTextFont() {
+			this.setFont(Font.loadFont(Resource.ROMAN_FONT, this.fontSize+2));
+			//System.out.println(Resource.ROMAN_FONT);
+			
+		}
+		@Override
+		protected void setMouseExitedTextFont() {
+			this.setFont(Font.loadFont(Resource.ROMAN_FONT, fontSize));
+			
+			
+		}
 	
 		
 	}

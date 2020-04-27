@@ -9,10 +9,14 @@ import application.AppManager;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.control.Button;
+import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.BackgroundImage;
+import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.CornerRadii;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
@@ -29,13 +33,14 @@ public class MyButton extends Button{
 	private String soundUrl;
 	private Media sound;
 	private MediaPlayer clickingSound;
-	private double fontSize;
+	protected double fontSize;
 	
 	public MyButton(String text,double fontSize) { // decorate button here.
 		super(text);
 		this.fontSize = fontSize;
-		this.setPrefSize(300, 50);
-		this.setBackground(new Background(new BackgroundFill(color, new CornerRadii(5), new Insets(3))));
+		this.setPrefSize(340, 60);
+		this.setAlignment(Pos.CENTER);
+		setBackgroundWithImage(new Image(Resource.BUTTON_FRAME));
 		setListener();
 		
 //		try {
@@ -77,7 +82,7 @@ public class MyButton extends Button{
 		}
 	}
 	
-	private void setListener() {
+	protected void setListener() {
 		this.setOnMouseEntered(new EventHandler<MouseEvent>() {
 
 			@Override
@@ -97,20 +102,26 @@ public class MyButton extends Button{
 		});
 	}
 	
-	private void setMouseEnteredTextFont() {
+	protected void setMouseEnteredTextFont() {
 		this.setFont(Font.loadFont(Resource.ROMAN_FONT, fontSize+2));
-		this.setBackground(new Background(new BackgroundFill(color, new CornerRadii(5), Insets.EMPTY)));
 		//System.out.println(Resource.ROMAN_FONT);
+		setBackgroundWithImage(new Image(Resource.HIGHLIGHT_BUTTON_FRAME));
 	}
 	
-	private void setMouseExitedTextFont() {
+	protected void setMouseExitedTextFont() {
 		this.setFont(Font.loadFont(Resource.ROMAN_FONT, fontSize));
-		this.setBackground(new Background(new BackgroundFill(color, new CornerRadii(5), new Insets(2))));
+		setBackgroundWithImage(new Image(Resource.BUTTON_FRAME));
+		
 	}
 
 	public void setFontSize(int fontSize) {
 		this.fontSize = fontSize;
 	}
 	
-	
+	public void setBackgroundWithImage(Image img) {
+		BackgroundSize bgSize = new BackgroundSize(this.getPrefWidth(), this.getPrefHeight(), false, false, false, false);
+		BackgroundImage bgImg = new BackgroundImage(img, null, null, null, bgSize);
+		BackgroundImage[] bgImgA = { bgImg };
+		this.setBackground(new Background(bgImgA));
+	}
 }

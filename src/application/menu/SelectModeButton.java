@@ -1,10 +1,12 @@
 package application.menu;
 
+import Resource.Resource;
 import application.*;
 import game.base.Games;
 import application.board.*;
 import application.console.GamePane;
 import javafx.event.EventHandler;
+import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import logic.Side;
 
@@ -14,6 +16,8 @@ public class SelectModeButton extends MyButton{
 	
 	public SelectModeButton(String text,double fontSize) {
 		super(text,fontSize);
+		this.setPrefWidth(300);
+		setBackgroundWithImage(new Image(Resource.BUTTON_FRAME));
 		// TODO Auto-generated constructor stub
 		switch(text) {
 		case "Normal" :
@@ -37,10 +41,10 @@ public class SelectModeButton extends MyButton{
 		default :
 		}
 		
-		setListener();
+		setSelectListener();
 	}
 
-	private void setListener() {
+	private void setSelectListener() {
 		this.setOnMouseClicked(new EventHandler<MouseEvent>() {
 
 			@Override

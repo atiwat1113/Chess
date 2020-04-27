@@ -13,6 +13,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundImage;
 import javafx.scene.layout.BackgroundSize;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
@@ -25,10 +26,21 @@ public class SelectModePane extends VBox{
 	
 		public SelectModePane() {
 			this.setAlignment(Pos.CENTER);
-			this.setSpacing(7);
-			this.setPrefSize(750, 500);
+			this.setSpacing(35);
+			this.setPrefSize(750, 600);
 			setBackgroundWithImage();
-				
+			
+			HBox selectBox = new HBox();
+			VBox left = new VBox();
+			VBox right = new VBox();
+			
+			selectBox.setAlignment(Pos.CENTER);
+			selectBox.setSpacing(25);
+			left.setAlignment(Pos.CENTER);
+			left.setSpacing(12);
+			right.setAlignment(Pos.CENTER);
+			right.setSpacing(12);
+			
 			Label select = new Label("Select Mode");
 			select.setFont(Font.loadFont(Resource.ROMAN_FONT, 30));
 			select.setTextFill(Color.BLACK);
@@ -42,7 +54,10 @@ public class SelectModePane extends VBox{
 			MyButton returnBtn = new MyButton("Return to Menu",20);
 			setReturnBtnListener(returnBtn);
 			
-			this.getChildren().addAll(select,normal,atomic,kingOfTheHill,threeCheck,chess960,horde,returnBtn);
+			left.getChildren().addAll(normal,atomic,kingOfTheHill);
+			right.getChildren().addAll(threeCheck,chess960,horde);
+			selectBox.getChildren().addAll(left,right);
+			this.getChildren().addAll(select,selectBox,returnBtn);
 			
 		}
 		

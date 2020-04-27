@@ -29,7 +29,7 @@ public class MenuPane extends StackPane{
 	private static final Image icon = new Image(Resource.ICON);
 	
 	public MenuPane() {
-		this.setPrefSize(750, 500);
+		this.setPrefSize(750, 600);
 		setBackgroundWithImage();
 		
 		VBox menu = new VBox();
@@ -48,6 +48,8 @@ public class MenuPane extends StackPane{
 		
 		playButton.setPrefWidth(200);
 		exitButton.setPrefWidth(200);
+		playButton.setBackgroundWithImage(new Image(Resource.BUTTON_FRAME));
+		exitButton.setBackgroundWithImage(new Image(Resource.BUTTON_FRAME));
 		
 		setPlayButtonListener(playButton);
 		setExitButtonListener(exitButton);
@@ -61,7 +63,7 @@ public class MenuPane extends StackPane{
 	}
 	
 	private void setBackgroundWithImage() {
-		BackgroundSize bgSize = new BackgroundSize(750, 500, false, false, false, false);
+		BackgroundSize bgSize = new BackgroundSize(this.getPrefWidth(), this.getPrefHeight(), false, false, false, false);
 		BackgroundImage bgImg = new BackgroundImage(background, null, null, null, bgSize);
 		BackgroundImage[] bgImgA = { bgImg };
 		this.setBackground(new Background(bgImgA));

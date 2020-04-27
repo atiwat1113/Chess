@@ -17,8 +17,8 @@ import javafx.scene.text.Font;
 public class TimeSelectPane extends VBox {
 	
 	public TimeSelectPane() {
-		this.setPrefSize(750, 500);
-		this.setSpacing(10);
+		this.setPrefSize(750, 600);
+		this.setSpacing(12);
 		this.setAlignment(Pos.CENTER);
 		setBackgroundWithImage();
 		

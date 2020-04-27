@@ -28,10 +28,10 @@ public class TimeSelectButton extends MyButton{
 		default :
 		}
 		
-		setListener();
+		setSelectListener();
 	}
 	
-	private void setListener() {
+	private void setSelectListener() {
 		this.setOnMouseClicked(new EventHandler<MouseEvent>() {
 
 			@Override
