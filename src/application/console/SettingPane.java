@@ -28,7 +28,7 @@ import logic.Side;
 public class SettingPane extends VBox {
 	public SettingPane() {
 		setPrefSize(200, 100);
-		this.setBackground(new Background(new BackgroundFill(Color.GRAY, CornerRadii.EMPTY, Insets.EMPTY)));
+		this.setBackground(new Background(new BackgroundFill(Color.GRAY, new CornerRadii(5), Insets.EMPTY)));
 //		this.setBorder(new Border(new BorderStroke(Color.GRAY, BorderStrokeStyle.SOLID, 
 //				CornerRadii.EMPTY, BorderWidths.DEFAULT)));
 		this.setSpacing(15);
@@ -36,7 +36,7 @@ public class SettingPane extends VBox {
 
 		MyCheckBox rotation = new MyCheckBox("rotate");
 		MyCheckBox clickSound = new MyCheckBox("click sound");
-		ReturnButton returnBtn = new ReturnButton("return to menu");
+		ReturnButton returnBtn = new ReturnButton("return to menu",14);
 
 		clickSound.setSelected(true);
 		setRotationListener(rotation);
@@ -59,9 +59,8 @@ public class SettingPane extends VBox {
 		
 		private Color color = new Color((double) 195 / 255, (double) 195 / 255, (double) 195 / 255, 1);
 
-		public ReturnButton(String text) {
-			super(text);
-			this.setFontSize(14);
+		public ReturnButton(String text,double fontSize) {
+			super(text,fontSize);
 			this.setFont(Font.loadFont(Resource.ROMAN_FONT, 14));
 			this.setPrefWidth(250);
 			

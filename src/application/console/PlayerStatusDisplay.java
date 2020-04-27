@@ -25,6 +25,7 @@ public class PlayerStatusDisplay extends VBox {
 	private Side side;
 	private int timePerTurn;
 	private int spareTime;
+	private boolean hasTimeLimit;
 	private Thread timerThread;
 	private Text spareTimeText;
 	private Text timePerTurnText;
@@ -33,13 +34,19 @@ public class PlayerStatusDisplay extends VBox {
 	public PlayerStatusDisplay(Side side) {
 		turn = new Label(side.toString());
 		this.side = side;
-		spareTime = 600;
+		spareTime = AppManager.getSpareTime();
+		hasTimeLimit = (spareTime == 0 ? false : true);
 		timePerTurn = 30;
 		spareTimeText = new Text();
 		timePerTurnText = new Text();
-		
-		setSpareTimeText();
-		setTimePerTurnText();
+		if(hasTimeLimit) {
+			setSpareTimeText();
+			setTimePerTurnText();
+		}
+		else {
+			spareTimeText.setText("-----");
+			timePerTurnText.setText("-----");
+		}
 		
 		turn.setFont(Font.loadFont(Resource.ROMAN_FONT,25));
 		spareTimeText.setFont(Font.loadFont(Resource.ROMAN_FONT,25));
@@ -66,50 +73,54 @@ public class PlayerStatusDisplay extends VBox {
 
 	public void startTurn() {
 		setTurnText(true);
-		timerThread = new Thread(() -> {
-			while (true) {
-				try {
-
-					Thread.sleep(1000);
-
-					if (timePerTurn == 0)
-						spareTime -= 1;
-					else
-						timePerTurn -= 1;
-					if (spareTime < 0) {
-						Platform.runLater(new Runnable() {
-							@Override
-							public void run() {
-								// TODO Auto-generated method stub
-								AppManager.getBoardPane()
-										.showEndGameWindow(GameController.getTurn() + " time out!\n"
-												+ GameController.getAnotherSide(GameController.getTurn())
-												+ " Win!!!\nReturn to Menu");
-							}
-						});
-						stop();
+		if(hasTimeLimit) {
+			timerThread = new Thread(() -> {
+				while (true) {
+					try {
+	
+						Thread.sleep(1000);
+	
+						if (timePerTurn == 0)
+							spareTime -= 1;
+						else
+							timePerTurn -= 1;
+						if (spareTime < 0) {
+							Platform.runLater(new Runnable() {
+								@Override
+								public void run() {
+									// TODO Auto-generated method stub
+									AppManager.getBoardPane()
+											.showEndGameWindow(GameController.getTurn() + " time out!\n"
+													+ GameController.getAnotherSide(GameController.getTurn())
+													+ " Win!!!\nReturn to Menu");
+								}
+							});
+							stop();
+						}
+	
+						else
+							update();
+					} catch (Exception e) {
+						// e.printStackTrace();
+						break;
 					}
-
-					else
-						update();
-				} catch (Exception e) {
-					// e.printStackTrace();
-					break;
 				}
-			}
-		});
-		timerThread.start();
+			});
+			timerThread.start();
+		}
 	}
 
 	public void endTurn() {
-		try {
-			stop();
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		if(hasTimeLimit) {
+			try {
+				stop();
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			timePerTurn = 30;
+			update();
 		}
-		timePerTurn = 30;
-		update();
 		setTurnText(false);
 	}
 

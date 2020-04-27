@@ -28,24 +28,18 @@ public class SelectModePane extends VBox{
 			this.setSpacing(7);
 			this.setPrefSize(750, 500);
 			setBackgroundWithImage();
-			
-			try {
-				font = URLDecoder.decode(Resource.ROMAN_FONT,"UTF-8");
-				} catch (UnsupportedEncodingException e) {
-					e.printStackTrace();
-				}
-			
+				
 			Label select = new Label("Select Mode");
-			select.setFont(Font.loadFont(font, 30));
+			select.setFont(Font.loadFont(Resource.ROMAN_FONT, 30));
 			select.setTextFill(Color.BLACK);
 			
-			SelectModeButton normal = new SelectModeButton("Normal");
-			SelectModeButton atomic = new SelectModeButton("Atomic");
-			SelectModeButton kingOfTheHill = new SelectModeButton("King of the hill");
-			SelectModeButton threeCheck = new SelectModeButton("Three check");
-			SelectModeButton chess960 = new SelectModeButton("Chess960");
-			SelectModeButton horde = new SelectModeButton("Horde");
-			MyButton returnBtn = new MyButton("Return to Menu");
+			SelectModeButton normal = new SelectModeButton("Normal",20);
+			SelectModeButton atomic = new SelectModeButton("Atomic",20);
+			SelectModeButton kingOfTheHill = new SelectModeButton("King of the hill",20);
+			SelectModeButton threeCheck = new SelectModeButton("Three check",20);
+			SelectModeButton chess960 = new SelectModeButton("Chess960",20);
+			SelectModeButton horde = new SelectModeButton("Horde",20);
+			MyButton returnBtn = new MyButton("Return to Menu",20);
 			setReturnBtnListener(returnBtn);
 			
 			this.getChildren().addAll(select,normal,atomic,kingOfTheHill,threeCheck,chess960,horde,returnBtn);
@@ -53,7 +47,7 @@ public class SelectModePane extends VBox{
 		}
 		
 		private void setBackgroundWithImage() {
-			BackgroundSize bgSize = new BackgroundSize(750, 500, false, false, false, false);
+			BackgroundSize bgSize = new BackgroundSize(this.getPrefWidth(), this.getPrefHeight(), false, false, false, false);
 			BackgroundImage bgImg = new BackgroundImage(background, null, null, null, bgSize);
 			BackgroundImage[] bgImgA = { bgImg };
 			this.setBackground(new Background(bgImgA));

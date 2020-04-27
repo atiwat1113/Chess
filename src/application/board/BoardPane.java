@@ -112,6 +112,7 @@ public class BoardPane extends GridPane {
 			if(!isPromoted) {
 				AppManager.getStatusDisplay(GameController.getTurn()).endTurn();
 				GameController.nextTurn();
+				checkEndGame();
 				updateBoard(myBoardCell);
 				myBoardCell.update();
 				AppManager.getStatusDisplay(GameController.getTurn()).startTurn();
@@ -139,10 +140,6 @@ public class BoardPane extends GridPane {
 			}
 		}
 		//print(GameController.getBoard());//---------------------------------
-		if (GameController.isWin()) 
-			showEndGameWindow(GameController.getAnotherSide(GameController.getTurn()).toString() + " WIN!!!\nReturn to Menu");
-		else if (GameController.isDraw()) 
-			showEndGameWindow("DRAW!!!\nReturn to Menu");
 		if (GameController.isCheck()) {
 			System.out.println(GameController.getAnotherSide(GameController.getTurn()).toString() + " Check");
 			AppManager.displayMessage(GameController.getAnotherSide(GameController.getTurn()).toString() + " Check");
@@ -151,6 +148,13 @@ public class BoardPane extends GridPane {
 
 	}
 
+	private void checkEndGame() {
+		if (GameController.isWin()) 
+			showEndGameWindow(GameController.getAnotherSide(GameController.getTurn()).toString() + " WIN!!!\nReturn to Menu");
+		else if (GameController.isDraw()) 
+			showEndGameWindow("DRAW!!!\nReturn to Menu");
+	}
+	
 	private void showWalkPath() {
 		for (BoardCell bc : this.getBoardCellList()) {
 			if (currentSelectedMoveList.contains(bc.getP())) {
@@ -169,12 +173,9 @@ public class BoardPane extends GridPane {
 		alert.setTitle("End Game");
 		alert.setHeaderText(null);
 		alert.setContentText(text);
-		alert.showAndWait().ifPresent(response -> {
-			if (response == ButtonType.OK) {
-				AppManager.showMenu();
-				AppManager.playMenuBgm();
-			}
-		});
+		alert.showAndWait();
+		AppManager.showMenu();
+		AppManager.playMenuBgm();
 	}
 	
 	public void updateBoard(BoardCell myBoardCell) {

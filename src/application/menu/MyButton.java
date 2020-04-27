@@ -29,13 +29,13 @@ public class MyButton extends Button{
 	private String soundUrl;
 	private Media sound;
 	private MediaPlayer clickingSound;
-	private int fontSize;
+	private double fontSize;
 	
-	public MyButton(String text) { // decorate button here.
+	public MyButton(String text,double fontSize) { // decorate button here.
 		super(text);
-		this.fontSize = 20;
+		this.fontSize = fontSize;
 		this.setPrefSize(300, 50);
-		this.setBackground(new Background(new BackgroundFill(color, CornerRadii.EMPTY, new Insets(3))));
+		this.setBackground(new Background(new BackgroundFill(color, new CornerRadii(5), new Insets(3))));
 		setListener();
 		
 //		try {
@@ -45,7 +45,7 @@ public class MyButton extends Button{
 //				e.printStackTrace();
 //			}
 		
-		this.setFont(Font.loadFont(Resource.ROMAN_FONT, fontSize));
+		this.setFont(Font.loadFont(Resource.ROMAN_FONT, this.fontSize));
 		this.setTextFill(Color.BLACK);
 		
 		sound = new Media(Resource.BUTTON_CLICK);
@@ -99,13 +99,13 @@ public class MyButton extends Button{
 	
 	private void setMouseEnteredTextFont() {
 		this.setFont(Font.loadFont(Resource.ROMAN_FONT, fontSize+2));
-		this.setBackground(new Background(new BackgroundFill(color, CornerRadii.EMPTY, Insets.EMPTY)));
+		this.setBackground(new Background(new BackgroundFill(color, new CornerRadii(5), Insets.EMPTY)));
 		//System.out.println(Resource.ROMAN_FONT);
 	}
 	
 	private void setMouseExitedTextFont() {
 		this.setFont(Font.loadFont(Resource.ROMAN_FONT, fontSize));
-		this.setBackground(new Background(new BackgroundFill(color, CornerRadii.EMPTY, new Insets(2))));
+		this.setBackground(new Background(new BackgroundFill(color, new CornerRadii(5), new Insets(2))));
 	}
 
 	public void setFontSize(int fontSize) {

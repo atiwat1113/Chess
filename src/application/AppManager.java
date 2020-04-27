@@ -22,11 +22,13 @@ public class AppManager {
 	private static Scene scene;
 	private static MenuPane menuPane;
 	private static SelectModePane selectModePane;
+	private static TimeSelectPane timeSelectPane;
 	private static GamePane gamePane;
 	private static BoardPane boardPane;
 	private static PromotionPane promotionPane;
 	private static SettingPane setting;
 	private static String gameType;
+	private static int spareTime;
 	private static PlayerStatusDisplay whiteDisplay;
 	private static PlayerStatusDisplay blackDisplay;
 	private static boolean clickSoundStatus;
@@ -60,6 +62,11 @@ public class AppManager {
 
 	public static void showSelectMode() {
 		scene.setRoot(selectModePane);
+		stage.sizeToScene();
+	}
+	
+	public static void showTimeSelect() {
+		scene.setRoot(timeSelectPane);
 		stage.sizeToScene();
 	}
 
@@ -100,12 +107,12 @@ public class AppManager {
 		AppManager.setting = setting;
 	}
 
-	public static SelectModePane getSelectModePane() {
-		return selectModePane;
-	}
-
 	public static void setSelectModePane(SelectModePane selectModePane) {
 		AppManager.selectModePane = selectModePane;
+	}
+
+	public static void setTimeSelectPane(TimeSelectPane timeSelectPane) {
+		AppManager.timeSelectPane = timeSelectPane;
 	}
 
 	public static void displayMessage(String message) {
@@ -137,6 +144,14 @@ public class AppManager {
 
 	public static boolean getRotateStatus() {
 		return rotateStatus;
+	}
+
+	public static int getSpareTime() {
+		return spareTime;
+	}
+
+	public static void setSpareTime(int spareTime) {
+		AppManager.spareTime = spareTime;
 	}
 
 	public static void setWhiteDisplay(PlayerStatusDisplay whiteDisplay) {

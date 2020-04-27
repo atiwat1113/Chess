@@ -11,11 +11,13 @@ public class Main extends Application {
 
 		MenuPane menu = new MenuPane();
 		SelectModePane selectMode = new SelectModePane();
+		TimeSelectPane timeSelect = new TimeSelectPane();
 		PromotionPane promotionPane = new PromotionPane();
 		SettingPane setting = new SettingPane();
 
 		AppManager.setMenuPane(menu);
 		AppManager.setSelectModePane(selectMode);
+		AppManager.setTimeSelectPane(timeSelect);
 		AppManager.setPromotionPane(promotionPane);
 		AppManager.setSetting(setting);
 		AppManager.setStage(primaryStage);

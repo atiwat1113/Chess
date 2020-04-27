@@ -12,8 +12,8 @@ public class SelectModeButton extends MyButton{
 
 	private String gameType;
 	
-	public SelectModeButton(String text) {
-		super(text);
+	public SelectModeButton(String text,double fontSize) {
+		super(text,fontSize);
 		// TODO Auto-generated constructor stub
 		switch(text) {
 		case "Normal" :
@@ -46,19 +46,15 @@ public class SelectModeButton extends MyButton{
 			@Override
 			public void handle(MouseEvent arg0) {
 				// TODO Auto-generated method stub
-				startGame();
+				setGame();
 			}
 		});
 	}
 	
-	private void startGame() {
+	private void setGame() {
 		this.playClickingSound();
 		AppManager.setGameType(gameType);
 		AppManager.setBoardPane(new BoardPane(gameType));
-		GamePane gamePane = new GamePane(AppManager.getBoardPane());
-		AppManager.setGamePane(gamePane);
-		AppManager.showGamePane();
-		AppManager.getStatusDisplay(Side.WHITE).startTurn();
-		AppManager.stopMenuBgm();
+		AppManager.showTimeSelect();
 	}
 }

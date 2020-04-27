@@ -43,8 +43,8 @@ public class MenuPane extends StackPane{
 		GraphicsContext gc = title.getGraphicsContext2D();
 		setTitleImage(gc);
 		
-		MyButton playButton = new MyButton("Play");
-		MyButton exitButton = new MyButton("Exit");
+		MyButton playButton = new MyButton("Play",20);
+		MyButton exitButton = new MyButton("Exit",20);
 		
 		playButton.setPrefWidth(200);
 		exitButton.setPrefWidth(200);
