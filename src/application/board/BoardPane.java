@@ -78,7 +78,7 @@ public class BoardPane extends GridPane {
 					} catch (Exception e1) {//NullEntityException WrongPieceException
 						// TODO Auto-generated catch block
 						AppManager.displayMessage(e1.getMessage());
-						System.out.println(e1.getMessage());
+						//System.out.println(e1.getMessage());
 //						Alert alert = new Alert(AlertType.WARNING);
 //						alert.setTitle("Warning");
 //						alert.setHeaderText(null);

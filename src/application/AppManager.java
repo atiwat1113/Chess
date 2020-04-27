@@ -32,16 +32,15 @@ public class AppManager {
 	private static boolean clickSoundStatus;
 	private static boolean rotateStatus;
 	private static MediaPlayer bgm = new MediaPlayer(new Media(Resource.GAME_MENU));
-	
-	
+
 	public static void setStage(Stage stage) {
 		AppManager.stage = stage;
 	}
-	
+
 	public static void setScene(Scene scene) {
 		AppManager.scene = scene;
 	}
-	
+
 	public static void setMenuPane(MenuPane menuPane) {
 		AppManager.menuPane = menuPane;
 	}
@@ -50,20 +49,20 @@ public class AppManager {
 		scene.setRoot(menuPane);
 		stage.sizeToScene();
 	}
-	
+
 	public static void hidePromotion() {
 		AppManager.promotionPane.hidePromotionPane();
 	}
-	
+
 	public static void showPromotion() {
 		AppManager.promotionPane.showPromotionPane();
 	}
-	
+
 	public static void showSelectMode() {
 		scene.setRoot(selectModePane);
 		stage.sizeToScene();
 	}
-	
+
 	public static void showGamePane() {
 		scene.setRoot(gamePane);
 		stage.sizeToScene();
@@ -76,7 +75,7 @@ public class AppManager {
 	public static void setPromotionListener(String text) {
 		boardPane.promotion(text);
 	}
-	
+
 	public static BoardPane getBoardPane() {
 		return boardPane;
 	}
@@ -100,7 +99,7 @@ public class AppManager {
 	public static void setSetting(SettingPane setting) {
 		AppManager.setting = setting;
 	}
-	
+
 	public static SelectModePane getSelectModePane() {
 		return selectModePane;
 	}
@@ -120,8 +119,7 @@ public class AppManager {
 	public static void setGameType(String gameType) {
 		AppManager.gameType = gameType;
 	}
-	
-	
+
 	public static void rotateBoard() {
 		boardPane.rotateBoard();
 		whiteDisplay.rotateDisplay();
@@ -136,7 +134,7 @@ public class AppManager {
 	public static void setClickSoundStatus(boolean clickSoundStatus) {
 		AppManager.clickSoundStatus = clickSoundStatus;
 	}
-	
+
 	public static boolean getRotateStatus() {
 		return rotateStatus;
 	}
@@ -150,11 +148,13 @@ public class AppManager {
 	}
 
 	public static PlayerStatusDisplay getStatusDisplay(Side side) {
-		if(side == Side.BLACK) return blackDisplay;
-		else return whiteDisplay;
-		
+		if (side == Side.BLACK)
+			return blackDisplay;
+		else
+			return whiteDisplay;
+
 	}
-	
+
 	public static void setRotateStatus(boolean rotateStatus) {
 		AppManager.rotateStatus = rotateStatus;
 	}
@@ -162,7 +162,7 @@ public class AppManager {
 	public static void playMenuBgm() {
 		Thread thread = new Thread(() -> {
 			try {
-				Platform.runLater(new Runnable(){
+				Platform.runLater(new Runnable() {
 					@Override
 					public void run() {
 						// TODO Auto-generated method stub
@@ -177,12 +177,11 @@ public class AppManager {
 		});
 		thread.start();
 	}
-	
-	
+
 	public static void stopMenuBgm() {
 		bgm.stop();
 	}
-	
+
 	public static void setMenuBgmVolume(double volume) {
 		bgm.setVolume(volume);
 	}

@@ -56,7 +56,8 @@ public class GamePane extends HBox{
 			
 			this.getChildren().addAll(topBox,gameMode,blackDisplay,whiteDisplay);
 			this.setPrefHeight(500);
-			this.setSpacing(15);
+			this.setAlignment(Pos.TOP_CENTER);
+			this.setSpacing(30);
 		}
 		
 		public void rotateStatusDisplay() {
