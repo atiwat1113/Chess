@@ -49,7 +49,7 @@ public class TimeSelectPane extends VBox {
 			@Override
 			public void handle(MouseEvent arg0) {
 				// TODO Auto-generated method stub
-				returnBtn.playClickingSound();
+				AppManager.playClickingSound();
 				AppManager.showSelectMode();
 			}
 		});

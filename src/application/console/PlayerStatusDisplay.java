@@ -65,7 +65,6 @@ public class PlayerStatusDisplay extends VBox {
 		this.setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, new CornerRadii(15), BorderWidths.DEFAULT)));
 		this.getChildren().addAll(turn, timePane);
 		
-		AppManager.setSoundEffectVolume(0.5);
 	}
 
 	public void rotateDisplay() {
@@ -173,4 +172,9 @@ public class PlayerStatusDisplay extends VBox {
 			turn.setText(this.side.toString());
 	}
 
+	public Thread getTimerThread() {
+		return timerThread;
+	}
+
+	
 }

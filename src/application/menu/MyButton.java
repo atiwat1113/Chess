@@ -31,8 +31,6 @@ public class MyButton extends Button{
 	private static final Color color = new Color((double) 195 / 255, (double) 195 / 255, (double) 195 / 255, 1);
 	protected String font;
 	private String soundUrl;
-	private Media sound;
-	private MediaPlayer clickingSound;
 	protected double fontSize;
 	
 	public MyButton(String text,double fontSize) { // decorate button here.
@@ -53,33 +51,7 @@ public class MyButton extends Button{
 		this.setFont(Font.loadFont(Resource.ROMAN_FONT, this.fontSize));
 		this.setTextFill(Color.BLACK);
 		
-		sound = new Media(Resource.BUTTON_CLICK);
-		clickingSound = new MediaPlayer(sound);
-		clickingSound.setVolume(0.6);
 		
-	}
-	
-	public void playClickingSound() {
-		if (AppManager.getClickSoundStatus()) {
-			Thread thread = new Thread(() -> {
-				try {
-					Platform.runLater(new Runnable(){
-						@Override
-						public void run() {
-							// TODO Auto-generated method stub
-							
-							clickingSound.play();
-							//clickingSound = new MediaPlayer(sound);
-							clickingSound.seek(new Duration(0));
-						}
-					});
-				} catch (Exception e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			});
-			thread.start();
-		}
 	}
 	
 	protected void setListener() {

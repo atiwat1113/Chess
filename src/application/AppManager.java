@@ -12,6 +12,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 import logic.GameController;
 import logic.Side;
 import Resource.Resource;
@@ -33,8 +34,11 @@ public class AppManager {
 	private static PlayerStatusDisplay blackDisplay;
 	private static boolean clickSoundStatus;
 	private static boolean rotateStatus;
+	private static MediaPlayer clickingSound = new MediaPlayer(new Media(Resource.BUTTON_CLICK));
 	private static MediaPlayer bgm = new MediaPlayer(new Media(Resource.GAME_MENU));
 	private static MediaPlayer clockTick = new MediaPlayer(new Media(Resource.CLOCK_TICKING));
+	private static MediaPlayer entitySelected = new MediaPlayer(new Media(Resource.ENTITY_SELECTED));
+	private static MediaPlayer wrongSelected = new MediaPlayer(new Media(Resource.WRONG_SELECTED));
 
 	public static void setStage(Stage stage) {
 		AppManager.stage = stage;
@@ -175,6 +179,75 @@ public class AppManager {
 		AppManager.rotateStatus = rotateStatus;
 	}
 
+	public static void playClickingSound() {
+		if (AppManager.getClickSoundStatus()) {
+			Thread thread = new Thread(() -> {
+				try {
+					Platform.runLater(new Runnable(){
+						@Override
+						public void run() {
+							// TODO Auto-generated method stub
+							
+							clickingSound.play();
+							//clickingSound = new MediaPlayer(sound);
+							clickingSound.seek(new Duration(0));
+						}
+					});
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			});
+			thread.start();
+		}
+	}
+	
+	public static void playEntitySelected() {
+		if (AppManager.getClickSoundStatus()) {
+			Thread thread = new Thread(() -> {
+				try {
+					Platform.runLater(new Runnable(){
+						@Override
+						public void run() {
+							// TODO Auto-generated method stub
+							
+							entitySelected.play();
+							//clickingSound = new MediaPlayer(sound);
+							entitySelected.seek(new Duration(0));
+						}
+					});
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			});
+			thread.start();
+		}
+	}
+	
+	public static void playWrongSelected() {
+		if (AppManager.getClickSoundStatus()) {
+			Thread thread = new Thread(() -> {
+				try {
+					Platform.runLater(new Runnable(){
+						@Override
+						public void run() {
+							// TODO Auto-generated method stub
+							
+							wrongSelected.play();
+							//clickingSound = new MediaPlayer(sound);
+							wrongSelected.seek(new Duration(0));
+						}
+					});
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			});
+			thread.start();
+		}
+	}
+	
 	public static void playMenuBgm() {
 		bgm.setCycleCount(-1);
 		Thread thread = new Thread(() -> {
@@ -226,7 +299,22 @@ public class AppManager {
 			clockTick.stop();
 	}
 	
+	public static void stopTimer() {
+		try {
+			whiteDisplay.stop();
+			blackDisplay.stop();
+			stopClockTick();
+			
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			//e.printStackTrace();
+		};
+	}
+	
 	public static void setSoundEffectVolume(double volume) {
 		clockTick.setVolume(volume);
+		clickingSound.setVolume(volume);
+		entitySelected.setVolume(volume*1.25);
+		wrongSelected.setVolume(volume*0.70);
 	}
 }

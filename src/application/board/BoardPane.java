@@ -20,6 +20,8 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import logic.*;
+import myException.NullPointException;
+
 import java.util.Scanner;
 
 import Resource.Sprites;
@@ -82,7 +84,10 @@ public class BoardPane extends GridPane {
 						addOnClickHandler(bc);
 					} catch (Exception e1) {//NullEntityException WrongPieceException
 						// TODO Auto-generated catch block
-						AppManager.displayMessage(e1.getMessage());
+						if(!(e1 instanceof NullPointerException)) {
+							AppManager.playWrongSelected();
+							AppManager.displayMessage(e1.getMessage());
+						}
 						//System.out.println(e1.getMessage());
 //						Alert alert = new Alert(AlertType.WARNING);
 //						alert.setTitle("Warning");
@@ -129,6 +134,7 @@ public class BoardPane extends GridPane {
 			currentSelectedMoveList = GameController.moveList(myBoardCell.getP());//setting rotate-----
 			//GameController.printPointList(currentSelectedMoveList);
 			if (myBoardCell.hasEntity() && GameController.isTurn(myBoardCell.getP(), GameController.getTurn())) {
+				AppManager.playEntitySelected();
 				if (!myBoardCell.isClicked()) {
 					showWalkPath();
 					currentSelectedPoint = myBoardCell.getP();
@@ -174,6 +180,7 @@ public class BoardPane extends GridPane {
 	}
 	
 	public void showEndGameWindow(String text) {
+		AppManager.stopTimer();
 		Alert alert = new Alert(AlertType.INFORMATION);
 		alert.setTitle("End Game");
 		alert.setHeaderText(null);

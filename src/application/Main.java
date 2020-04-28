@@ -24,6 +24,7 @@ public class Main extends Application {
 		AppManager.setClickSoundStatus(true);
 		AppManager.setMenuBgmVolume(0.3);
 		AppManager.playMenuBgm();
+		AppManager.setSoundEffectVolume(0.5);
 
 		Scene scene = new Scene(menu);
 

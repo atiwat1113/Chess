@@ -131,7 +131,7 @@ public class SettingPane extends VBox {
 			@Override
 			public void handle(MouseEvent arg0) {
 				// TODO Auto-generated method stub
-				returnBtn.playClickingSound();
+				AppManager.playClickingSound();
 				Alert alert = new Alert(AlertType.CONFIRMATION);
 				alert.setTitle("Return to menu");
 				alert.setHeaderText(null);
@@ -139,7 +139,7 @@ public class SettingPane extends VBox {
 				alert.showAndWait().ifPresent(response -> {
 					if (response == ButtonType.OK) {
 						AppManager.displayMessage("");
-						AppManager.stopClockTick();
+						AppManager.stopTimer();
 						AppManager.showMenu();
 						AppManager.playMenuBgm();
 					}
