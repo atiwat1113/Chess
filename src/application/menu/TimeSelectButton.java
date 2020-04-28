@@ -37,6 +37,7 @@ public class TimeSelectButton extends MyButton{
 			@Override
 			public void handle(MouseEvent arg0) {
 				// TODO Auto-generated method stub
+				AppManager.playClickingSound();
 				startGame();
 			}
 		});

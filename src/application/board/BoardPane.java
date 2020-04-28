@@ -134,7 +134,8 @@ public class BoardPane extends GridPane {
 			currentSelectedMoveList = GameController.moveList(myBoardCell.getP());//setting rotate-----
 			//GameController.printPointList(currentSelectedMoveList);
 			if (myBoardCell.hasEntity() && GameController.isTurn(myBoardCell.getP(), GameController.getTurn())) {
-				AppManager.playEntitySelected();
+				//AppManager.playEntitySelected();
+				AppManager.playClickingSound();
 				if (!myBoardCell.isClicked()) {
 					showWalkPath();
 					currentSelectedPoint = myBoardCell.getP();

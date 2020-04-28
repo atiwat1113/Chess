@@ -36,15 +36,15 @@ public class SettingPane extends VBox {
 		this.setAlignment(Pos.TOP_LEFT);
 
 		MyCheckBox rotation = new MyCheckBox("rotate");
-		MyCheckBox clickSound = new MyCheckBox("click sound");
+		MyCheckBox soundEffect = new MyCheckBox("sound effect");
 		ReturnButton returnBtn = new ReturnButton("return to menu",14);
 
-		clickSound.setSelected(true);
+		soundEffect.setSelected(true);
 		setRotationListener(rotation);
-		setClickSoundListener(clickSound);
+		setSoundEffectListener(soundEffect);
 		setReturnBtnListener(returnBtn);
 
-		this.getChildren().addAll(rotation, clickSound, returnBtn);
+		this.getChildren().addAll(rotation, soundEffect, returnBtn);
 	}
 
 	class MyCheckBox extends CheckBox {
@@ -108,7 +108,7 @@ public class SettingPane extends VBox {
 		});
 	}
 
-	private void setClickSoundListener(MyCheckBox clickSound) {
+	private void setSoundEffectListener(MyCheckBox clickSound) {
 		clickSound.setOnMouseClicked(new EventHandler<MouseEvent>() {
 
 			@Override
@@ -116,10 +116,10 @@ public class SettingPane extends VBox {
 				// TODO Auto-generated method stub
 				if (clickSound.isSelected()) {
 					// System.out.println("selected");
-					AppManager.setClickSoundStatus(true);
+					AppManager.setSoundEffectStatus(true);
 				} else {
 					// System.out.println("deselected");
-					AppManager.setClickSoundStatus(false);
+					AppManager.setSoundEffectStatus(false);
 				}
 			}
 		});

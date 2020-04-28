@@ -44,17 +44,21 @@ public class MenuPane extends StackPane{
 		setTitleImage(gc);
 		
 		MyButton playButton = new MyButton("Play",20);
+		MyButton settingButton = new MyButton("Setting", 20);
 		MyButton exitButton = new MyButton("Exit",20);
 		
 		playButton.setPrefWidth(200);
+		settingButton.setPrefWidth(200);
 		exitButton.setPrefWidth(200);
 		playButton.setBackgroundWithImage(new Image(Resource.BUTTON_FRAME));
+		settingButton.setBackgroundWithImage(new Image(Resource.BUTTON_FRAME));
 		exitButton.setBackgroundWithImage(new Image(Resource.BUTTON_FRAME));
 		
 		setPlayButtonListener(playButton);
+		setSettingButtonListener(settingButton);
 		setExitButtonListener(exitButton);
 		
-		menu.getChildren().addAll(title,playButton,exitButton);
+		menu.getChildren().addAll(title,playButton,settingButton,exitButton);
 		this.getChildren().add(menu);
 	}
 	
@@ -98,6 +102,19 @@ public class MenuPane extends StackPane{
 				// TODO Auto-generated method stub
 				AppManager.playClickingSound();
 				AppManager.showSelectMode();
+			}
+		});
+	}
+	
+	private void setSettingButtonListener(MyButton settingButton) {
+		settingButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
+
+			@Override
+			public void handle(MouseEvent arg0) {
+				// TODO Auto-generated method stub
+				AppManager.playClickingSound();
+				AppManager.showSettingMenu();
+				AppManager.setSliderStyle();
 			}
 		});
 	}
