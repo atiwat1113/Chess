@@ -152,7 +152,7 @@ public class BoardPane extends GridPane {
 		}
 		//print(GameController.getBoard());//---------------------------------
 		if (GameController.isCheck()) {
-			System.out.println(GameController.getAnotherSide(GameController.getTurn()).toString() + " Check");
+			//System.out.println(GameController.getAnotherSide(GameController.getTurn()).toString() + " Check");
 			AppManager.displayMessage(GameController.getAnotherSide(GameController.getTurn()).toString() + " Check");
 		}
 		

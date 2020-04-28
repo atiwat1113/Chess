@@ -39,6 +39,7 @@ public class AppManager {
 	private static MediaPlayer clockTick = new MediaPlayer(new Media(Resource.CLOCK_TICKING));
 	private static MediaPlayer entitySelected = new MediaPlayer(new Media(Resource.ENTITY_SELECTED));
 	private static MediaPlayer wrongSelected = new MediaPlayer(new Media(Resource.WRONG_SELECTED));
+	private static MediaPlayer promotionSound = new MediaPlayer(new Media(Resource.PROMOTION_SOUND));
 
 	public static void setStage(Stage stage) {
 		AppManager.stage = stage;
@@ -248,6 +249,29 @@ public class AppManager {
 		}
 	}
 	
+	public static void playPromotionSound() {
+		if (AppManager.getClickSoundStatus()) {
+			Thread thread = new Thread(() -> {
+				try {
+					Platform.runLater(new Runnable(){
+						@Override
+						public void run() {
+							// TODO Auto-generated method stub
+							
+							promotionSound.play();
+							//clickingSound = new MediaPlayer(sound);
+							promotionSound.seek(new Duration(0));
+						}
+					});
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			});
+			thread.start();
+		}
+	}
+	
 	public static void playMenuBgm() {
 		bgm.setCycleCount(-1);
 		Thread thread = new Thread(() -> {
@@ -316,5 +340,6 @@ public class AppManager {
 		clickingSound.setVolume(volume);
 		entitySelected.setVolume(volume*1.25);
 		wrongSelected.setVolume(volume*0.70);
+		promotionSound.setVolume(volume*0.25);
 	}
 }

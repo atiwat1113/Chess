@@ -39,6 +39,7 @@ public class PromotionButton extends Button {
 			@Override
 			public void handle(MouseEvent arg0) {
 				// TODO Auto-generated method stub
+				AppManager.playPromotionSound();
 				AppManager.hidePromotion();
 				AppManager.setPromotionListener(text);
 			}
