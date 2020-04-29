@@ -121,6 +121,7 @@ public class SettingPane extends VBox {
 				} else {
 					// System.out.println("deselected");
 					SoundManager.setSoundEffectStatus(false);
+					SoundManager.stopClockTick();
 				}
 			}
 		});

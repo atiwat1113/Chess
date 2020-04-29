@@ -183,6 +183,7 @@ public class BoardPane extends GridPane {
 	
 	public void showEndGameWindow(String text) {
 		AppManager.stopTimer();
+		SoundManager.playWinningSound();
 		Alert alert = new Alert(AlertType.INFORMATION);
 		alert.setTitle("End Game");
 		alert.setHeaderText(null);

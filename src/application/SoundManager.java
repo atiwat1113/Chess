@@ -13,6 +13,7 @@ public class SoundManager {
 	private static MediaPlayer clockTick = new MediaPlayer(new Media(Resource.CLOCK_TICKING));
 	private static MediaPlayer wrongSelected = new MediaPlayer(new Media(Resource.WRONG_SELECTED));
 	private static MediaPlayer promotionSound = new MediaPlayer(new Media(Resource.PROMOTION_SOUND));
+	private static MediaPlayer winning = new MediaPlayer(new Media(Resource.WINNING_SOUND));
 	private static boolean soundEffectStatus;
 	private static boolean bgmStatus;
 	
@@ -121,6 +122,29 @@ public class SoundManager {
 		}
 	}
 
+	public static void playWinningSound() {
+		if (soundEffectStatus) {
+			Thread thread = new Thread(() -> {
+				try {
+					Platform.runLater(new Runnable() {
+						@Override
+						public void run() {
+							// TODO Auto-generated method stub
+
+							winning.play();
+							// clickingSound = new MediaPlayer(sound);
+							winning.seek(new Duration(0));
+						}
+					});
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			});
+			thread.start();
+		}
+	}
+
 	public static void stopMenuBgm() {
 		if (bgm.getStatus().equals(MediaPlayer.Status.PLAYING))
 			bgm.stop();
@@ -135,7 +159,7 @@ public class SoundManager {
 	}
 
 	public static void playClockTick() {
-		if(soundEffectStatus) {
+		if(soundEffectStatus && !clockTick.getStatus().equals(MediaPlayer.Status.PLAYING)) {
 			clockTick.setCycleCount(-1);
 			Thread thread = new Thread(() -> {
 				try {
@@ -169,5 +193,6 @@ public class SoundManager {
 		clickingSound.setVolume(volume);
 		wrongSelected.setVolume(volume * 0.70);
 		promotionSound.setVolume(volume * 0.25);
+		winning.setVolume(volume);
 	}
 }

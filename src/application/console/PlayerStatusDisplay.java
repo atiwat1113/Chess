@@ -81,14 +81,15 @@ public class PlayerStatusDisplay extends VBox {
 					try {
 	
 						Thread.sleep(1000);
-						if(spareTime <= 30 || timePerTurn == 10)
-							SoundManager.playClockTick();
-						if (timePerTurn == 0) {
+						if(timePerTurn != 0) {
+							if(spareTime <= 30 || timePerTurn <= 10) 
+								SoundManager.playClockTick();
+							timePerTurn -= 1;
+						}
+						else {
 							if(spareTime > 30) SoundManager.stopClockTick();
 							spareTime -= 1;
 						}
-						else
-							timePerTurn -= 1;
 						if (spareTime < 0) {
 							Platform.runLater(new Runnable() {
 								@Override
