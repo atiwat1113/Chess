@@ -161,7 +161,7 @@ public class PlayerStatusDisplay extends VBox {
 	}
 	
 	private void setTimePerTurnText() {
-		if (timePerTurn >= 10)
+		if (timePerTurn >= 10) 
 			timePerTurnText.setText("00:" + timePerTurn);
 		else
 			timePerTurnText.setText("00:0" + timePerTurn);

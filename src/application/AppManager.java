@@ -17,6 +17,7 @@ import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import logic.Side;
@@ -223,7 +224,7 @@ public class AppManager {
 			@Override
 			public void handle(MouseEvent arg0) {
 				// TODO Auto-generated method stub
-				SoundManager.playWrongSelected();
+				//SoundManager.playWrongSelected();
 				AppManager.displayMessage("It's not your piece.");
 				removeCanvas();
 			}
@@ -240,6 +241,7 @@ public class AppManager {
 		transition.setNode(canvas);
 		transition.play();
 		boardPane.getChildren().add(canvas);
+		
 
 	}
 

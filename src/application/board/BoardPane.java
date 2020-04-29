@@ -108,7 +108,6 @@ public class BoardPane extends GridPane {
 	private void addOnClickHandler(BoardCell myBoardCell) throws Exception {
 		// TODO Auto-generated method stub
 		// System.out.println("clicked");
-		AppManager.removeCanvas();
 		currenntSelectedBoardCell = myBoardCell;
 		if (myBoardCell.isMoveable()) {
 			// currentSelectedPoint = new Point(myBoardCell.getP().y,myBoardCell.getP().x);
@@ -124,6 +123,7 @@ public class BoardPane extends GridPane {
 						@Override
 						public void run() {
 							// TODO Auto-generated method stub
+							AppManager.removeCanvas();
 							myBoardCell.update();
 							if (GameController.isPromotion()) {
 								setPromoted(true);

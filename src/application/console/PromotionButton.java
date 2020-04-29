@@ -41,7 +41,6 @@ public class PromotionButton extends Button {
 			public void handle(MouseEvent arg0) {
 				// TODO Auto-generated method stub
 				SoundManager.playPromotionSound();
-				AppManager.removeCanvas();
 				AppManager.hidePromotion();
 				AppManager.setPromotionListener(text);
 			}
