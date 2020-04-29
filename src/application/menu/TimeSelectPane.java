@@ -2,6 +2,7 @@ package application.menu;
 
 import Resource.Resource;
 import application.AppManager;
+import application.SoundManager;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
@@ -49,7 +50,7 @@ public class TimeSelectPane extends VBox {
 			@Override
 			public void handle(MouseEvent arg0) {
 				// TODO Auto-generated method stub
-				AppManager.playClickingSound();
+				SoundManager.playClickingSound();
 				AppManager.showSelectMode();
 			}
 		});

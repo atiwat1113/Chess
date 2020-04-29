@@ -2,6 +2,7 @@ package application.console;
 
 import Resource.Resource;
 import application.AppManager;
+import application.SoundManager;
 import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -81,9 +82,9 @@ public class PlayerStatusDisplay extends VBox {
 	
 						Thread.sleep(1000);
 						if(spareTime <= 30 || timePerTurn == 10)
-							AppManager.playClockTick();
+							SoundManager.playClockTick();
 						if (timePerTurn == 0) {
-							if(spareTime > 30) AppManager.stopClockTick();
+							if(spareTime > 30) SoundManager.stopClockTick();
 							spareTime -= 1;
 						}
 						else
@@ -106,7 +107,7 @@ public class PlayerStatusDisplay extends VBox {
 							update();
 					} catch (Exception e) {
 						// e.printStackTrace();
-						AppManager.stopClockTick();
+						SoundManager.stopClockTick();
 						break;
 					}
 				}

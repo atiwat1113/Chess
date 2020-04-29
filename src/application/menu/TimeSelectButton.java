@@ -1,6 +1,7 @@
 package application.menu;
 
 import application.AppManager;
+import application.SoundManager;
 import application.console.GamePane;
 import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
@@ -37,7 +38,7 @@ public class TimeSelectButton extends MyButton{
 			@Override
 			public void handle(MouseEvent arg0) {
 				// TODO Auto-generated method stub
-				AppManager.playClickingSound();
+				SoundManager.playClickingSound();
 				startGame();
 			}
 		});
@@ -49,6 +50,6 @@ public class TimeSelectButton extends MyButton{
 		AppManager.setGamePane(gamePane);
 		AppManager.showGamePane();
 		AppManager.getStatusDisplay(Side.WHITE).startTurn();
-		AppManager.stopMenuBgm();
+		SoundManager.stopMenuBgm();
 	}
 }

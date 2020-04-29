@@ -26,6 +26,7 @@ import java.util.Scanner;
 
 import Resource.Sprites;
 import application.AppManager;
+import application.SoundManager;
 
 import java.awt.Point;
 import java.util.ArrayList;
@@ -85,7 +86,7 @@ public class BoardPane extends GridPane {
 					} catch (Exception e1) {//NullEntityException WrongPieceException
 						// TODO Auto-generated catch block
 						if(!(e1 instanceof NullPointerException)) {
-							AppManager.playWrongSelected();
+							SoundManager.playWrongSelected();
 							AppManager.displayMessage(e1.getMessage());
 						}
 						//System.out.println(e1.getMessage());
@@ -135,7 +136,7 @@ public class BoardPane extends GridPane {
 			//GameController.printPointList(currentSelectedMoveList);
 			if (myBoardCell.hasEntity() && GameController.isTurn(myBoardCell.getP(), GameController.getTurn())) {
 				//AppManager.playEntitySelected();
-				AppManager.playClickingSound();
+				SoundManager.playClickingSound();
 				if (!myBoardCell.isClicked()) {
 					showWalkPath();
 					currentSelectedPoint = myBoardCell.getP();
@@ -188,7 +189,7 @@ public class BoardPane extends GridPane {
 		alert.setContentText(text);
 		alert.showAndWait();
 		AppManager.showMenu();
-		AppManager.playMenuBgm();
+		SoundManager.playMenuBgm();
 	}
 	
 	public void updateBoard(BoardCell myBoardCell) {

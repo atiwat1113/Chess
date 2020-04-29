@@ -2,6 +2,7 @@ package application.menu;
 
 import Resource.Resource;
 import application.AppManager;
+import application.SoundManager;
 import javafx.beans.InvalidationListener;
 import javafx.beans.Observable;
 import javafx.event.EventHandler;
@@ -39,8 +40,8 @@ public class SettingMenu extends VBox {
 		MyButton returnBtn = new MyButton("Return to Menu", 20);
 		setReturnBtnListener(returnBtn);
 
-		bgmSlider.setValue(AppManager.getMenuBgmVolume() * 100);
-		soundEffectSlider.setValue(AppManager.getSoundEffectVolume() * 100);
+		bgmSlider.setValue(SoundManager.getMenuBgmVolume() * 100);
+		soundEffectSlider.setValue(SoundManager.getSoundEffectVolume() * 100);
 		setBgmSliderListener();
 		setSoundEffectSliderListener();
 
@@ -54,7 +55,7 @@ public class SettingMenu extends VBox {
 			@Override
 			public void invalidated(Observable arg0) {
 				// TODO Auto-generated method stub
-				AppManager.setMenuBgmVolume(bgmSlider.getValue() / 100);
+				SoundManager.setMenuBgmVolume(bgmSlider.getValue() / 100);
 				// System.out.println(bgmSlider.getValue()/100);
 				String style = String.format("-fx-background-color: linear-gradient(to right, #2D819D %d%%, #CCCCCC %d%%);"
 						+ "-fx-pref-height:10;",
@@ -68,7 +69,7 @@ public class SettingMenu extends VBox {
 			@Override
 			public void handle(MouseEvent arg0) {
 				// TODO Auto-generated method stub
-				AppManager.playClickingSound();
+				SoundManager.playClickingSound();
 				
 			}
 		});
@@ -80,12 +81,12 @@ public class SettingMenu extends VBox {
 			@Override
 			public void invalidated(Observable arg0) {
 				// TODO Auto-generated method stub
-				AppManager.setSoundEffectVolume(soundEffectSlider.getValue() / 100);
+				SoundManager.setSoundEffectVolume(soundEffectSlider.getValue() / 100);
 				// System.out.println(soundEffectSlider.getValue() / 100);
 				String style = String.format("-fx-background-color: linear-gradient(to right, #2D819D %d%%, #CCCCCC %d%%);"
 						+ "-fx-pref-height:10;",
 	                      (int) soundEffectSlider.getValue(), (int) soundEffectSlider.getValue());
-					soundEffectSlider.lookup(".track").setStyle(style);
+				soundEffectSlider.lookup(".track").setStyle(style);
 			}
 		});
 
@@ -94,7 +95,7 @@ public class SettingMenu extends VBox {
 			@Override
 			public void handle(MouseEvent arg0) {
 				// TODO Auto-generated method stub
-				AppManager.playClickingSound();
+				SoundManager.playClickingSound();
 			}
 		});
 	}
@@ -105,7 +106,7 @@ public class SettingMenu extends VBox {
 			@Override
 			public void handle(MouseEvent arg0) {
 				// TODO Auto-generated method stub
-				AppManager.playClickingSound();
+				SoundManager.playClickingSound();
 				AppManager.showMenu();
 			}
 		});

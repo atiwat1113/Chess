@@ -31,14 +31,7 @@ public class AppManager {
 	private static int spareTime;
 	private static PlayerStatusDisplay whiteDisplay;
 	private static PlayerStatusDisplay blackDisplay;
-	private static boolean soundEffectStatus;
-	private static boolean bgmStatus;
 	private static boolean rotateStatus;
-	private static MediaPlayer clickingSound = new MediaPlayer(new Media(Resource.BUTTON_CLICK));
-	private static MediaPlayer bgm = new MediaPlayer(new Media(Resource.GAME_MENU));
-	private static MediaPlayer clockTick = new MediaPlayer(new Media(Resource.CLOCK_TICKING));
-	private static MediaPlayer wrongSelected = new MediaPlayer(new Media(Resource.WRONG_SELECTED));
-	private static MediaPlayer promotionSound = new MediaPlayer(new Media(Resource.PROMOTION_SOUND));
 
 	public static void setStage(Stage stage) {
 		AppManager.stage = stage;
@@ -148,21 +141,7 @@ public class AppManager {
 		gamePane.rotateStatusDisplay();
 	}
 
-	public static boolean getSoundEffectStatus() {
-		return soundEffectStatus;
-	}
-
-	public static void setSoundEffectStatus(boolean soundEffectStatus) {
-		AppManager.soundEffectStatus = soundEffectStatus;
-	}
-
-	public static boolean isBgmStatus() {
-		return bgmStatus;
-	}
-
-	public static void setBgmStatus(boolean bgmStatus) {
-		AppManager.bgmStatus = bgmStatus;
-	}
+	
 
 	public static boolean getRotateStatus() {
 		return rotateStatus;
@@ -196,138 +175,13 @@ public class AppManager {
 		AppManager.rotateStatus = rotateStatus;
 	}
 
-	public static void playClickingSound() {
-		if (soundEffectStatus) {
-			Thread thread = new Thread(() -> {
-				try {
-					Platform.runLater(new Runnable() {
-						@Override
-						public void run() {
-							// TODO Auto-generated method stub
-
-							clickingSound.play();
-							// clickingSound = new MediaPlayer(sound);
-							clickingSound.seek(new Duration(0));
-						}
-					});
-				} catch (Exception e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			});
-			thread.start();
-		}
-	}
-
-	public static void playWrongSelected() {
-		if (soundEffectStatus) {
-			Thread thread = new Thread(() -> {
-				try {
-					Platform.runLater(new Runnable() {
-						@Override
-						public void run() {
-							// TODO Auto-generated method stub
-
-							wrongSelected.play();
-							// clickingSound = new MediaPlayer(sound);
-							wrongSelected.seek(new Duration(0));
-						}
-					});
-				} catch (Exception e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			});
-			thread.start();
-		}
-	}
-
-	public static void playPromotionSound() {
-		if (soundEffectStatus) {
-			Thread thread = new Thread(() -> {
-				try {
-					Platform.runLater(new Runnable() {
-						@Override
-						public void run() {
-							// TODO Auto-generated method stub
-
-							promotionSound.play();
-							// clickingSound = new MediaPlayer(sound);
-							promotionSound.seek(new Duration(0));
-						}
-					});
-				} catch (Exception e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			});
-			thread.start();
-		}
-	}
-
-	public static void playMenuBgm() {
-		if (bgmStatus) {
-			bgm.setCycleCount(-1);
-			Thread thread = new Thread(() -> {
-				try {
-					Platform.runLater(new Runnable() {
-						@Override
-						public void run() {
-							// TODO Auto-generated method stub
-							bgm.play();
-						}
-					});
-				} catch (Exception e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			});
-			thread.start();
-		}
-	}
-
-	public static void stopMenuBgm() {
-		if (bgm.getStatus().equals(MediaPlayer.Status.PLAYING))
-			bgm.stop();
-	}
-
-	public static double getMenuBgmVolume() {
-		return bgm.getVolume();
-	}
-
-	public static void setMenuBgmVolume(double volume) {
-		bgm.setVolume(volume);
-	}
-
-	public static void playClockTick() {
-		clockTick.setCycleCount(-1);
-		Thread thread = new Thread(() -> {
-			try {
-				Platform.runLater(new Runnable() {
-					@Override
-					public void run() {
-						// TODO Auto-generated method stub
-						clockTick.play();
-					}
-				});
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		});
-		thread.start();
-	}
-
-	public static void stopClockTick() {
-		if (clockTick.getStatus().equals(MediaPlayer.Status.PLAYING))
-			clockTick.stop();
-	}
+	
 
 	public static void stopTimer() {
 		try {
 			whiteDisplay.stop();
 			blackDisplay.stop();
-			stopClockTick();
+			SoundManager.stopClockTick();
 
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -336,16 +190,7 @@ public class AppManager {
 		;
 	}
 
-	public static double getSoundEffectVolume() {
-		return clickingSound.getVolume();
-	}
-
-	public static void setSoundEffectVolume(double volume) {
-		clockTick.setVolume(volume);
-		clickingSound.setVolume(volume);
-		wrongSelected.setVolume(volume * 0.70);
-		promotionSound.setVolume(volume * 0.25);
-	}
+	
 
 	public static void setSliderStyle() {
 		settingMenu.getBgmSlider().lookup(".track")

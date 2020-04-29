@@ -2,6 +2,7 @@ package application.console;
 
 import Resource.Sprites;
 import application.AppManager;
+import application.SoundManager;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
@@ -39,7 +40,7 @@ public class PromotionButton extends Button {
 			@Override
 			public void handle(MouseEvent arg0) {
 				// TODO Auto-generated method stub
-				AppManager.playPromotionSound();
+				SoundManager.playPromotionSound();
 				AppManager.hidePromotion();
 				AppManager.setPromotionListener(text);
 			}

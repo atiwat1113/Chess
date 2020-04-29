@@ -2,6 +2,7 @@ package application.console;
 
 import Resource.Resource;
 import application.AppManager;
+import application.SoundManager;
 import application.menu.MyButton;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -116,10 +117,10 @@ public class SettingPane extends VBox {
 				// TODO Auto-generated method stub
 				if (clickSound.isSelected()) {
 					// System.out.println("selected");
-					AppManager.setSoundEffectStatus(true);
+					SoundManager.setSoundEffectStatus(true);
 				} else {
 					// System.out.println("deselected");
-					AppManager.setSoundEffectStatus(false);
+					SoundManager.setSoundEffectStatus(false);
 				}
 			}
 		});
@@ -131,7 +132,7 @@ public class SettingPane extends VBox {
 			@Override
 			public void handle(MouseEvent arg0) {
 				// TODO Auto-generated method stub
-				AppManager.playClickingSound();
+				SoundManager.playClickingSound();
 				Alert alert = new Alert(AlertType.CONFIRMATION);
 				alert.setTitle("Return to menu");
 				alert.setHeaderText(null);
@@ -141,7 +142,7 @@ public class SettingPane extends VBox {
 						AppManager.displayMessage("");
 						AppManager.stopTimer();
 						AppManager.showMenu();
-						AppManager.playMenuBgm();
+						SoundManager.playMenuBgm();
 					}
 				});
 			}

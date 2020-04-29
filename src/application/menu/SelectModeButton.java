@@ -56,7 +56,7 @@ public class SelectModeButton extends MyButton{
 	}
 	
 	private void setGame() {
-		AppManager.playClickingSound();
+		SoundManager.playClickingSound();
 		AppManager.setGameType(gameType);
 		AppManager.setBoardPane(new BoardPane(gameType));
 		AppManager.showTimeSelect();
