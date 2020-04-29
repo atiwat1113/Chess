@@ -16,44 +16,44 @@ import Resource.Resource;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;;
 
-public class PromotionPane extends VBox{
-	
+public class PromotionPane extends VBox {
+
 	private Text text;
 	private VBox promotion;
 	private HBox selection;
-	
+
 	public PromotionPane() {
-		this.setPrefSize(200,100);
+		this.setPrefSize(200, 100);
 		this.setBackground(new Background(new BackgroundFill(Color.GRAY, CornerRadii.EMPTY, Insets.EMPTY)));
 		this.setAlignment(Pos.TOP_LEFT);
 		this.setSpacing(15);
-		
+
 		promotion = new VBox();
 		promotion.setAlignment(Pos.TOP_LEFT);
 		promotion.setSpacing(15);
-		
+
 		selection = new HBox();
 		selection.setAlignment(Pos.CENTER_LEFT);
 		selection.setSpacing(4);
-		
+
 		Label label = new Label("Select promotion");
 		label.setFont(Font.loadFont(Resource.ROMAN_FONT, 15));
-		//change color label
+		// change color label
 		PromotionButton queen = new PromotionButton("Q");
 		PromotionButton rook = new PromotionButton("R");
 		PromotionButton bishop = new PromotionButton("B");
 		PromotionButton knight = new PromotionButton("K");
-		
+
 		text = new Text();
 		text.setFont(Font.loadFont(Resource.ROMAN_FONT, 16));
 		text.setFill(Color.DARKRED);
-		
-		selection.getChildren().addAll(queen,rook,bishop,knight);
-		promotion.getChildren().addAll(label,selection);
-		
+
+		selection.getChildren().addAll(queen, rook, bishop, knight);
+		promotion.getChildren().addAll(label, selection);
+
 		this.getChildren().add(text);
 	}
-	
+
 	public void hidePromotionPane() {
 		this.getChildren().remove(this.getChildren().indexOf(promotion));
 //		canvas = new Canvas(150,150);
@@ -62,13 +62,13 @@ public class PromotionPane extends VBox{
 //		gc.fillRect(0, 0, 150, 150);
 //		this.getChildren().add(canvas);
 	}
-	
+
 	public void showPromotionPane() {
 		this.getChildren().add(promotion);
 		for (Node pb : selection.getChildren()) {
 			((PromotionButton) pb).setBackgroundWithImage();
 		}
-		//this.getChildren().remove(1);
+		// this.getChildren().remove(1);
 	}
 
 	public void setMessage(String message) {

@@ -5,7 +5,6 @@ import java.util.ArrayList;
 
 import Resource.Sprites;
 import entity.base.Entity;
-import entity.base.Updatable;
 import logic.*;
 import game.base.Board;
 
@@ -29,7 +28,7 @@ public class Pawn extends Entity {
 		ArrayList<Point> returnPoint = new ArrayList<Point>();
 		if (side == Side.WHITE) {
 			Point nextPoint = new Point(point.x - 1, point.y);
-			Point extraPoint = new Point(point.x-2, point.y);
+			Point extraPoint = new Point(point.x - 2, point.y);
 			if (board.getEntity(nextPoint) == null) {
 				if (board.getEntity(extraPoint) == null && point.x >= 6) {
 					returnPoint.add(extraPoint);
@@ -38,7 +37,7 @@ public class Pawn extends Entity {
 			}
 		} else {
 			Point nextPoint = new Point(point.x + 1, point.y);
-			Point extraPoint = new Point(point.x+2, point.y);
+			Point extraPoint = new Point(point.x + 2, point.y);
 			if (board.getEntity(nextPoint) == null) {
 				if (board.getEntity(extraPoint) == null && point.x <= 1) {
 					returnPoint.add(extraPoint);
@@ -51,7 +50,7 @@ public class Pawn extends Entity {
 		}
 		return returnPoint;
 	}
-	
+
 	public ArrayList<Point> eatList(Board board) {
 		ArrayList<Point> returnPoint = new ArrayList<Point>();
 		Point[] eatPoint = new Point[2];
@@ -73,7 +72,7 @@ public class Pawn extends Entity {
 		}
 		return returnPoint;
 	}
-	
+
 	public String toString() {
 		return "Pawn [point=" + point + ", side=" + side + "]";
 	}
@@ -86,5 +85,5 @@ public class Pawn extends Entity {
 		}
 		return Sprites.HIGHLIGHT_W_PAWN;
 	}
-	
+
 }

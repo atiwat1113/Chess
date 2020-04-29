@@ -23,7 +23,7 @@ public class SettingMenu extends VBox {
 
 	private Slider bgmSlider;
 	private Label bgmValue;
-	private SoundButton bgmSoundButton; 
+	private SoundButton bgmSoundButton;
 	private Slider sfxSlider;
 	private Label sfxValue;
 	private SoundButton sfxSoundButton;
@@ -118,7 +118,7 @@ public class SettingMenu extends VBox {
 						value.setDisable(false);
 					} else {
 						isMuted = true;
-						if (sound.equals("bgm")) 
+						if (sound.equals("bgm"))
 							SoundManager.setMenuBgmVolume(0);
 						else
 							SoundManager.setSoundEffectStatus(false);

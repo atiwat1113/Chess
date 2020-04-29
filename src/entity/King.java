@@ -38,20 +38,19 @@ public class King extends Entity implements HaveCastling {
 		}
 		return returnPoint;
 	}
-	
+
 	public String toString() {
 		return "King [point=" + point + ", side=" + side + "]";
 	}
-	
+
 	public void setNeverMove() {
 		this.neverMove = false;
 	}
-	
+
 	public boolean isNeverMove() {
 		return neverMove;
 	}
-	
-	
+
 	@Override
 	public String getHighlightSymbol() {
 		// TODO Auto-generated method stub

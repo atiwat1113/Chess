@@ -16,5 +16,5 @@ public class WrongPieceException extends Exception {
 	@Override
 	public String getMessage() {
 		return message;
-	}
+	} 
 }

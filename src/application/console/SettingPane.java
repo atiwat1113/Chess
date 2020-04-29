@@ -38,7 +38,7 @@ public class SettingPane extends VBox {
 
 		MyCheckBox rotation = new MyCheckBox("rotate");
 		MyCheckBox soundEffect = new MyCheckBox("sound effect");
-		ReturnButton returnBtn = new ReturnButton("return to menu",14);
+		ReturnButton returnBtn = new ReturnButton("return to menu", 14);
 
 		soundEffect.setSelected(true);
 		setRotationListener(rotation);
@@ -58,33 +58,32 @@ public class SettingPane extends VBox {
 	}
 
 	class ReturnButton extends MyButton {
-		
+
 		private Color color = new Color((double) 195 / 255, (double) 195 / 255, (double) 195 / 255, 1);
 
-		public ReturnButton(String text,double fontSize) {
-			super(text,fontSize);
+		public ReturnButton(String text, double fontSize) {
+			super(text, fontSize);
 			this.setFont(Font.loadFont(Resource.ROMAN_FONT, 14));
 			this.setPrefWidth(250);
-			this.setBackground(new Background(new BackgroundFill(color,new CornerRadii(10), Insets.EMPTY)));
+			this.setBackground(new Background(new BackgroundFill(color, new CornerRadii(10), Insets.EMPTY)));
 			this.setBorder(new Border(
 					new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, new CornerRadii(10), BorderWidths.DEFAULT)));
 			setListener();
 		}
-		
+
 		@Override
 		protected void setMouseEnteredTextFont() {
-			this.setFont(Font.loadFont(Resource.ROMAN_FONT, this.fontSize+2));
-			//System.out.println(Resource.ROMAN_FONT);
-			
+			this.setFont(Font.loadFont(Resource.ROMAN_FONT, this.fontSize + 2));
+			// System.out.println(Resource.ROMAN_FONT);
+
 		}
+
 		@Override
 		protected void setMouseExitedTextFont() {
 			this.setFont(Font.loadFont(Resource.ROMAN_FONT, fontSize));
-			
-			
+
 		}
-	
-		
+
 	}
 
 	private void setRotationListener(MyCheckBox rotation) {
@@ -126,7 +125,7 @@ public class SettingPane extends VBox {
 			}
 		});
 	}
-	
+
 	private void setReturnBtnListener(ReturnButton returnBtn) {
 		returnBtn.setOnMouseClicked(new EventHandler<MouseEvent>() {
 

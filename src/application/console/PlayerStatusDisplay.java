@@ -40,18 +40,17 @@ public class PlayerStatusDisplay extends VBox {
 		timePerTurn = 30;
 		spareTimeText = new Text();
 		timePerTurnText = new Text();
-		if(hasTimeLimit) {
+		if (hasTimeLimit) {
 			setSpareTimeText();
 			setTimePerTurnText();
-		}
-		else {
+		} else {
 			spareTimeText.setText("-----");
 			timePerTurnText.setText("-----");
 		}
-		
-		turn.setFont(Font.loadFont(Resource.ROMAN_FONT,25));
-		spareTimeText.setFont(Font.loadFont(Resource.ROMAN_FONT,25));
-		timePerTurnText.setFont(Font.loadFont(Resource.ROMAN_FONT,25));
+
+		turn.setFont(Font.loadFont(Resource.ROMAN_FONT, 25));
+		spareTimeText.setFont(Font.loadFont(Resource.ROMAN_FONT, 25));
+		timePerTurnText.setFont(Font.loadFont(Resource.ROMAN_FONT, 25));
 
 		timePane = new HBox();
 		timePane.getChildren().addAll(spareTimeText, timePerTurnText);
@@ -63,9 +62,10 @@ public class PlayerStatusDisplay extends VBox {
 		this.setAlignment(Pos.CENTER);
 		this.setPadding(new Insets(10));
 		this.setSpacing(5);
-		this.setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, new CornerRadii(15), BorderWidths.DEFAULT)));
+		this.setBorder(
+				new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, new CornerRadii(15), BorderWidths.DEFAULT)));
 		this.getChildren().addAll(turn, timePane);
-		
+
 	}
 
 	public void rotateDisplay() {
@@ -75,19 +75,19 @@ public class PlayerStatusDisplay extends VBox {
 
 	public void startTurn() {
 		setTurnText(true);
-		if(hasTimeLimit) {
+		if (hasTimeLimit) {
 			timerThread = new Thread(() -> {
 				while (true) {
 					try {
-	
+
 						Thread.sleep(1000);
-						if(timePerTurn != 0) {
-							if(spareTime <= 30 || timePerTurn <= 10) 
+						if (timePerTurn != 0) {
+							if (spareTime <= 30 || timePerTurn <= 10)
 								SoundManager.playClockTick();
 							timePerTurn -= 1;
-						}
-						else {
-							if(spareTime > 30) SoundManager.stopClockTick();
+						} else {
+							if (spareTime > 30)
+								SoundManager.stopClockTick();
 							spareTime -= 1;
 						}
 						if (spareTime < 0) {
@@ -95,15 +95,13 @@ public class PlayerStatusDisplay extends VBox {
 								@Override
 								public void run() {
 									// TODO Auto-generated method stub
-									AppManager.getBoardPane()
-											.showEndGameWindow(GameController.getTurn() + " time out!\n"
-													+ GameController.getAnotherSide(GameController.getTurn())
-													+ " Win!!!\nReturn to Menu");
+									AppManager.getBoardPane().showEndGameWindow(GameController.getTurn() + " time out!\n"
+											+ GameController.getAnotherSide(GameController.getTurn()) + " Win!!!\nReturn to Menu");
 								}
 							});
 							stop();
 						}
-	
+
 						else
 							update();
 					} catch (Exception e) {
@@ -118,7 +116,7 @@ public class PlayerStatusDisplay extends VBox {
 	}
 
 	public void endTurn() {
-		if(hasTimeLimit) {
+		if (hasTimeLimit) {
 			try {
 				stop();
 			} catch (Exception e) {
@@ -147,26 +145,28 @@ public class PlayerStatusDisplay extends VBox {
 				spareTimeText.setText("00:" + spareTime);
 			else
 				spareTimeText.setText("00:0" + spareTime);
-		}
-		else {
-			if (spareTime/60 >= 10) {
-				if(spareTime%60 >=10) spareTimeText.setText(spareTime/60 + ":" + spareTime%60);
-				else spareTimeText.setText(spareTime/60 + ":0" + spareTime%60);
-			}	
-			else {
-				if(spareTime%60 >=10) spareTimeText.setText("0" + spareTime/60 + ":" + spareTime%60);
-				else spareTimeText.setText("0" + spareTime/60 + ":0" + spareTime%60);
+		} else {
+			if (spareTime / 60 >= 10) {
+				if (spareTime % 60 >= 10)
+					spareTimeText.setText(spareTime / 60 + ":" + spareTime % 60);
+				else
+					spareTimeText.setText(spareTime / 60 + ":0" + spareTime % 60);
+			} else {
+				if (spareTime % 60 >= 10)
+					spareTimeText.setText("0" + spareTime / 60 + ":" + spareTime % 60);
+				else
+					spareTimeText.setText("0" + spareTime / 60 + ":0" + spareTime % 60);
 			}
 		}
 	}
-	
+
 	private void setTimePerTurnText() {
-		if (timePerTurn >= 10) 
+		if (timePerTurn >= 10)
 			timePerTurnText.setText("00:" + timePerTurn);
 		else
 			timePerTurnText.setText("00:0" + timePerTurn);
 	}
-	
+
 	public void setTurnText(boolean isTurn) {
 		if (isTurn)
 			turn.setText(this.side + " TURN");
@@ -178,5 +178,4 @@ public class PlayerStatusDisplay extends VBox {
 		return timerThread;
 	}
 
-	
 }

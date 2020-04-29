@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import game.base.Board;
 import logic.Side;
 
-
 public abstract class Entity { // private --> protected
 	protected Point point;
 	protected boolean isMove;
@@ -18,7 +17,7 @@ public abstract class Entity { // private --> protected
 	}
 
 	public abstract String getSymbol();
-	
+
 	public abstract String getHighlightSymbol();
 
 	public abstract ArrayList<Point> moveList(Board board);

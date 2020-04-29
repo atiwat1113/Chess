@@ -39,10 +39,10 @@ public class BoardCell extends Pane {
 			this.setBackgroundTileColor(new Image(this.myCell.getEntity().getSymbol()));
 		else
 			setBackgroundTileColor();
-		if(AppManager.getGameType() == Games.KINGOFTHEHILL) {
-			if ((p.x==3 && p.y==3) || (p.x==4 && p.y==3) || (p.x==3 && p.y==4) || (p.x==4 && p.y==4)) {
-				this.setBorder(new Border(
-						new BorderStroke(Color.RED, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
+		if (AppManager.getGameType() == Games.KINGOFTHEHILL) {
+			if ((p.x == 3 && p.y == 3) || (p.x == 4 && p.y == 3) || (p.x == 3 && p.y == 4) || (p.x == 4 && p.y == 4)) {
+				this.setBorder(
+						new Border(new BorderStroke(Color.RED, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
 			}
 		}
 
@@ -66,7 +66,7 @@ public class BoardCell extends Pane {
 		BackgroundImage bgImg = new BackgroundImage(image, null, null, null, bgSize);
 		BackgroundImage[] bgImgA = { bgImg };
 		this.setBackground(new Background(bgFillA, bgImgA));
-	} 
+	}
 
 	public void setBackgroundTileColor(Image redDot, Image entity) {
 		// TODO Auto-generated method stub
@@ -95,7 +95,7 @@ public class BoardCell extends Pane {
 	public Cell getMyCell() {
 		return myCell;
 	}
-	
+
 	public void setP(Point p) {
 		this.p = p;
 	}

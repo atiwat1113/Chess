@@ -18,3 +18,4 @@ public class NullEntityException extends Exception {
 		return message;
 	}
 }
+ 

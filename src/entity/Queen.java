@@ -56,7 +56,7 @@ public class Queen extends Entity {
 	public boolean isFromPawn() {
 		return isFromPawn;
 	}
-	
+
 	public String toString() {
 		return "Queen [point=" + point + ", side=" + side + "]";
 	}

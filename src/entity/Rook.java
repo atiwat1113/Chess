@@ -55,10 +55,11 @@ public class Rook extends Entity implements HaveCastling {
 	public String toString() {
 		return "Rook [point=" + point + ", side=" + side + "]";
 	}
-	
+
 	public boolean isNeverMove() {
 		return neverMove;
 	}
+
 	public void setNeverMove() {
 		this.neverMove = false;
 	}

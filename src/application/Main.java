@@ -11,7 +11,7 @@ public class Main extends Application {
 
 		SoundManager.setMenuBgmVolume(0.5);
 		SoundManager.setSoundEffectVolume(0.5);
-		
+
 		MenuPane menu = new MenuPane();
 		SelectModePane selectMode = new SelectModePane();
 		SettingMenu settingMenu = new SettingMenu();
@@ -19,14 +19,14 @@ public class Main extends Application {
 		PromotionPane promotionPane = new PromotionPane();
 		SettingPane setting = new SettingPane();
 
-		AppManager.setMenuPane(menu); 
+		AppManager.setMenuPane(menu);
 		AppManager.setSelectModePane(selectMode);
 		AppManager.setSettingMenu(settingMenu);
 		AppManager.setTimeSelectPane(timeSelect);
 		AppManager.setPromotionPane(promotionPane);
 		AppManager.setSetting(setting);
 		AppManager.setStage(primaryStage);
-		SoundManager.setSoundEffectStatus(true);
+		SoundManager.setSoundEffectStatus(true); 
 		SoundManager.playMenuBgm();
 
 		Scene scene = new Scene(menu);

@@ -28,4 +28,4 @@ public class Sprites {
 	public static final String HIGHLIGHT_B_KNIGHT = ClassLoader.getSystemResource("Sprites\\highlight_B_Knight.png").toString();
 	public static final String HIGHLIGHT_B_ROOK = ClassLoader.getSystemResource("Sprites\\highlight_B_Rook.png").toString();
 	public static final String HIGHLIGHT_B_PAWN = ClassLoader.getSystemResource("Sprites\\highlight_B_Pawn.png").toString();
-}
+} 

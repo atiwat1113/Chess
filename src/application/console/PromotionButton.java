@@ -22,19 +22,20 @@ import logic.GameController;
 import logic.Side;
 
 public class PromotionButton extends Button {
-	
+
 	private String text;
 	private String imgURL;
-	
+
 	public PromotionButton(String text) {
 		super();
 		this.text = text;
 		this.setPrefSize(40, 40);
-		//this.setBackground(new Background(new BackgroundFill(Color.WHITE, CornerRadii.EMPTY, Insets.EMPTY)));
+		// this.setBackground(new Background(new BackgroundFill(Color.WHITE,
+		// CornerRadii.EMPTY, Insets.EMPTY)));
 		setBackgroundWithImage();
 		this.setListener();
 	}
-	
+
 	public void setListener() {
 		this.setOnMouseClicked(new EventHandler<MouseEvent>() {
 			@Override
@@ -45,16 +46,16 @@ public class PromotionButton extends Button {
 				AppManager.setPromotionListener(text);
 			}
 		});
-		
+
 		this.setOnMouseEntered(new EventHandler<MouseEvent>() {
 
 			@Override
 			public void handle(MouseEvent arg0) {
 				// TODO Auto-generated method stub
 				highlightButton();
-			} 
+			}
 		});
-		
+
 		this.setOnMouseExited(new EventHandler<MouseEvent>() {
 
 			@Override
@@ -64,34 +65,42 @@ public class PromotionButton extends Button {
 			}
 		});
 	}
-	
+
 	private void highlightButton() {
-		this.setBorder(new Border(new BorderStroke(Color.RED, BorderStrokeStyle.SOLID, 
-				CornerRadii.EMPTY, BorderWidths.DEFAULT)));
+		this.setBorder(
+				new Border(new BorderStroke(Color.RED, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
 	}
-	
+
 	private void unhighlightButton() {
-		this.setBorder(new Border(new BorderStroke(Color.GRAY, BorderStrokeStyle.SOLID, 
-				CornerRadii.EMPTY, BorderWidths.DEFAULT)));
+		this.setBorder(
+				new Border(new BorderStroke(Color.GRAY, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
 	}
-	
+
 	public void setBackgroundWithImage() {
-		switch(text) {
-		case "Q" :
-			if(GameController.getTurn() == Side.BLACK) this.imgURL = Sprites.B_QUEEN;
-			else this.imgURL = Sprites.W_QUEEN;
+		switch (text) {
+		case "Q":
+			if (GameController.getTurn() == Side.BLACK)
+				this.imgURL = Sprites.B_QUEEN;
+			else
+				this.imgURL = Sprites.W_QUEEN;
 			break;
-		case "R" :
-			if(GameController.getTurn() == Side.BLACK) this.imgURL = Sprites.B_ROOK;
-			else this.imgURL = Sprites.W_ROOK;
+		case "R":
+			if (GameController.getTurn() == Side.BLACK)
+				this.imgURL = Sprites.B_ROOK;
+			else
+				this.imgURL = Sprites.W_ROOK;
 			break;
-		case "B" :
-			if(GameController.getTurn() == Side.BLACK) this.imgURL = Sprites.B_BISHOP;
-			else this.imgURL = Sprites.W_BISHOP;
+		case "B":
+			if (GameController.getTurn() == Side.BLACK)
+				this.imgURL = Sprites.B_BISHOP;
+			else
+				this.imgURL = Sprites.W_BISHOP;
 			break;
-		case "K" :
-			if(GameController.getTurn() == Side.BLACK) this.imgURL = Sprites.B_KNIGHT;
-			else this.imgURL = Sprites.W_KNIGHT;
+		case "K":
+			if (GameController.getTurn() == Side.BLACK)
+				this.imgURL = Sprites.B_KNIGHT;
+			else
+				this.imgURL = Sprites.W_KNIGHT;
 			break;
 		default:
 		}

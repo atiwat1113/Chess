@@ -48,7 +48,7 @@ public class Knight extends Entity {
 	public boolean isFromPawn() {
 		return isFromPawn;
 	}
-	
+
 	public String toString() {
 		return "Knight [point=" + point + ", side=" + side + "]";
 	}

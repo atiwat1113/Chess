@@ -18,3 +18,4 @@ public class NullPointException extends Exception {
 	}
 
 }
+ 

@@ -15,7 +15,7 @@ public class SoundManager {
 	private static MediaPlayer promotionSound = new MediaPlayer(new Media(Resource.PROMOTION_SOUND));
 	private static MediaPlayer winning = new MediaPlayer(new Media(Resource.WINNING_SOUND));
 	private static boolean soundEffectStatus;
-	
+
 	public static boolean getSoundEffectStatus() {
 		return soundEffectStatus;
 	}
@@ -71,7 +71,7 @@ public class SoundManager {
 	}
 
 	public static void playPromotionSound() {
-		if (soundEffectStatus) { 
+		if (soundEffectStatus) {
 			Thread thread = new Thread(() -> {
 				try {
 					Platform.runLater(new Runnable() {
@@ -94,24 +94,23 @@ public class SoundManager {
 	}
 
 	public static void playMenuBgm() {
-			bgm.setCycleCount(-1);
-			Thread thread = new Thread(() -> {
-				try {
-					Platform.runLater(new Runnable() {
-						@Override
-						public void run() {
-							// TODO Auto-generated method stub
-							bgm.play();
-						}
-					});
-				} catch (Exception e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			});
-			thread.start();
-		}
-	
+		bgm.setCycleCount(-1);
+		Thread thread = new Thread(() -> {
+			try {
+				Platform.runLater(new Runnable() {
+					@Override
+					public void run() {
+						// TODO Auto-generated method stub
+						bgm.play();
+					}
+				});
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		});
+		thread.start();
+	}
 
 	public static void playWinningSound() {
 		if (soundEffectStatus) {
@@ -150,7 +149,7 @@ public class SoundManager {
 	}
 
 	public static void playClockTick() {
-		if(soundEffectStatus && !clockTick.getStatus().equals(MediaPlayer.Status.PLAYING)) {
+		if (soundEffectStatus && !clockTick.getStatus().equals(MediaPlayer.Status.PLAYING)) {
 			clockTick.setCycleCount(-1);
 			Thread thread = new Thread(() -> {
 				try {
@@ -174,7 +173,7 @@ public class SoundManager {
 		if (clockTick.getStatus().equals(MediaPlayer.Status.PLAYING))
 			clockTick.stop();
 	}
-	
+
 	public static double getSoundEffectVolume() {
 		return clickingSound.getVolume();
 	}

@@ -47,7 +47,7 @@ public class Bishop extends Entity {
 	public boolean isFromPawn() {
 		return isFromPawn;
 	}
-	
+
 	public String toString() {
 		return "Bishop [point=" + point + ", side=" + side + "]";
 	}

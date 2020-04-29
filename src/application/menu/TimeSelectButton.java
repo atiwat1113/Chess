@@ -7,31 +7,31 @@ import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
 import logic.Side;
 
-public class TimeSelectButton extends MyButton{
+public class TimeSelectButton extends MyButton {
 
 	private int spareTime;
-	
-	public TimeSelectButton(String text,double fontSize) {
-		super(text,fontSize);
-		switch(text) {
-		case "30 Minutes" :
+
+	public TimeSelectButton(String text, double fontSize) {
+		super(text, fontSize);
+		switch (text) {
+		case "30 Minutes":
 			spareTime = 1800;
 			break;
-		case "15 Minutes" :
+		case "15 Minutes":
 			spareTime = 900;
 			break;
-		case "5 Minutes" :
+		case "5 Minutes":
 			spareTime = 300;
 			break;
-		case "No time limit" :
+		case "No time limit":
 			spareTime = 0;
 			break;
-		default :
+		default:
 		}
-		
+
 		setSelectListener();
 	}
-	
+
 	private void setSelectListener() {
 		this.setOnMouseClicked(new EventHandler<MouseEvent>() {
 
@@ -43,7 +43,7 @@ public class TimeSelectButton extends MyButton{
 			}
 		});
 	}
-	
+
 	private void startGame() {
 		AppManager.setSpareTime(spareTime);
 		GamePane gamePane = new GamePane(AppManager.getBoardPane());

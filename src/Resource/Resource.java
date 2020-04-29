@@ -25,3 +25,4 @@ public class Resource {
 	public static final String ROMAN_FONT = ClassLoader.getSystemResource("Font/Roman.ttf").toString();
 	
 }
+ 

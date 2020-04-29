@@ -219,16 +219,6 @@ public class AppManager {
 		canvas = new Canvas();
 		canvas.setWidth(60);
 		canvas.setHeight(60);
-		canvas.setOnMouseClicked(new EventHandler<MouseEvent>() {
-
-			@Override
-			public void handle(MouseEvent arg0) {
-				// TODO Auto-generated method stub
-				//SoundManager.playWrongSelected();
-				AppManager.displayMessage("It's not your piece.");
-				removeCanvas();
-			}
-		});
 		GraphicsContext gc = canvas.getGraphicsContext2D();
 		gc.drawImage(new Image(entity.getSymbol()), 0, 0, 60, 60);
 
@@ -241,7 +231,6 @@ public class AppManager {
 		transition.setNode(canvas);
 		transition.play();
 		boardPane.getChildren().add(canvas);
-		
 
 	}
 
