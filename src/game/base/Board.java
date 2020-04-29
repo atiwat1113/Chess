@@ -7,6 +7,7 @@ import java.awt.*;
 import java.util.ArrayList;
 
 import Resource.Sprites;
+import application.AppManager;
 
 //import java.lang.Math;
 //remain: win, draw
@@ -449,5 +450,6 @@ public abstract class Board {
 		remove(oldPoint);
 		rook.setPoint(newPoint);
 		addEntity(rook, newPoint);
+		AppManager.setRookCastlingPoint(oldPoint, newPoint,rook);
 	}
 }

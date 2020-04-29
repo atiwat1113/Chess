@@ -37,6 +37,10 @@ public class AppManager {
 	private static PlayerStatusDisplay blackDisplay;
 	private static boolean rotateStatus;
 	private static Canvas transitionCanvas;
+	private static Point oldRookCastlingPoint;
+	private static Point newRookCastlingPoint;
+	private static boolean isCastling;
+	private static Entity rookEntity;
 
 	public static void setStage(Stage stage) {
 		AppManager.stage = stage;
@@ -211,7 +215,7 @@ public class AppManager {
 		settingMenu.getSfxSlider().lookup(".thumb").setStyle("-fx-pref-height: 30;" + "-fx-prefer-width: 5;");
 	}
 
-	public static void moveAnimation(Point start, Point end, Entity entity) {
+	public static Canvas moveAnimation(Point start, Point end, Entity entity) {
 
 		transitionCanvas = new Canvas();
 		transitionCanvas.setWidth(60);
@@ -229,10 +233,48 @@ public class AppManager {
 		transition.play();
 		boardPane.getChildren().add(transitionCanvas);
 
+		return transitionCanvas;
 	}
 
-	public static void removeTransitionCanvas() {
-		if (boardPane.getChildren().contains(transitionCanvas))
-			boardPane.getChildren().remove(transitionCanvas);
+	public static void removeTransitionCanvas(Canvas canvas) {
+		if (boardPane.getChildren().contains(canvas))
+			boardPane.getChildren().remove(canvas);
 	}
+
+	public static boolean isCastling() {
+		return isCastling;
+	}
+
+	public static void setCastling(boolean isCastling) {
+		AppManager.isCastling = isCastling;
+	}
+	
+	public static void setRookCastlingPoint(Point oldPoint,Point newPoint,Entity rook) {
+		oldRookCastlingPoint = oldPoint;
+		newRookCastlingPoint = newPoint;
+		rookEntity = rook;
+		isCastling = true;
+	}
+
+	public static Point getOldRookCastlingPoint() {
+		return oldRookCastlingPoint;
+	}
+	
+	public static Point getOldRotateRookCastlingPoint() {
+		return new Point(7-oldRookCastlingPoint.x,7-oldRookCastlingPoint.y);
+	}
+
+	public static Point getNewRookCastlingPoint() {
+		return newRookCastlingPoint;
+	}
+	
+	public static Point getNewRotateRookCastlingPoint() {
+		return new Point(7-newRookCastlingPoint.x,7-newRookCastlingPoint.y);
+	}
+
+	public static Entity getRookEntity() {
+		return rookEntity;
+	}
+	
+	
 }

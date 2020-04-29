@@ -47,6 +47,9 @@ public class BoardPane extends GridPane {
 	private boolean moved;
 	private String promotionPiece;
 	private boolean isPromoted;
+	private Canvas normalTransitionCanvas;
+	private Canvas castlingTransitionCanvas;
+	private BoardCell castlingBoardCell;
 
 	public BoardPane(String gameType) {
 		super();
@@ -108,10 +111,23 @@ public class BoardPane extends GridPane {
 			// System.out.println(currentSelectedPoint.toString());
 			// System.out.println(currentSelectedMoveList.toString());
 			GameController.move(currentSelectedPoint, myBoardCell.getP());// , currentSelectedMoveList);
-			updateBoard(myBoardCell);
-			if(AppManager.getRotateStatus() && GameController.getTurn().equals(Side.BLACK))			
-				AppManager.moveAnimation(new Point(7-currentSelectedPoint.x,7-currentSelectedPoint.y), new Point(7-myBoardCell.getP().x,7-myBoardCell.getP().y), currentSelectedEntity);
-			else AppManager.moveAnimation(currentSelectedPoint, myBoardCell.getP(), currentSelectedEntity);
+			if(AppManager.isCastling()) updateBoard(myBoardCell,AppManager.getNewRookCastlingPoint());
+			else updateBoard(myBoardCell);
+			if(AppManager.getRotateStatus() && GameController.getTurn().equals(Side.BLACK)) {			
+				normalTransitionCanvas = AppManager.moveAnimation(new Point(7-currentSelectedPoint.x,7-currentSelectedPoint.y), new Point(7-myBoardCell.getP().x,7-myBoardCell.getP().y), currentSelectedEntity);
+				if(AppManager.isCastling()) {
+					castlingTransitionCanvas = AppManager.moveAnimation(AppManager.getOldRotateRookCastlingPoint(), AppManager.getNewRotateRookCastlingPoint(), AppManager.getRookEntity());					
+
+				}
+			}
+			else {
+				normalTransitionCanvas = AppManager.moveAnimation(currentSelectedPoint, myBoardCell.getP(), currentSelectedEntity);
+				
+				if(AppManager.isCastling()) {
+					castlingTransitionCanvas = AppManager.moveAnimation(AppManager.getOldRookCastlingPoint(), AppManager.getNewRookCastlingPoint(), AppManager.getRookEntity());
+
+				}
+			}
 			Thread thread = new Thread(() -> {
 				try {
 					Thread.sleep(330);
@@ -119,7 +135,12 @@ public class BoardPane extends GridPane {
 						@Override
 						public void run() {
 							// TODO Auto-generated method stub
-							AppManager.removeTransitionCanvas();
+							AppManager.removeTransitionCanvas(normalTransitionCanvas);
+							if(AppManager.isCastling()) {
+								AppManager.removeTransitionCanvas(castlingTransitionCanvas);
+								AppManager.setCastling(false);
+								castlingBoardCell.update();
+							}
 							myBoardCell.update();
 							if (GameController.isPromotion()) {
 								setPromoted(true);
@@ -134,8 +155,7 @@ public class BoardPane extends GridPane {
 								AppManager.getStatusDisplay(GameController.getTurn()).endTurn();
 								GameController.nextTurn();
 								checkEndGame();
-								updateBoard(myBoardCell);
-								myBoardCell.update();
+								updateBoard();
 								AppManager.getStatusDisplay(GameController.getTurn()).startTurn();
 							}
 						}
@@ -233,6 +253,27 @@ public class BoardPane extends GridPane {
 		AppManager.getGamePane().getChildren().add(endBox);
 	}
 
+	public void updateBoard(BoardCell myBoardCell,Point p) {
+		// TODO Auto-generated method stub
+		if (moved) {
+			this.cellMap = GameController.getDisplayCellMap();// setting rotate-----------
+			for (BoardCell bc : this.getBoardCellList()) {
+				bc.setMyCell(cellMap[bc.getP().x][bc.getP().y]);
+				moved = false;
+			}
+			if (AppManager.getRotateStatus()) 
+				AppManager.rotateBoard();
+				
+				
+		}
+		for (BoardCell bc : this.getBoardCellList()) {
+			if (!bc.equals(myBoardCell) && !bc.getP().equals(p))
+				bc.update();
+			if(bc.getP().equals(p)) castlingBoardCell = bc;
+		}
+		AppManager.displayMessage("");
+	}
+	
 	public void updateBoard(BoardCell myBoardCell) {
 		// TODO Auto-generated method stub
 		if (moved) {
