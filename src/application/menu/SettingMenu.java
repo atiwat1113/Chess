@@ -132,11 +132,11 @@ public class SettingMenu extends VBox {
 		}
 
 		public void setBackgroundImageByVolume(Slider slider) {
-			if (slider.getValue() >= 75)
+			if (slider.getValue() >= 70)
 				setBackgroundWithImage(new Image(Resource.HIGH_VOLUME_IMAGE));
-			else if (slider.getValue() >= 50)
+			else if (slider.getValue() >= 35)
 				setBackgroundWithImage(new Image(Resource.MID_VOLUME_IMAGE));
-			else if (slider.getValue() >= 25)
+			else if (slider.getValue() >= 15)
 				setBackgroundWithImage(new Image(Resource.LOW_VOLUME_IMAGE));
 			else
 				setBackgroundWithImage(new Image(Resource.VERY_LOW_VOLUME_IMAGE));
