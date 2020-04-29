@@ -36,7 +36,7 @@ public class AppManager {
 	private static PlayerStatusDisplay whiteDisplay;
 	private static PlayerStatusDisplay blackDisplay;
 	private static boolean rotateStatus;
-	private static Canvas canvas;
+	private static Canvas transitionCanvas;
 
 	public static void setStage(Stage stage) {
 		AppManager.stage = stage;
@@ -209,10 +209,10 @@ public class AppManager {
 
 	public static void moveAnimation(Point start, Point end, Entity entity) {
 
-		canvas = new Canvas();
-		canvas.setWidth(60);
-		canvas.setHeight(60);
-		GraphicsContext gc = canvas.getGraphicsContext2D();
+		transitionCanvas = new Canvas();
+		transitionCanvas.setWidth(60);
+		transitionCanvas.setHeight(60);
+		GraphicsContext gc = transitionCanvas.getGraphicsContext2D();
 		gc.drawImage(new Image(entity.getSymbol()), 0, 0, 60, 60);
 
 		TranslateTransition transition = new TranslateTransition();
@@ -221,14 +221,14 @@ public class AppManager {
 		transition.setFromY(start.getX() * 60);
 		transition.setToX(end.getY() * 60);
 		transition.setToY(end.getX() * 60);
-		transition.setNode(canvas);
+		transition.setNode(transitionCanvas);
 		transition.play();
-		boardPane.getChildren().add(canvas);
+		boardPane.getChildren().add(transitionCanvas);
 
 	}
 
-	public static void removeCanvas() {
-		if (boardPane.getChildren().contains(canvas))
-			boardPane.getChildren().remove(canvas);
+	public static void removeTransitionCanvas() {
+		if (boardPane.getChildren().contains(transitionCanvas))
+			boardPane.getChildren().remove(transitionCanvas);
 	}
 }

@@ -107,7 +107,7 @@ public class BoardPane extends GridPane {
 						@Override
 						public void run() {
 							// TODO Auto-generated method stub
-							AppManager.removeCanvas();
+							AppManager.removeTransitionCanvas();
 							myBoardCell.update();
 							if (GameController.isPromotion()) {
 								setPromoted(true);
