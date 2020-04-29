@@ -87,6 +87,10 @@ public class AppManager {
 		AppManager.gamePane = gamePane;
 	}
 
+	public static GamePane getGamePane() {
+		return gamePane;
+	}
+
 	public static void setPromotionListener(String text) {
 		boardPane.promotion(text);
 	}

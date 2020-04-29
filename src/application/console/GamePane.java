@@ -10,12 +10,13 @@ import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import logic.Side;
 
-public class GamePane extends HBox {
+public class GamePane extends StackPane {
 
 	private Console console;
 
@@ -23,12 +24,16 @@ public class GamePane extends HBox {
 		this.setBackground(new Background(new BackgroundFill(Color.GRAY, CornerRadii.EMPTY, Insets.EMPTY)));
 		this.setPadding(new Insets(10));
 		this.setPrefHeight(500);
-		this.setSpacing(20);
+		//this.setSpacing(20);
 		this.setAlignment(Pos.CENTER);
+		
+		HBox gameBox = new HBox();
+		gameBox.setSpacing(20);
 
 		console = new Console();
 
-		this.getChildren().addAll(boardPane, console);
+		gameBox.getChildren().addAll(boardPane, console);
+		this.getChildren().add(gameBox);
 	}
 
 	class Console extends VBox {

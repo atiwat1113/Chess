@@ -4,16 +4,28 @@ import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
+import javafx.scene.canvas.Canvas;
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 import logic.*;
+import Resource.Resource;
 import Resource.Sprites;
 import application.AppManager;
 import application.SoundManager;
+import application.menu.MyButton;
 import entity.base.Entity;
 import java.awt.Point;
 import java.util.ArrayList;
@@ -173,9 +185,9 @@ public class BoardPane extends GridPane {
 
 	private void checkEndGame() {
 		if (GameController.isWin())
-			showEndGameWindow(GameController.getAnotherSide(GameController.getTurn()).toString() + " WIN!!!\nReturn to Menu");
+			showEndGameWindow(GameController.getAnotherSide(GameController.getTurn()).toString() + " WIN!!!\n");
 		else if (GameController.isDraw())
-			showEndGameWindow("DRAW!!!\nReturn to Menu");
+			showEndGameWindow("DRAW!!!\n");
 	}
 
 	private void showWalkPath() {
@@ -193,13 +205,32 @@ public class BoardPane extends GridPane {
 	public void showEndGameWindow(String text) {
 		AppManager.stopTimer();
 		SoundManager.playWinningSound();
-		Alert alert = new Alert(AlertType.INFORMATION);
-		alert.setTitle("End Game");
-		alert.setHeaderText(null);
-		alert.setContentText(text);
-		alert.showAndWait();
-		AppManager.showMenu();
-		SoundManager.playMenuBgm();
+//		Alert alert = new Alert(AlertType.INFORMATION);
+//		alert.setTitle("End Game");
+//		alert.setHeaderText(null);
+//		alert.setContentText(text);
+//		alert.showAndWait();
+		VBox endBox = new VBox();
+		endBox.setSpacing(20);
+		endBox.setAlignment(Pos.CENTER);
+		endBox.setPrefSize(AppManager.getGamePane().getPrefWidth(), AppManager.getGamePane().getPrefHeight());
+		endBox.setBackground(new Background(new BackgroundFill(new Color((double)200/255,(double)200/255,(double)200/255,0.6), CornerRadii.EMPTY, Insets.EMPTY)));
+		Label endText = new Label(text);
+		endText.setFont(Font.loadFont(Resource.ROMAN_FONT,50));
+		endText.setTextFill(Color.BLACK); 
+		MyButton returnBtn = new MyButton("Return to Menu", 20);
+		returnBtn.setOnMouseClicked(new EventHandler<MouseEvent>() {
+
+			@Override
+			public void handle(MouseEvent arg0) {
+				SoundManager.playClickingSound();
+				AppManager.showMenu();
+				SoundManager.playMenuBgm();
+			}
+		});
+	
+		endBox.getChildren().addAll(endText,returnBtn);
+		AppManager.getGamePane().getChildren().add(endBox);
 	}
 
 	public void updateBoard(BoardCell myBoardCell) {
