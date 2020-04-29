@@ -17,6 +17,8 @@ import javafx.util.Duration;
 import logic.Side;
 
 import java.awt.Point;
+import java.util.ArrayList;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 
 public class AppManager {
@@ -41,6 +43,7 @@ public class AppManager {
 	private static Point newRookCastlingPoint;
 	private static boolean isCastling;
 	private static Entity rookEntity;
+	private static CopyOnWriteArrayList<Point> explosionPointList = new CopyOnWriteArrayList<Point>();
 
 	public static void setStage(Stage stage) {
 		AppManager.stage = stage;
@@ -275,6 +278,19 @@ public class AppManager {
 	public static Entity getRookEntity() {
 		return rookEntity;
 	}
+
+	public static void removeExplosionPoint(Point p) {
+		explosionPointList.remove(p);
+	}
+	
+	public static void addExplosionPoint(Point p) {
+		explosionPointList.add(p);
+	}
+
+	public static CopyOnWriteArrayList<Point> getExplosionPointList() {
+		return explosionPointList;
+	}
+	
 	
 	
 }

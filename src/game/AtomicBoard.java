@@ -3,6 +3,7 @@ package game;
 import java.awt.Point;
 import java.util.ArrayList;
 
+import application.AppManager;
 import entity.King;
 import entity.Knight;
 import entity.Pawn;
@@ -196,7 +197,10 @@ public class AtomicBoard extends Board implements CheckMateAble {
 	private void explosion(Point point) {
 		if (!isInBoard(point))
 			return;
-		if (!(getEntity(point) instanceof Pawn))
+		if (!(getEntity(point) instanceof Pawn)) {
+			if(!(getEntity(point) == null))
+				AppManager.addExplosionPoint(point);
 			remove(point);
+		}
 	}
 }

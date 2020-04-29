@@ -29,7 +29,10 @@ import application.menu.MyButton;
 import entity.base.Entity;
 import java.awt.Point;
 import java.util.ArrayList;
+import java.util.concurrent.CopyOnWriteArrayList;
+
 import game.base.Board;
+import game.base.Games;
 
 public class BoardPane extends GridPane {
 	private ObservableList<BoardCell> boardCellList = FXCollections.observableArrayList();
@@ -50,10 +53,12 @@ public class BoardPane extends GridPane {
 	private Canvas normalTransitionCanvas;
 	private Canvas castlingTransitionCanvas;
 	private BoardCell castlingBoardCell;
+	private ArrayList<BoardCell> explosionBoardCellList;
 
 	public BoardPane(String gameType) {
 		super();
 		this.isPromoted = false;
+		if(gameType.equals(Games.ATOMIC)) explosionBoardCellList = new ArrayList<BoardCell>();
 
 		GameController.InitializeMap(gameType);
 		this.cellMap = GameController.getDisplayCellMap();// setting rotate-----
@@ -112,6 +117,7 @@ public class BoardPane extends GridPane {
 			// System.out.println(currentSelectedMoveList.toString());
 			GameController.move(currentSelectedPoint, myBoardCell.getP());// , currentSelectedMoveList);
 			if(AppManager.isCastling()) updateBoard(myBoardCell,AppManager.getNewRookCastlingPoint());
+			else if (AppManager.getGameType().equals(Games.ATOMIC)) updateBoard(myBoardCell, AppManager.getExplosionPointList());
 			else updateBoard(myBoardCell);
 			if(AppManager.getRotateStatus() && GameController.getTurn().equals(Side.BLACK)) {			
 				normalTransitionCanvas = AppManager.moveAnimation(new Point(7-currentSelectedPoint.x,7-currentSelectedPoint.y), new Point(7-myBoardCell.getP().x,7-myBoardCell.getP().y), currentSelectedEntity);
@@ -140,6 +146,14 @@ public class BoardPane extends GridPane {
 								AppManager.removeTransitionCanvas(castlingTransitionCanvas);
 								AppManager.setCastling(false);
 								castlingBoardCell.update();
+							}
+							if (AppManager.getGameType().equals(Games.ATOMIC)) {
+								for (BoardCell bc : explosionBoardCellList) {
+									bc.update();
+								}
+								for (int i = 0; i<explosionBoardCellList.size();i++) {
+									explosionBoardCellList.remove(i);
+								}
 							}
 							myBoardCell.update();
 							if (GameController.isPromotion()) {
@@ -252,7 +266,38 @@ public class BoardPane extends GridPane {
 		endBox.getChildren().addAll(endText,returnBtn);
 		AppManager.getGamePane().getChildren().add(endBox);
 	}
-
+ 
+	
+	// update board for Atomic board --------------------------------------------------------------------------
+	
+	public void updateBoard(BoardCell myBoardCell,CopyOnWriteArrayList<Point> explosionList) {
+		// TODO Auto-generated method stub
+		if (moved) {
+			this.cellMap = GameController.getDisplayCellMap();// setting rotate-----------
+			for (BoardCell bc : this.getBoardCellList()) {
+				bc.setMyCell(cellMap[bc.getP().x][bc.getP().y]);
+				moved = false;
+			}
+			if (AppManager.getRotateStatus()) 
+				AppManager.rotateBoard();
+				
+			
+		}
+		for (BoardCell bc : this.getBoardCellList()) {
+			if (!bc.equals(myBoardCell) && !explosionList.contains(bc.getP()))
+				bc.update();
+			if(explosionList.contains(bc.getP()) && bc.getP().equals(currentSelectedPoint))
+				bc.update();
+			if(explosionList.contains(bc.getP())) {
+				explosionBoardCellList.add(bc);
+				AppManager.removeExplosionPoint(bc.getP());
+			}
+		}
+		AppManager.displayMessage("");
+	}
+	
+	// update board for castling ------------------------------------------------------------------------------------
+	
 	public void updateBoard(BoardCell myBoardCell,Point p) {
 		// TODO Auto-generated method stub
 		if (moved) {
@@ -273,6 +318,8 @@ public class BoardPane extends GridPane {
 		}
 		AppManager.displayMessage("");
 	}
+	
+	// normal update board -----------------------------------------------------------------------------------------------
 	
 	public void updateBoard(BoardCell myBoardCell) {
 		// TODO Auto-generated method stub
