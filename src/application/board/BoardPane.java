@@ -85,7 +85,7 @@ public class BoardPane extends GridPane {
 				}
 			});
 		}
-	}
+	} 
 
 	private void addOnClickHandler(BoardCell myBoardCell) throws Exception {
 		// TODO Auto-generated method stub
@@ -95,12 +95,14 @@ public class BoardPane extends GridPane {
 			// currentSelectedPoint = new Point(myBoardCell.getP().y,myBoardCell.getP().x);
 			// System.out.println(currentSelectedPoint.toString());
 			// System.out.println(currentSelectedMoveList.toString());
-			AppManager.moveAnimation(currentSelectedPoint, myBoardCell.getP(), currentSelectedEntity);
 			GameController.move(currentSelectedPoint, myBoardCell.getP());// , currentSelectedMoveList);
 			updateBoard(myBoardCell);
+			if(AppManager.getRotateStatus() && GameController.getTurn().equals(Side.BLACK))			
+				AppManager.moveAnimation(new Point(7-currentSelectedPoint.x,7-currentSelectedPoint.y), new Point(7-myBoardCell.getP().x,7-myBoardCell.getP().y), currentSelectedEntity);
+			else AppManager.moveAnimation(currentSelectedPoint, myBoardCell.getP(), currentSelectedEntity);
 			Thread thread = new Thread(() -> {
 				try {
-					Thread.sleep(300);
+					Thread.sleep(330);
 					Platform.runLater(new Runnable() {
 						@Override
 						public void run() {
@@ -208,8 +210,10 @@ public class BoardPane extends GridPane {
 				bc.setMyCell(cellMap[bc.getP().x][bc.getP().y]);
 				moved = false;
 			}
-			if (AppManager.getRotateStatus())
+			if (AppManager.getRotateStatus()) 
 				AppManager.rotateBoard();
+				
+				
 		}
 		for (BoardCell bc : this.getBoardCellList()) {
 			if (!bc.equals(myBoardCell))
@@ -240,6 +244,7 @@ public class BoardPane extends GridPane {
 			bc.setP(new Point(7 - bc.getP().x, 7 - bc.getP().y));
 			bc.setMyCell(cellMap[bc.getP().x][bc.getP().y]);
 		}
+
 	}
 
 	public void promotion(String text) {

@@ -184,7 +184,7 @@ public class AppManager {
 			blackDisplay.stop();
 			SoundManager.stopClockTick();
 
-		} catch (Exception e) {
+		} catch (Exception e) { 
 			// TODO Auto-generated catch block
 			// e.printStackTrace();
 		}
