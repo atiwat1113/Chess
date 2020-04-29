@@ -7,6 +7,7 @@ public class Resource {
 	public static final String ICON = ClassLoader.getSystemResource("Image/icon.png").toString();
 	public static final String BUTTON_FRAME = ClassLoader.getSystemResource("Image/buttonFrame.png").toString();
 	public static final String HIGHLIGHT_BUTTON_FRAME = ClassLoader.getSystemResource("Image/highlightButtonFrame.png").toString();
+	public static final String VERY_LOW_VOLUME_IMAGE = ClassLoader.getSystemResource("Image/veryLowVolume.png").toString();
 	public static final String LOW_VOLUME_IMAGE = ClassLoader.getSystemResource("Image/lowVolume.png").toString();
 	public static final String MID_VOLUME_IMAGE = ClassLoader.getSystemResource("Image/midVolume.png").toString();
 	public static final String HIGH_VOLUME_IMAGE = ClassLoader.getSystemResource("Image/highVolume.png").toString();

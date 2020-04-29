@@ -19,7 +19,7 @@ public class Main extends Application {
 		PromotionPane promotionPane = new PromotionPane();
 		SettingPane setting = new SettingPane();
 
-		AppManager.setMenuPane(menu);
+		AppManager.setMenuPane(menu); 
 		AppManager.setSelectModePane(selectMode);
 		AppManager.setSettingMenu(settingMenu);
 		AppManager.setTimeSelectPane(timeSelect);
@@ -27,7 +27,6 @@ public class Main extends Application {
 		AppManager.setSetting(setting);
 		AppManager.setStage(primaryStage);
 		SoundManager.setSoundEffectStatus(true);
-		SoundManager.setBgmStatus(true);
 		SoundManager.playMenuBgm();
 
 		Scene scene = new Scene(menu);

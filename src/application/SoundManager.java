@@ -15,7 +15,6 @@ public class SoundManager {
 	private static MediaPlayer promotionSound = new MediaPlayer(new Media(Resource.PROMOTION_SOUND));
 	private static MediaPlayer winning = new MediaPlayer(new Media(Resource.WINNING_SOUND));
 	private static boolean soundEffectStatus;
-	private static boolean bgmStatus;
 	
 	public static boolean getSoundEffectStatus() {
 		return soundEffectStatus;
@@ -25,13 +24,6 @@ public class SoundManager {
 		SoundManager.soundEffectStatus = soundEffectStatus;
 	}
 
-	public static boolean isBgmStatus() {
-		return bgmStatus;
-	}
-
-	public static void setBgmStatus(boolean bgmStatus) {
-		SoundManager.bgmStatus = bgmStatus;
-	}
 	public static void playClickingSound() {
 		if (soundEffectStatus) {
 			Thread thread = new Thread(() -> {
@@ -79,7 +71,7 @@ public class SoundManager {
 	}
 
 	public static void playPromotionSound() {
-		if (soundEffectStatus) {
+		if (soundEffectStatus) { 
 			Thread thread = new Thread(() -> {
 				try {
 					Platform.runLater(new Runnable() {
@@ -102,7 +94,6 @@ public class SoundManager {
 	}
 
 	public static void playMenuBgm() {
-		if (bgmStatus) {
 			bgm.setCycleCount(-1);
 			Thread thread = new Thread(() -> {
 				try {
@@ -120,7 +111,7 @@ public class SoundManager {
 			});
 			thread.start();
 		}
-	}
+	
 
 	public static void playWinningSound() {
 		if (soundEffectStatus) {

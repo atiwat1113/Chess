@@ -141,8 +141,6 @@ public class AppManager {
 		gamePane.rotateStatusDisplay();
 	}
 
-	
-
 	public static boolean getRotateStatus() {
 		return rotateStatus;
 	}
@@ -175,8 +173,6 @@ public class AppManager {
 		AppManager.rotateStatus = rotateStatus;
 	}
 
-	
-
 	public static void stopTimer() {
 		try {
 			whiteDisplay.stop();
@@ -190,16 +186,19 @@ public class AppManager {
 		;
 	}
 
-	
-
 	public static void setSliderStyle() {
+		settingMenu.getBgmSlider().lookup(".slider").setStyle("-fx-pref-width:300;");
 		settingMenu.getBgmSlider().lookup(".track")
-				.setStyle(String.format("-fx-background-color: linear-gradient(to right, #2D819D %d%%, #CCCCCC %d%%);"
-						+ "-fx-pref-height:10;",
+				.setStyle(String.format(
+						"-fx-background-color: linear-gradient(to right, #2D819D %d%%, #CCCCCC %d%%);" + "-fx-pref-height:10;" ,
 						(int) settingMenu.getBgmSlider().getValue(), (int) settingMenu.getBgmSlider().getValue()));
-		settingMenu.getSoundEffectSlider().lookup(".track")
-		.setStyle(String.format("-fx-background-color: linear-gradient(to right, #2D819D %d%%, #CCCCCC %d%%);"
-				+ "-fx-pref-height:10;",
-				(int) settingMenu.getSoundEffectSlider().getValue(), (int) settingMenu.getSoundEffectSlider().getValue()));
+		settingMenu.getBgmSlider().lookup(".thumb").setStyle("-fx-pref-height: 30;" + "-fx-prefer-width: 5;");
+
+		settingMenu.getSfxSlider().lookup(".slider").setStyle("-fx-pref-width:300;");
+		settingMenu.getSfxSlider().lookup(".track")
+				.setStyle(String.format(
+						"-fx-background-color: linear-gradient(to right, #2D819D %d%%, #CCCCCC %d%%);" + "-fx-pref-height:10;" ,
+						(int) settingMenu.getSfxSlider().getValue(), (int) settingMenu.getSfxSlider().getValue()));
+		settingMenu.getSfxSlider().lookup(".thumb").setStyle("-fx-pref-height: 30;" + "-fx-prefer-width: 5;");
 	}
 }
