@@ -13,7 +13,7 @@ public class Resource {
 	public static final String HIGH_VOLUME_IMAGE = ClassLoader.getSystemResource("Image/highVolume.png").toString();
 	public static final String MUTE_VOLUME_IMAGE = ClassLoader.getSystemResource("Image/muteVolume.png").toString();
 	
-	//sound
+	//sound 
 	public static final String BUTTON_CLICK = ClassLoader.getSystemResource("Sound/buttonClick.mp3").toString();
 	public static final String CLOCK_TICKING = ClassLoader.getSystemResource("Sound/clockTicking.wav").toString();
 	public static final String WRONG_SELECTED = ClassLoader.getSystemResource("Sound/wrongPieceSelectedSound.mp3").toString();
