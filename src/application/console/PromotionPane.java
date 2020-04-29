@@ -29,7 +29,7 @@ public class PromotionPane extends VBox {
 		promotion.setSpacing(15);
 
 		selection = new HBox();
-		selection.setAlignment(Pos.CENTER_LEFT);
+		selection.setAlignment(Pos.CENTER_LEFT); 
 		selection.setSpacing(4);
 
 		Label label = new Label("Select promotion");
@@ -41,7 +41,7 @@ public class PromotionPane extends VBox {
 		PromotionButton knight = new PromotionButton("K");
 
 		text = new Text();
-		text.setFont(Font.loadFont(Resource.ROMAN_FONT, 16));
+		text.setFont(Font.loadFont(Resource.ROMAN_FONT, 14));
 		text.setFill(Color.DARKRED);
 
 		selection.getChildren().addAll(queen, rook, bishop, knight);
