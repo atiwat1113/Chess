@@ -4,7 +4,6 @@ import java.awt.Point;
 import java.util.ArrayList;
 
 import entity.base.Entity;
-import logic.GameController;
 import logic.Side;
 
 public class HordeBoard extends NormalBoard {

@@ -3,8 +3,6 @@ package application.console;
 import Resource.Resource;
 import application.AppManager;
 import application.board.*;
-import application.console.*;
-import application.console.GamePane.Console;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
@@ -15,9 +13,6 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
-import javafx.scene.text.FontWeight;
-import javafx.scene.text.Text;
-import logic.GameController;
 import logic.Side;
 
 public class GamePane extends HBox {

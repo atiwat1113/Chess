@@ -6,8 +6,7 @@ import java.util.ArrayList;
 import entity.King;
 import entity.Rook;
 import entity.base.Entity;
-import entity.base.HaveCastling;
-import logic.GameController;
+
 import logic.Side;
 
 public class Chess960Board extends NormalBoard {

@@ -1,7 +1,6 @@
 package game;
 
 import java.awt.Point;
-import application.AppManager;
 import logic.Side;
 
 public class ThreeCheckBoard extends NormalBoard {

@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import entity.*;
 import entity.base.Entity;
 import entity.base.HaveCastling;
-import logic.GameController;
 import logic.Side;
 import game.base.*;
 

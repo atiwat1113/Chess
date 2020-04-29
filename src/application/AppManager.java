@@ -8,23 +8,16 @@ import application.menu.SettingMenu;
 import application.menu.TimeSelectPane;
 import entity.base.Entity;
 import javafx.animation.TranslateTransition;
-import javafx.application.Platform;
-import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.media.Media;
-import javafx.scene.media.MediaPlayer;
-import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import logic.Side;
 
 import java.awt.Point;
 
-import Resource.Resource;
 
 public class AppManager {
 

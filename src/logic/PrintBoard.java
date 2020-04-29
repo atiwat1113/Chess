@@ -1,14 +1,14 @@
 package logic;
 
-import java.awt.*;
-import game.base.Board;
-import game.base.Games;
-
-import java.util.ArrayList;
-import java.util.Scanner;
-import logic.*;
-import entity.base.Entity;
-import myException.*;
+//import java.awt.*;
+//import game.base.Board;
+//import game.base.Games;
+//
+//import java.util.ArrayList;
+//import java.util.Scanner;
+//import logic.*;
+//import entity.base.Entity;
+//import myException.*;
 
 public class PrintBoard {
 //	

@@ -4,11 +4,9 @@ import Resource.Resource;
 import application.*;
 import game.base.Games;
 import application.board.*;
-import application.console.GamePane;
 import javafx.event.EventHandler;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
-import logic.Side;
 
 public class SelectModeButton extends MyButton {
 

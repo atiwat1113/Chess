@@ -1,8 +1,5 @@
 package application.menu;
 
-import java.io.UnsupportedEncodingException;
-import java.net.URLDecoder;
-
 import Resource.Resource;
 import application.AppManager;
 import application.SoundManager;
@@ -18,12 +15,10 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
-import javafx.scene.text.FontWeight;
 
 public class SelectModePane extends VBox {
 
 	private static final Image background = new Image(Resource.BACKGROUND);
-	private String font;
 
 	public SelectModePane() {
 		this.setAlignment(Pos.CENTER);
@@ -74,7 +69,6 @@ public class SelectModePane extends VBox {
 
 			@Override
 			public void handle(MouseEvent arg0) {
-				// TODO Auto-generated method stub
 				SoundManager.playClickingSound();
 				AppManager.showMenu();
 			}

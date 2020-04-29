@@ -35,9 +35,9 @@ public abstract class GameController {
 			whiteRow };
 	private static final String[][] hordeBoard = { blackRow, blackPawn, blank, fourWhitePawn, whitePawn, whitePawn,
 			whitePawn, whitePawn };
-	private static final String[][] hordeCheck = { blackRow, blackPawn, blank, fourWhitePawn, blank, blank, blank,
-			blank };
-	private static final String[][] noPawnBoard = { blackRow, blank, blank, blank, blank, blank, blank, whiteRow };
+//	private static final String[][] hordeCheck = { blackRow, blackPawn, blank, fourWhitePawn, blank, blank, blank,
+//			blank };
+//	private static final String[][] noPawnBoard = { blackRow, blank, blank, blank, blank, blank, blank, whiteRow };
 
 	public static void InitializeMap(String gameType) {
 		promotionPoint = null;
