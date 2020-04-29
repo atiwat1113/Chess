@@ -22,7 +22,7 @@ import logic.Side;
 
 public class GamePane extends HBox{
 	
-	private Console console;
+	private Console console; 
 	
 	public GamePane(BoardPane boardPane) {
 		this.setBackground(new Background(new BackgroundFill(Color.GRAY, CornerRadii.EMPTY, Insets.EMPTY)));

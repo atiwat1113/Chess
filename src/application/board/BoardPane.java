@@ -1,5 +1,6 @@
 package application.board;
 
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
@@ -19,6 +20,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
+import javafx.util.Duration;
 import logic.*;
 import myException.NullPointException;
 
@@ -27,6 +29,7 @@ import java.util.Scanner;
 import Resource.Sprites;
 import application.AppManager;
 import application.SoundManager;
+import entity.base.Entity;
 
 import java.awt.Point;
 import java.util.ArrayList;
@@ -36,7 +39,7 @@ import game.base.Games;
 
 public class BoardPane extends GridPane {
 	private ObservableList<BoardCell> boardCellList = FXCollections.observableArrayList();
-	
+
 	private Cell[][] cellMap;
 	private static final int row = 8;
 	private static final int column = 8;
@@ -44,6 +47,7 @@ public class BoardPane extends GridPane {
 	private static final Color blackTile = new Color((double) 89 / 255, (double) 89 / 255, (double) 89 / 255, 1);
 	private BoardCell bc;
 	private BoardCell currenntSelectedBoardCell;
+	private Entity currentSelectedEntity;
 	private Point currentSelectedPoint;
 	private ArrayList<Point> currentSelectedMoveList;
 	private boolean moved;
@@ -53,9 +57,9 @@ public class BoardPane extends GridPane {
 	public BoardPane(String gameType) {
 		super();
 		this.isPromoted = false;
-		
+
 		GameController.InitializeMap(gameType);
-		this.cellMap = GameController.getDisplayCellMap();//setting rotate-----
+		this.cellMap = GameController.getDisplayCellMap();// setting rotate-----
 		createBoardCell();
 		setBoardCellListener();
 	}
@@ -74,7 +78,7 @@ public class BoardPane extends GridPane {
 			}
 		}
 	}
-	
+
 	private void setBoardCellListener() {
 		for (BoardCell bc : boardCellList) {
 			bc.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
@@ -83,13 +87,13 @@ public class BoardPane extends GridPane {
 					// TODO fill in this method
 					try {
 						addOnClickHandler(bc);
-					} catch (Exception e1) {//NullEntityException WrongPieceException
+					} catch (Exception e1) {// NullEntityException WrongPieceException
 						// TODO Auto-generated catch block
-						if(!(e1 instanceof NullPointerException)) {
+						if (!(e1 instanceof NullPointerException)) {
 							SoundManager.playWrongSelected();
 							AppManager.displayMessage(e1.getMessage());
 						}
-						//System.out.println(e1.getMessage());
+						// System.out.println(e1.getMessage());
 //						Alert alert = new Alert(AlertType.WARNING);
 //						alert.setTitle("Warning");
 //						alert.setHeaderText(null);
@@ -100,87 +104,108 @@ public class BoardPane extends GridPane {
 			});
 		}
 	}
-	
+
 	private void addOnClickHandler(BoardCell myBoardCell) throws Exception {
 		// TODO Auto-generated method stub
 		// System.out.println("clicked");
+		AppManager.removeCanvas();
 		currenntSelectedBoardCell = myBoardCell;
 		if (myBoardCell.isMoveable()) {
 			// currentSelectedPoint = new Point(myBoardCell.getP().y,myBoardCell.getP().x);
 			// System.out.println(currentSelectedPoint.toString());
 			// System.out.println(currentSelectedMoveList.toString());
-			GameController.move(currentSelectedPoint, myBoardCell.getP());//, currentSelectedMoveList);
+			AppManager.moveAnimation(currentSelectedPoint, myBoardCell.getP(), currentSelectedEntity);
+			GameController.move(currentSelectedPoint, myBoardCell.getP());// , currentSelectedMoveList);
 			updateBoard(myBoardCell);
-			myBoardCell.update();
-			if (GameController.isPromotion()) {
-				setPromoted(true);
-				AppManager.showPromotion();
-				//AppManager.hidePromotion();
-			}
-			moved = true;
-			currentSelectedPoint = null;
-			//currentSelectedMoveList = null;
-			if(!isPromoted) {
-				AppManager.getStatusDisplay(GameController.getTurn()).endTurn();
-				GameController.nextTurn();
-				checkEndGame();
-				updateBoard(myBoardCell);
-				myBoardCell.update();
-				AppManager.getStatusDisplay(GameController.getTurn()).startTurn();
-			}
-		} 
-		
+			Thread thread = new Thread(() -> {
+				try {
+					Thread.sleep(300);
+					Platform.runLater(new Runnable() {
+						@Override
+						public void run() {
+							// TODO Auto-generated method stub
+							myBoardCell.update();
+							if (GameController.isPromotion()) {
+								setPromoted(true);
+								AppManager.showPromotion();
+								// AppManager.hidePromotion();
+							}
+							moved = true;
+							currentSelectedPoint = null;
+							currentSelectedEntity = null;
+							// currentSelectedMoveList = null;
+							if (!isPromoted) {
+								AppManager.getStatusDisplay(GameController.getTurn()).endTurn();
+								GameController.nextTurn();
+								checkEndGame();
+								updateBoard(myBoardCell);
+								myBoardCell.update();
+								AppManager.getStatusDisplay(GameController.getTurn()).startTurn();
+							}
+						}
+					});
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			});
+			thread.start();
+
+		}
+
 		else {
 			updateBoard(myBoardCell);
-			currentSelectedMoveList = GameController.moveList(myBoardCell.getP());//setting rotate-----
-			//GameController.printPointList(currentSelectedMoveList);
+			currentSelectedMoveList = GameController.moveList(myBoardCell.getP());// setting rotate-----
+			// GameController.printPointList(currentSelectedMoveList);
 			if (myBoardCell.hasEntity() && GameController.isTurn(myBoardCell.getP(), GameController.getTurn())) {
-				//AppManager.playEntitySelected();
+				// AppManager.playEntitySelected();
 				SoundManager.playClickingSound();
 				if (!myBoardCell.isClicked()) {
 					showWalkPath();
 					currentSelectedPoint = myBoardCell.getP();
+					currentSelectedEntity = myBoardCell.getMyCell().getEntity();
 					myBoardCell.setBackgroundTileColor(new Image(myBoardCell.getMyCell().getEntity().getHighlightSymbol()));
-					//currentSelectedMoveList = myBoardCell.getMyCell().getEntity().moveList(GameController.getBoard());
+					// currentSelectedMoveList =
+					// myBoardCell.getMyCell().getEntity().moveList(GameController.getBoard());
 					myBoardCell.setClicked(true);
 				} else {
 					for (BoardCell bc : this.boardCellList) {
 						bc.update();
 					}
 					currentSelectedPoint = null;
-					//currentSelectedMoveList = null;
+					currentSelectedEntity = null;
+					// currentSelectedMoveList = null;
 				}
 			}
 		}
-		//print(GameController.getBoard());//---------------------------------
+		// print(GameController.getBoard());//---------------------------------
 		if (GameController.isCheck()) {
-			//System.out.println(GameController.getAnotherSide(GameController.getTurn()).toString() + " Check");
+			// System.out.println(GameController.getAnotherSide(GameController.getTurn()).toString()
+			// + " Check");
 			AppManager.displayMessage(GameController.getAnotherSide(GameController.getTurn()).toString() + " Check");
 		}
-		
 
 	}
 
 	private void checkEndGame() {
-		if (GameController.isWin()) 
+		if (GameController.isWin())
 			showEndGameWindow(GameController.getAnotherSide(GameController.getTurn()).toString() + " WIN!!!\nReturn to Menu");
-		else if (GameController.isDraw()) 
+		else if (GameController.isDraw())
 			showEndGameWindow("DRAW!!!\nReturn to Menu");
 	}
-	
+
 	private void showWalkPath() {
 		for (BoardCell bc : this.getBoardCellList()) {
 			if (currentSelectedMoveList.contains(bc.getP())) {
 				if (bc.hasEntity())
-					bc.setBackgroundTileColor(new Image(Sprites.WALKPATH),
-							new Image(bc.getMyCell().getEntity().getSymbol()));
+					bc.setBackgroundTileColor(new Image(Sprites.WALKPATH), new Image(bc.getMyCell().getEntity().getSymbol()));
 				else
 					bc.setBackgroundTileColor(new Image(Sprites.WALKPATH));
 				bc.setMoveable(true);
 			}
 		}
 	}
-	
+
 	public void showEndGameWindow(String text) {
 		AppManager.stopTimer();
 		SoundManager.playWinningSound();
@@ -192,16 +217,17 @@ public class BoardPane extends GridPane {
 		AppManager.showMenu();
 		SoundManager.playMenuBgm();
 	}
-	
+
 	public void updateBoard(BoardCell myBoardCell) {
 		// TODO Auto-generated method stub
 		if (moved) {
-			this.cellMap = GameController.getDisplayCellMap();//setting rotate-----------
+			this.cellMap = GameController.getDisplayCellMap();// setting rotate-----------
 			for (BoardCell bc : this.getBoardCellList()) {
-				bc.setMyCell(cellMap[bc.getP().x][bc.getP().y]);	
+				bc.setMyCell(cellMap[bc.getP().x][bc.getP().y]);
 				moved = false;
 			}
-			if(AppManager.getRotateStatus()) AppManager.rotateBoard();
+			if (AppManager.getRotateStatus())
+				AppManager.rotateBoard();
 		}
 		for (BoardCell bc : this.getBoardCellList()) {
 			if (!bc.equals(myBoardCell))
@@ -209,30 +235,31 @@ public class BoardPane extends GridPane {
 		}
 		AppManager.displayMessage("");
 	}
-	
+
 	public void updateBoard() {
 		// TODO Auto-generated method stub
 		if (moved) {
-			this.cellMap = GameController.getDisplayCellMap();//setting rotate-----------
+			this.cellMap = GameController.getDisplayCellMap();// setting rotate-----------
 			for (BoardCell bc : this.getBoardCellList()) {
-				bc.setMyCell(cellMap[bc.getP().x][bc.getP().y]);	
+				bc.setMyCell(cellMap[bc.getP().x][bc.getP().y]);
 				moved = false;
 			}
-			if(AppManager.getRotateStatus()) AppManager.rotateBoard();
+			if (AppManager.getRotateStatus())
+				AppManager.rotateBoard();
 		}
 		for (BoardCell bc : this.getBoardCellList()) {
-				bc.update();
+			bc.update();
 		}
 		AppManager.displayMessage("");
 	}
-	
+
 	public void rotateBoard() {
 		for (BoardCell bc : this.getBoardCellList()) {
-			bc.setP(new Point(7-bc.getP().x,7-bc.getP().y));
+			bc.setP(new Point(7 - bc.getP().x, 7 - bc.getP().y));
 			bc.setMyCell(cellMap[bc.getP().x][bc.getP().y]);
 		}
 	}
-	
+
 	public void promotion(String text) {
 		setPromotionPiece(text);
 		GameController.promotion(this.getPromotionPiece());
@@ -244,7 +271,7 @@ public class BoardPane extends GridPane {
 		getCurrenntSelectedBoardCell().update();
 		GameController.setPromotion(null, Side.EMPTY);
 	}
-	
+
 	public boolean isPromoted() {
 		return isPromoted;
 	}
@@ -287,7 +314,8 @@ public class BoardPane extends GridPane {
 					continue;
 				}
 				String pr = board.getEntity(new Point(i, j)).getSymbol().substring(0, 4);
-				if (pr.substring(2, 4).equals("Kn")) pr=pr.substring(0, 2)+"N";
+				if (pr.substring(2, 4).equals("Kn"))
+					pr = pr.substring(0, 2) + "N";
 				System.out.print(pr.substring(0, 3) + "|");
 			}
 			System.out.println();

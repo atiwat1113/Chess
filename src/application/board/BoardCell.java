@@ -66,7 +66,7 @@ public class BoardCell extends Pane {
 		BackgroundImage bgImg = new BackgroundImage(image, null, null, null, bgSize);
 		BackgroundImage[] bgImgA = { bgImg };
 		this.setBackground(new Background(bgFillA, bgImgA));
-	}
+	} 
 
 	public void setBackgroundTileColor(Image redDot, Image entity) {
 		// TODO Auto-generated method stub

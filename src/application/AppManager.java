@@ -6,13 +6,23 @@ import application.menu.MenuPane;
 import application.menu.SelectModePane;
 import application.menu.SettingMenu;
 import application.menu.TimeSelectPane;
+import entity.base.Entity;
+import javafx.animation.TranslateTransition;
 import javafx.application.Platform;
+import javafx.event.EventHandler;
 import javafx.scene.Scene;
+import javafx.scene.canvas.Canvas;
+import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.image.Image;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import logic.Side;
+
+import java.awt.Point;
+
 import Resource.Resource;
 
 public class AppManager {
@@ -32,6 +42,7 @@ public class AppManager {
 	private static PlayerStatusDisplay whiteDisplay;
 	private static PlayerStatusDisplay blackDisplay;
 	private static boolean rotateStatus;
+	private static Canvas canvas;
 
 	public static void setStage(Stage stage) {
 		AppManager.stage = stage;
@@ -190,15 +201,50 @@ public class AppManager {
 		settingMenu.getBgmSlider().lookup(".slider").setStyle("-fx-pref-width:300;");
 		settingMenu.getBgmSlider().lookup(".track")
 				.setStyle(String.format(
-						"-fx-background-color: linear-gradient(to right, #2D819D %d%%, #CCCCCC %d%%);" + "-fx-pref-height:10;" ,
+						"-fx-background-color: linear-gradient(to right, #2D819D %d%%, #CCCCCC %d%%);" + "-fx-pref-height:10;",
 						(int) settingMenu.getBgmSlider().getValue(), (int) settingMenu.getBgmSlider().getValue()));
 		settingMenu.getBgmSlider().lookup(".thumb").setStyle("-fx-pref-height: 30;" + "-fx-prefer-width: 5;");
 
 		settingMenu.getSfxSlider().lookup(".slider").setStyle("-fx-pref-width:300;");
 		settingMenu.getSfxSlider().lookup(".track")
 				.setStyle(String.format(
-						"-fx-background-color: linear-gradient(to right, #2D819D %d%%, #CCCCCC %d%%);" + "-fx-pref-height:10;" ,
+						"-fx-background-color: linear-gradient(to right, #2D819D %d%%, #CCCCCC %d%%);" + "-fx-pref-height:10;",
 						(int) settingMenu.getSfxSlider().getValue(), (int) settingMenu.getSfxSlider().getValue()));
 		settingMenu.getSfxSlider().lookup(".thumb").setStyle("-fx-pref-height: 30;" + "-fx-prefer-width: 5;");
+	}
+
+	public static void moveAnimation(Point start, Point end, Entity entity) {
+
+		canvas = new Canvas();
+		canvas.setWidth(60);
+		canvas.setHeight(60);
+		canvas.setOnMouseClicked(new EventHandler<MouseEvent>() {
+
+			@Override
+			public void handle(MouseEvent arg0) {
+				// TODO Auto-generated method stub
+				SoundManager.playWrongSelected();
+				AppManager.displayMessage("It's not your piece.");
+				removeCanvas();
+			}
+		});
+		GraphicsContext gc = canvas.getGraphicsContext2D();
+		gc.drawImage(new Image(entity.getSymbol()), 0, 0, 60, 60);
+
+		TranslateTransition transition = new TranslateTransition();
+		transition.setDuration(Duration.seconds(0.3));
+		transition.setFromX(start.getY() * 60);
+		transition.setFromY(start.getX() * 60);
+		transition.setToX(end.getY() * 60);
+		transition.setToY(end.getX() * 60);
+		transition.setNode(canvas);
+		transition.play();
+		boardPane.getChildren().add(canvas);
+
+	}
+
+	public static void removeCanvas() {
+		if (boardPane.getChildren().contains(canvas))
+			boardPane.getChildren().remove(canvas);
 	}
 }
