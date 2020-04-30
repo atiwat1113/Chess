@@ -43,7 +43,9 @@ public class AppManager {
 	private static Point newRookCastlingPoint;
 	private static boolean isCastling;
 	private static Entity rookEntity;
-	private static CopyOnWriteArrayList<Point> explosionPointList = new CopyOnWriteArrayList<Point>();
+	private static ArrayList<Point> explosionPointList = new ArrayList<Point>();
+	private static boolean isEnPassnt;
+	private static Point enPassantPawnPoint;
 
 	public static void setStage(Stage stage) {
 		AppManager.stage = stage;
@@ -287,8 +289,21 @@ public class AppManager {
 		explosionPointList.add(p);
 	}
 
-	public static CopyOnWriteArrayList<Point> getExplosionPointList() {
+	public static ArrayList<Point> getExplosionPointList() {
 		return explosionPointList;
+	}
+
+	public static boolean isEnPassnt() {
+		return isEnPassnt;
+	}
+
+	public static void setEnPassnt(boolean isEnPassnt,Point p) {
+		AppManager.isEnPassnt = isEnPassnt;
+		enPassantPawnPoint = p;
+	}
+
+	public static Point getEnPassantPawnPoint() {
+		return enPassantPawnPoint;
 	}
 	
 	

@@ -53,6 +53,7 @@ public class BoardPane extends GridPane {
 	private Canvas normalTransitionCanvas;
 	private Canvas castlingTransitionCanvas;
 	private BoardCell castlingBoardCell;
+	private BoardCell enPassantBoardCell;
 	private ArrayList<BoardCell> explosionBoardCellList;
 
 	public BoardPane(String gameType) {
@@ -112,13 +113,18 @@ public class BoardPane extends GridPane {
 		// System.out.println("clicked");
 		currenntSelectedBoardCell = myBoardCell;
 		if (myBoardCell.isMoveable()) {
-			// currentSelectedPoint = new Point(myBoardCell.getP().y,myBoardCell.getP().x);
-			// System.out.println(currentSelectedPoint.toString());
-			// System.out.println(currentSelectedMoveList.toString());
+			
 			GameController.move(currentSelectedPoint, myBoardCell.getP());// , currentSelectedMoveList);
+			
+			//check condition and update board ---------------------------------------------------------------------
+			
 			if(AppManager.isCastling()) updateBoard(myBoardCell,AppManager.getNewRookCastlingPoint());
 			else if (AppManager.getGameType().equals(Games.ATOMIC)) updateBoard(myBoardCell, AppManager.getExplosionPointList());
+			else if (AppManager.isEnPassnt()) updateBoard(myBoardCell, AppManager.getEnPassantPawnPoint());
 			else updateBoard(myBoardCell);
+			
+			// moving animation ------------------------------------------------------------------------------------
+			
 			if(AppManager.getRotateStatus() && GameController.getTurn().equals(Side.BLACK)) {			
 				normalTransitionCanvas = AppManager.moveAnimation(new Point(7-currentSelectedPoint.x,7-currentSelectedPoint.y), new Point(7-myBoardCell.getP().x,7-myBoardCell.getP().y), currentSelectedEntity);
 				if(AppManager.isCastling()) {
@@ -134,6 +140,9 @@ public class BoardPane extends GridPane {
 
 				}
 			}
+			
+			// wait for moving animation to finish---------------------------------------------------------------------
+			
 			Thread thread = new Thread(() -> {
 				try {
 					Thread.sleep(330);
@@ -141,8 +150,11 @@ public class BoardPane extends GridPane {
 						@Override
 						public void run() {
 							// TODO Auto-generated method stub
+							
+							// reset parameter and update remained board cell -------------------------------------------------
+							
 							AppManager.removeTransitionCanvas(normalTransitionCanvas);
-							if(AppManager.isCastling()) {
+							if (AppManager.isCastling()) {
 								AppManager.removeTransitionCanvas(castlingTransitionCanvas);
 								AppManager.setCastling(false);
 								castlingBoardCell.update();
@@ -155,6 +167,11 @@ public class BoardPane extends GridPane {
 									explosionBoardCellList.remove(i);
 								}
 							}
+							if (AppManager.isEnPassnt()) {
+								AppManager.setEnPassnt(false, null);
+								enPassantBoardCell.update();
+							}
+							
 							myBoardCell.update();
 							if (GameController.isPromotion()) {
 								setPromoted(true);
@@ -270,7 +287,7 @@ public class BoardPane extends GridPane {
 	
 	// update board for Atomic board --------------------------------------------------------------------------
 	
-	public void updateBoard(BoardCell myBoardCell,CopyOnWriteArrayList<Point> explosionList) {
+	public void updateBoard(BoardCell myBoardCell,ArrayList<Point> explosionList) {
 		// TODO Auto-generated method stub
 		if (moved) {
 			this.cellMap = GameController.getDisplayCellMap();// setting rotate-----------
@@ -296,7 +313,7 @@ public class BoardPane extends GridPane {
 		AppManager.displayMessage("");
 	}
 	
-	// update board for castling ------------------------------------------------------------------------------------
+	// update board for castling and en passant------------------------------------------------------------------------------------
 	
 	public void updateBoard(BoardCell myBoardCell,Point p) {
 		// TODO Auto-generated method stub
@@ -314,7 +331,10 @@ public class BoardPane extends GridPane {
 		for (BoardCell bc : this.getBoardCellList()) {
 			if (!bc.equals(myBoardCell) && !bc.getP().equals(p))
 				bc.update();
-			if(bc.getP().equals(p)) castlingBoardCell = bc;
+			if(bc.getP().equals(p)) {
+				if(AppManager.isCastling()) castlingBoardCell = bc;
+				if(AppManager.isEnPassnt()) enPassantBoardCell = bc;
+			}
 		}
 		AppManager.displayMessage("");
 	}

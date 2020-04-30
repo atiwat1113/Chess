@@ -199,7 +199,7 @@ public class AtomicBoard extends Board implements CheckMateAble {
 			return;
 		if (!(getEntity(point) instanceof Pawn)) {
 			if(!(getEntity(point) == null))
-				AppManager.addExplosionPoint(point);
+				AppManager.addExplosionPoint(point); // for moving animation ---------------------
 			remove(point);
 		}
 	}
