@@ -59,7 +59,7 @@ public class NormalBoard extends Board implements CheckMateAble {
 			((HaveCastling) moveEntity).setNeverMove();
 		if (moveEntity instanceof Pawn) {
 			if (twoWalkPawn != null && twoWalkPawn.equals(new Point(oldPoint.x, newPoint.y))) {
-				AppManager.setEnPassnt(true,new Point(oldPoint.x, newPoint.y));// for moving animation ------------------------
+				AppManager.setEnPassant(true,new Point(oldPoint.x, newPoint.y));// for moving animation ------------------------
 				remove(twoWalkPawn);
 			} else if (Math.abs(oldPoint.x - newPoint.x) == 2) {
 				twoWalkPawn = newPoint;

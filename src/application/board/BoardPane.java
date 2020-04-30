@@ -168,7 +168,7 @@ public class BoardPane extends GridPane {
 								}
 							}
 							if (AppManager.isEnPassnt()) {
-								AppManager.setEnPassnt(false, null);
+								AppManager.setEnPassant(false, null);
 								enPassantBoardCell.update();
 							}
 							

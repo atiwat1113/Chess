@@ -71,7 +71,7 @@ public class SettingPane extends VBox {
 
 		@Override
 		protected void setMouseEnteredTextFont() {
-			this.setFont(Font.loadFont(Resource.ROMAN_FONT, this.fontSize + 2));
+			this.setFont(Font.loadFont(Resource.ROMAN_FONT, this.fontSize-1));
 			// System.out.println(Resource.ROMAN_FONT);
 
 		}

@@ -297,7 +297,7 @@ public class AppManager {
 		return isEnPassnt;
 	}
 
-	public static void setEnPassnt(boolean isEnPassnt,Point p) {
+	public static void setEnPassant(boolean isEnPassnt,Point p) {
 		AppManager.isEnPassnt = isEnPassnt;
 		enPassantPawnPoint = p;
 	}
