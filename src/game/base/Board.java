@@ -2,6 +2,7 @@ package game.base;
 
 import logic.*;
 import entity.base.*;
+import game.Chess960Board;
 import entity.*;
 import java.awt.*;
 import java.util.ArrayList;
@@ -15,6 +16,9 @@ public abstract class Board {
 	protected Point twoWalkPawn;
 	private Cell[][] cellMap;
 	private Entity whiteKing, blackKing;
+	protected ArrayList<Point> removePoint;
+	protected Entity movePiece, castlingRook = null;
+	protected Point movePoint, newRookPoint = null;
 	protected static final Point[] knightWalk = { new Point(1, 2), new Point(2, 1), new Point(2, -1), new Point(1, -2),
 			new Point(-1, -2), new Point(-2, -1), new Point(-2, 1), new Point(-1, 2) };
 	protected static final Point[] KingWalk = { new Point(1, 1), new Point(1, 0), new Point(1, -1), new Point(0, -1),
@@ -92,7 +96,20 @@ public abstract class Board {
 
 	// move
 	public abstract void move(Point oldPoint, Point newPoint);
-
+	public abstract void startAnimation(Point oldPoint, Point newPoint);
+	public void continueMove() {
+		if (castlingRook!=null) {
+			castlingRook.setPoint(newRookPoint);
+			addEntity(castlingRook, newRookPoint);
+			castlingRook = null;
+		}
+		movePiece.setPoint(movePoint);
+		addEntity(movePiece, movePoint);
+		for(Point point : removePoint) {
+			remove(point);
+		}
+	}
+	
 	// complete moveList to display
 	public ArrayList<Point> moveList(Point point) {
 		Entity moveEntity = getEntity(point);
@@ -124,9 +141,7 @@ public abstract class Board {
 	public boolean checkOther(Point newPoint, Point kingPoint, Side side) {
 		Point[] blackPawnWalk = { new Point(1, 1), new Point(1, -1) };
 		Point[] whitePawnWalk = { new Point(-1, 1), new Point(-1, -1) };
-		Point[] pawnWalk = whitePawnWalk;
-		if (side == Side.BLACK)
-			pawnWalk = blackPawnWalk;
+		Point[] pawnWalk = (side == Side.BLACK) ? blackPawnWalk : whitePawnWalk;
 		for (Point point : pawnWalk) {
 			Point checkPoint = addPoint(kingPoint, point);
 			if (!isInBoard(checkPoint))
@@ -167,78 +182,40 @@ public abstract class Board {
 	}
 
 	public boolean checkRook(Point point, Point vector, ArrayList<Point> oldPoint, Point newPoint, Side side) {
-		// System.out.print(print(oldPoint)+"->"+print(newPoint));
-		// System.out.print(print(newPoint));
-		// System.out.print(":"+print(point)+"R"+print(vector));
 		Point nextPoint = addPoint(point, vector);
-		// if (vector.equals(new Point(0, 0))) {
-		// System.out.println("return wrong vecter");
-		// return false;
-		// }
 		if (!isInBoard(nextPoint)) {
-			// System.out.println("out of board");
 			return false;
 		}
 		if (nextPoint.equals(newPoint)) {
-			// System.out.println("new point protect king");
 			return false;
 		}
 		if (oldPoint.contains(nextPoint) || getEntity(nextPoint) == null) {
-			// System.out.println("go continue");
 			return checkRook(nextPoint, vector, oldPoint, newPoint, side);
 		}
 		if (getEntity(nextPoint).getSide() != side) {
 			if (getEntity(nextPoint) instanceof Rook || getEntity(nextPoint) instanceof Queen) {
-				// System.out.println("can eat");
 				return true;
 			}
-			// System.out.println(""+getEntity(nextPoint));
-			// System.out.println("Opposite side");
-			// return false;
 		}
-		// if (getEntity(nextPoint).getSide() == side) {
-		// System.out.println("Same side");
-		// return false;
-		// }
-		// System.out.println("Error checkRook");
 		return false;
 	}
 
 	public boolean checkBishop(Point point, Point vector, ArrayList<Point> oldPoint, Point newPoint, Side side) {
-		// System.out.print(print(oldPoint)+"->"+print(newPoint));
-		// System.out.print(print(newPoint));
-		// System.out.print(":"+print(point)+"B"+print(vector));
 		Point nextPoint = addPoint(point, vector);
-		// if (vector.equals(new Point(0, 0))) {
-		// System.out.println("return wrong vecter");
-		// return false;
-		// }
 		if (!isInBoard(nextPoint)) {
-			// System.out.println("out of board");
 			return false;
 		}
 		if (nextPoint.equals(newPoint)) {
-			// System.out.println("new point protect king");
 			return false;
 		}
 		if (oldPoint.contains(nextPoint) || getEntity(nextPoint) == null) {
-			// System.out.println("go continue");
 			return checkBishop(nextPoint, vector, oldPoint, newPoint, side);
 		}
 		if (getEntity(nextPoint).getSide() != side) {
 			if (getEntity(nextPoint) instanceof Bishop || getEntity(nextPoint) instanceof Queen) {
-				// System.out.println("can eat");
 				return true;
 			}
-			// System.out.println(""+getEntity(nextPoint));
-			// System.out.println("Opposite side");
-			// return false;
 		}
-		// if (getEntity(nextPoint).getSide() == side) {
-		// System.out.println("Same side");
-		// return false;
-		// }
-		// System.out.println("Error checkBishop");
 		return false;
 	}
 
@@ -354,102 +331,110 @@ public abstract class Board {
 	}
 
 	// castling
-	public ArrayList<Point> castingPoint(Side side) {// White 7,4 7,0 7,7 // Black 0,4 0,0 0,7
+	public ArrayList<Point> castingPoint(Side side) {
 		ArrayList<Point> returnPoint = new ArrayList<Point>();
 		Entity king = getKing(side);
 		int s = (side == Side.BLACK) ? 0 : 7;
 		if (!((King) king).isNeverMove()) {
 			return returnPoint;
 		}
-		if (isRightCastling(side))
-			returnPoint.add(new Point(s, 6));
-		if (isLeftCastling(side))
-			returnPoint.add(new Point(s, 2));
+		Point rightRook = null;
+		Point leftRook = null;
+		Point temp = king.getPoint();
+		while (true) {
+			temp = addPoint(temp, new Point(0, 1));
+			if (!isInBoard(temp))
+				break;
+			if (getEntity(temp) instanceof Rook) {
+				rightRook = temp;
+				break;
+			}
+		}
+		temp = king.getPoint();
+		while (true) {
+			temp = addPoint(temp, new Point(0, -1));
+			if (!isInBoard(temp))
+				break;
+			if (getEntity(temp) instanceof Rook) {
+				leftRook = temp;
+				break;
+			}
+		}
+		if (rightRook != null) {
+			Point newKing = new Point(s, 6);
+			Point newRook = new Point(s, 5);
+			if (isNull(king.getPoint(), rightRook, newKing, newRook) && isFree(king.getPoint(), newKing, side)) {
+				returnPoint.add(newKing);
+				returnPoint.add(rightRook);
+			}
+		}
+		if (leftRook != null) {
+			Point newKing = new Point(s, 2);
+			Point newRook = new Point(s, 3);
+			if (isNull(king.getPoint(), leftRook, newKing, newRook) && isFree(king.getPoint(), newKing, side)) {
+				returnPoint.add(newKing);
+				returnPoint.add(leftRook);
+			}
+		}
 		return returnPoint;
 	}
-
 	public boolean isCastlingPoint(Side side, Point point) {
-		int s = (side == Side.BLACK) ? 0 : 7;
-		if (isRightCastling(side) && point.equals(new Point(s, 6)))
-			return true;
-		if (isLeftCastling(side) && point.equals(new Point(s, 2)))
-			return true;
-		return false;
+		//Entity entity = getEntity(point);
+		return Math.abs(point.y-4)>1;
 	}
 
-	public boolean isRightCastling(Side side) {
-		int s = (side == Side.BLACK) ? 0 : 7;
-		int[] s1 = { 4, 5, 6 };
-		int[] s2 = { 5, 6 };
-		for (int e : s1) {
-			if (isEatenPoint(new Point(s, e), side)) {
-				return false;
-			}
-		}
-		for (int e : s2) {
-			if (getEntity(new Point(s, e)) != null) {
-				return false;
-			}
-		}
-		if (getEntity(new Point(s, 7)) != null && getEntity(new Point(s, 7)) instanceof Rook) {
-			if (((HaveCastling) getEntity(new Point(s, 7))).isNeverMove())
-				return true;
-		}
-//		try {
-//			if(((HaveCastling) board.getEntity(new Point(s,7))).isNeverMove()) {
-//				return true;//new Point(s,6);
-//			}
-//		}finally {}
-		return false;
+	public int min(int i1, int i2, int i3, int i4) {
+		return Math.min(i1, Math.min(i2, Math.min(i3, i4)));
 	}
 
-	public boolean isLeftCastling(Side side) {
-		int s = (side == Side.BLACK) ? 0 : 7;
-		int[] s1 = { 2, 3, 4 };
-		int[] s2 = { 1, 2, 3 };
-		for (int e : s1) {
-			if (isEatenPoint(new Point(s, e), side)) {
+	public int max(int i1, int i2, int i3, int i4) {
+		return Math.max(i1, Math.max(i2, Math.max(i3, i4)));
+	}
+
+	public boolean isFree(Point start, Point stop, Side side) {// king -> king
+		for (int i = Math.min(start.y, stop.y); i <= Math.max(start.y, stop.y); i++) {
+			Point point = new Point(start.x, i);
+			if (isEatenPoint(point, side)) {
 				return false;
 			}
 		}
-		for (int e : s2) {
-			if (getEntity(new Point(s, e)) != null) {
+		return true;
+	}
+
+	public boolean isNull(Point oldKing, Point oldRook, Point newKing, Point newRook) {
+		if (oldKing.x != oldRook.x && oldRook.x != newKing.x && newKing.x != newRook.x) {
+			System.out.println("error");
+		}
+		for (int i = min(oldKing.y, oldRook.y, newKing.y, newRook.y); i <= max(oldKing.y, oldRook.y, newKing.y,
+				newRook.y); i++) {
+			Point point = new Point(oldKing.x, i);
+			if (point.equals(oldRook) || point.equals(oldKing))
+				continue;
+			if (getEntity(point) != null)
 				return false;
-			}
 		}
-		if (getEntity(new Point(s, 0)) != null && getEntity(new Point(s, 0)) instanceof Rook) {
-			if (((HaveCastling) getEntity(new Point(s, 0))).isNeverMove())
-				return true;
-		}
-//		try {
-//			if(((HaveCastling) board.getEntity(new Point(s,0))).isNeverMove()) {
-//				return true;//new Point(s,2);
-//			}
-//		}finally {}
-		return false;
+		return true;
 	}
 
 	public void castling(Side side, Point oldPoint, Point newPoint) {
-		Entity moveEntity = this.getEntity(oldPoint);
+		Entity moveEntity = getEntity(oldPoint);
+		int s = (side == Side.BLACK) ? 0 : 7;
+		int ss =  (oldPoint.y > newPoint.y) ? 0 : 7;
+		Point rookPoint = (this instanceof Chess960Board) ? newPoint : new Point(s, ss);
+		System.out.println(GameController.print(rookPoint));
+		castlingRook = getEntity(rookPoint);
 		remove(oldPoint);
-		moveEntity.setPoint(newPoint);
-		addEntity(moveEntity, newPoint);
-		if (newPoint.equals(new Point(0, 2))) {
-			moveRook(new Point(0, 0), new Point(0, 3));
-		} else if (newPoint.equals(new Point(0, 6))) {
-			moveRook(new Point(0, 7), new Point(0, 5));
-		} else if (newPoint.equals(new Point(7, 2))) {
-			moveRook(new Point(7, 0), new Point(7, 3));
-		} else if (newPoint.equals(new Point(7, 6))) {
-			moveRook(new Point(7, 7), new Point(7, 5));
+		remove(rookPoint);
+		Point moveKing;
+		if (oldPoint.y > newPoint.y) {
+			moveKing = new Point(s, 2);
+			newRookPoint = new Point(s, 3);
+		} else {
+			moveKing = new Point(s, 6);
+			newRookPoint = new Point(s, 5);
 		}
-	}
-
-	public void moveRook(Point oldPoint, Point newPoint) {// kingpoint
-		Entity rook = getEntity(oldPoint);
-		remove(oldPoint);
-		rook.setPoint(newPoint);
-		addEntity(rook, newPoint);
-		AppManager.setRookCastlingPoint(oldPoint, newPoint,rook);
+		AppManager.startCastlingAnimation(oldPoint, moveKing, moveEntity, rookPoint, newRookPoint, castlingRook);
+		//AppManager.startCastlingAnimation(Point startKing, Point endKing, Entity king, Point startRook, Point endRook, Entity rook);
+		
 	}
 }

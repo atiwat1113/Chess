@@ -174,8 +174,20 @@ public abstract class GameController {
 		for (Point movePoint : moveList(p1)) {
 			if (movePoint.equals(p2)) {
 				board.move(p1, p2);
+				//board.startAnimation(p1, p2);
+				//board.continueMove();
 			}
 		}
+	}
+	public static void startAnimation(Point oldPoint, Point newPoint) {
+		for (Point movePoint : moveList(oldPoint)) {
+			if (movePoint.equals(newPoint)) {
+				board.startAnimation(oldPoint, newPoint);
+			}
+		}
+	}
+	public static void continueMove() {
+		board.continueMove();
 	}
 
 	public static Board getBoard() {
