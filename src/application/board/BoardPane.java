@@ -114,14 +114,13 @@ public class BoardPane extends GridPane {
 		currenntSelectedBoardCell = myBoardCell;
 		if (myBoardCell.isMoveable()) {
 			
-			GameController.move(currentSelectedPoint, myBoardCell.getP());// , currentSelectedMoveList);
+			GameController.startAnimation(currentSelectedPoint,myBoardCell.getP());// , currentSelectedMoveList);
 			
 			//check condition and update board ---------------------------------------------------------------------
 			
-			updateBoard(myBoardCell);
+			updateBoard();
 			
 			// moving animation ------------------------------------------------------------------------------------
-			GameController.startAnimation(currentSelectedPoint,myBoardCell.getP());
 //			if(AppManager.getRotateStatus() && GameController.getTurn().equals(Side.BLACK)) {			
 //				normalTransitionCanvas = AppManager.moveAnimation(new Point(7-currentSelectedPoint.x,7-currentSelectedPoint.y), new Point(7-myBoardCell.getP().x,7-myBoardCell.getP().y), currentSelectedEntity);
 //				if(AppManager.isCastling()) {

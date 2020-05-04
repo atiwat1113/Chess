@@ -8,6 +8,8 @@ import application.menu.SettingMenu;
 import application.menu.TimeSelectPane;
 import entity.base.Entity;
 import javafx.animation.TranslateTransition;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
@@ -222,7 +224,6 @@ public class AppManager {
 	}
 
 	public static void startAnimation(Point start, Point end, Entity entity) {
-		System.out.println("start");
 		transitionCanvas = new Canvas();
 		transitionCanvas.setWidth(60);
 		transitionCanvas.setHeight(60);
@@ -238,7 +239,6 @@ public class AppManager {
 		transition.setNode(transitionCanvas);
 		transition.play();
 		boardPane.getChildren().add(transitionCanvas);
-		System.out.println("end");
 
 	}
 	
@@ -248,9 +248,13 @@ public class AppManager {
 	}
 
 	public static void removeTransitionCanvas() {
+		ObservableList<Node> removedCanvas = FXCollections.observableArrayList();
 		for (Node n : boardPane.getChildren()) {
 			if (n instanceof Canvas)
-				boardPane.getChildren().remove(n);
+				removedCanvas.add(n);
+		}
+		for (Node n : removedCanvas) {
+			boardPane.getChildren().remove(n);
 		}
 	}
 

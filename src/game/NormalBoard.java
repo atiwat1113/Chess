@@ -82,7 +82,7 @@ public class NormalBoard extends Board implements CheckMateAble {
 		}
 	}
 	public void startAnimation(Point oldPoint, Point newPoint) {
-		removePoint = null;
+		removePoint = new ArrayList<Point>();
 		Entity moveEntity = this.getEntity(oldPoint);
 		if (moveEntity instanceof HaveCastling)
 			((HaveCastling) moveEntity).setNeverMove();

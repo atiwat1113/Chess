@@ -3,6 +3,7 @@ package game.base;
 import logic.*;
 import entity.base.*;
 import game.Chess960Board;
+import javafx.application.Platform;
 import entity.*;
 import java.awt.*;
 import java.util.ArrayList;
@@ -16,7 +17,7 @@ public abstract class Board {
 	protected Point twoWalkPawn;
 	private Cell[][] cellMap;
 	private Entity whiteKing, blackKing;
-	protected ArrayList<Point> removePoint;
+	protected ArrayList<Point> removePoint = new ArrayList<Point>();
 	protected Entity movePiece, castlingRook = null;
 	protected Point movePoint, newRookPoint = null;
 	protected static final Point[] knightWalk = { new Point(1, 2), new Point(2, 1), new Point(2, -1), new Point(1, -2),
@@ -106,7 +107,7 @@ public abstract class Board {
 		movePiece.setPoint(movePoint);
 		addEntity(movePiece, movePoint);
 		for(Point point : removePoint) {
-			remove(point);
+				remove(point);
 		}
 	}
 	
@@ -433,7 +434,14 @@ public abstract class Board {
 			moveKing = new Point(s, 6);
 			newRookPoint = new Point(s, 5);
 		}
-		AppManager.startCastlingAnimation(oldPoint, moveKing, moveEntity, rookPoint, newRookPoint, castlingRook);
+		Platform.runLater(new Runnable() {
+			@Override
+			public void run() {
+				// TODO Auto-generated method stub
+				AppManager.startCastlingAnimation(oldPoint, moveKing, moveEntity, rookPoint, newRookPoint, castlingRook);
+			}
+		});
+	
 		//AppManager.startCastlingAnimation(Point startKing, Point endKing, Entity king, Point startRook, Point endRook, Entity rook);
 		
 	}
