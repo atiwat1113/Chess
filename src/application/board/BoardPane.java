@@ -211,10 +211,10 @@ public class BoardPane extends GridPane {
 	}
 
 	private void checkEndGame() {
-		if (GameController.isWin())
-			showEndGameWindow(GameController.getAnotherSide(GameController.getTurn()).toString() + " WIN!!!\n");
-		else if (GameController.isDraw())
+		if (GameController.isDraw())
 			showEndGameWindow("DRAW!!!\n");
+		else if (GameController.isWin())
+			showEndGameWindow(GameController.getAnotherSide(GameController.getTurn()).toString() + " WIN!!!\n");
 	}
 
 	private void showWalkPath() {
@@ -274,7 +274,6 @@ public class BoardPane extends GridPane {
 			if (AppManager.getRotateStatus()) 
 				AppManager.rotateBoard();
 				
-			
 		}
 		for (BoardCell bc : this.getBoardCellList()) {
 			if (!bc.equals(myBoardCell) && !explosionList.contains(bc.getP()))

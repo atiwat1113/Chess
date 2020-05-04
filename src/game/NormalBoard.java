@@ -94,8 +94,9 @@ public class NormalBoard extends Board implements CheckMateAble {
 				twoWalkPawn = newPoint;
 			} else
 				twoWalkPawn = null;
-		} else
+		} else {
 			twoWalkPawn = null;
+		}
 		if (moveEntity instanceof King && isCastlingPoint(moveEntity.getSide(), newPoint)) {
 			castling(moveEntity.getSide(), oldPoint, newPoint);
 		} else {

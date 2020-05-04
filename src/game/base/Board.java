@@ -104,10 +104,12 @@ public abstract class Board {
 			addEntity(castlingRook, newRookPoint);
 			castlingRook = null;
 		}
-		movePiece.setPoint(movePoint);
-		addEntity(movePiece, movePoint);
+		if (movePiece!=null) {
+			movePiece.setPoint(movePoint);
+			addEntity(movePiece, movePoint);
+		}
 		for(Point point : removePoint) {
-				remove(point);
+			remove(point);
 		}
 	}
 	
@@ -284,10 +286,7 @@ public abstract class Board {
 		for (int i = 0; i < 8; i++) {
 			for (int j = 0; j < 8; j++) {
 				Entity e = getEntity(new Point(i, j));
-				if (e == null)
-					continue;
-				// System.out.println(e);
-				if (e.getSide() == side) {
+				if (e != null && e.getSide() == side) {
 					returnList.add(e);
 				}
 			}
@@ -422,10 +421,6 @@ public abstract class Board {
 		int s = (side == Side.BLACK) ? 0 : 7;
 		int ss =  (oldPoint.y > newPoint.y) ? 0 : 7;
 		Point rookPoint = (this instanceof Chess960Board) ? newPoint : new Point(s, ss);
-		System.out.println(GameController.print(rookPoint));
-		castlingRook = getEntity(rookPoint);
-		remove(oldPoint);
-		remove(rookPoint);
 		Point moveKing;
 		if (oldPoint.y > newPoint.y) {
 			moveKing = new Point(s, 2);
@@ -434,6 +429,11 @@ public abstract class Board {
 			moveKing = new Point(s, 6);
 			newRookPoint = new Point(s, 5);
 		}
+		movePiece = moveEntity;
+		movePoint = moveKing;
+		castlingRook = getEntity(rookPoint);
+		remove(oldPoint);
+		remove(rookPoint);
 		Platform.runLater(new Runnable() {
 			@Override
 			public void run() {
