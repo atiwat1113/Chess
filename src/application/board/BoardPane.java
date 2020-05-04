@@ -118,29 +118,26 @@ public class BoardPane extends GridPane {
 			
 			//check condition and update board ---------------------------------------------------------------------
 			
-			if(AppManager.isCastling()) updateBoard(myBoardCell,AppManager.getNewRookCastlingPoint());
-			else if (AppManager.getGameType().equals(Games.ATOMIC)) updateBoard(myBoardCell, AppManager.getExplosionPointList());
-			else if (AppManager.isEnPassnt()) updateBoard(myBoardCell, AppManager.getEnPassantPawnPoint());
-			else updateBoard(myBoardCell);
+			updateBoard(myBoardCell);
 			
 			// moving animation ------------------------------------------------------------------------------------
-			
-			if(AppManager.getRotateStatus() && GameController.getTurn().equals(Side.BLACK)) {			
-				normalTransitionCanvas = AppManager.moveAnimation(new Point(7-currentSelectedPoint.x,7-currentSelectedPoint.y), new Point(7-myBoardCell.getP().x,7-myBoardCell.getP().y), currentSelectedEntity);
-				if(AppManager.isCastling()) {
-					castlingTransitionCanvas = AppManager.moveAnimation(AppManager.getOldRotateRookCastlingPoint(), AppManager.getNewRotateRookCastlingPoint(), AppManager.getRookEntity());					
-
-				}
-			}
-			else {
-				normalTransitionCanvas = AppManager.moveAnimation(currentSelectedPoint, myBoardCell.getP(), currentSelectedEntity);
-				
-				if(AppManager.isCastling()) {
-					castlingTransitionCanvas = AppManager.moveAnimation(AppManager.getOldRookCastlingPoint(), AppManager.getNewRookCastlingPoint(), AppManager.getRookEntity());
-
-				}
-			}
-			
+			GameController.startAnimation(currentSelectedPoint,myBoardCell.getP());
+//			if(AppManager.getRotateStatus() && GameController.getTurn().equals(Side.BLACK)) {			
+//				normalTransitionCanvas = AppManager.moveAnimation(new Point(7-currentSelectedPoint.x,7-currentSelectedPoint.y), new Point(7-myBoardCell.getP().x,7-myBoardCell.getP().y), currentSelectedEntity);
+//				if(AppManager.isCastling()) {
+//					castlingTransitionCanvas = AppManager.moveAnimation(AppManager.getOldRotateRookCastlingPoint(), AppManager.getNewRotateRookCastlingPoint(), AppManager.getRookEntity());					
+//
+//				}
+//			}
+//			else {
+//				normalTransitionCanvas = AppManager.moveAnimation(currentSelectedPoint, myBoardCell.getP(), currentSelectedEntity);
+//				
+//				if(AppManager.isCastling()) {
+//					castlingTransitionCanvas = AppManager.moveAnimation(AppManager.getOldRookCastlingPoint(), AppManager.getNewRookCastlingPoint(), AppManager.getRookEntity());
+//
+//				}
+//			}
+//			
 			// wait for moving animation to finish---------------------------------------------------------------------
 			
 			Thread thread = new Thread(() -> {
@@ -152,26 +149,8 @@ public class BoardPane extends GridPane {
 							// TODO Auto-generated method stub
 							
 							// reset parameter and update remained board cell -------------------------------------------------
-							
-							AppManager.removeTransitionCanvas(normalTransitionCanvas);
-							if (AppManager.isCastling()) {
-								AppManager.removeTransitionCanvas(castlingTransitionCanvas);
-								AppManager.setCastling(false);
-								castlingBoardCell.update();
-							}
-							if (AppManager.getGameType().equals(Games.ATOMIC)) {
-								for (BoardCell bc : explosionBoardCellList) {
-									bc.update();
-								}
-								for (int i = 0; i<explosionBoardCellList.size();i++) {
-									explosionBoardCellList.remove(i);
-								}
-							}
-							if (AppManager.isEnPassnt()) {
-								AppManager.setEnPassant(false, null);
-								enPassantBoardCell.update();
-							}
-							
+							GameController.continueMove();
+							AppManager.removeTransitionCanvas();
 							myBoardCell.update();
 							if (GameController.isPromotion()) {
 								setPromoted(true);
@@ -198,9 +177,7 @@ public class BoardPane extends GridPane {
 			});
 			thread.start();
 
-		}
-
-		else {
+		} else {
 			updateBoard(myBoardCell);
 			currentSelectedMoveList = GameController.moveList(myBoardCell.getP());// setting rotate-----
 			// GameController.printPointList(currentSelectedMoveList);

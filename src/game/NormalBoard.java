@@ -9,6 +9,8 @@ import entity.base.Entity;
 import entity.base.HaveCastling;
 import logic.Side;
 import game.base.*;
+import javafx.application.Platform;
+import javafx.util.Duration;
 
 public class NormalBoard extends Board implements CheckMateAble {
 
@@ -100,7 +102,14 @@ public class NormalBoard extends Board implements CheckMateAble {
 			movePiece = moveEntity;
 			movePoint = newPoint;
 			remove(oldPoint);
-			AppManager.startAnimation(oldPoint, newPoint, moveEntity);
+			Platform.runLater(new Runnable() {
+				@Override
+				public void run() {
+					// TODO Auto-generated method stub
+					AppManager.startAnimation(oldPoint, newPoint, moveEntity);
+				}
+			});
+			
 			//startAnimation(Point start, Point end, Entity entity)
 			int s = (moveEntity.getSide() == Side.BLACK) ? 7 : 0;
 			if (moveEntity instanceof Pawn && newPoint.x == s) {

@@ -8,6 +8,7 @@ import application.menu.SettingMenu;
 import application.menu.TimeSelectPane;
 import entity.base.Entity;
 import javafx.animation.TranslateTransition;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
@@ -220,8 +221,8 @@ public class AppManager {
 		settingMenu.getSfxSlider().lookup(".thumb").setStyle("-fx-pref-height: 30;" + "-fx-prefer-width: 5;");
 	}
 
-	public static Canvas moveAnimation(Point start, Point end, Entity entity) {
-
+	public static void startAnimation(Point start, Point end, Entity entity) {
+		System.out.println("start");
 		transitionCanvas = new Canvas();
 		transitionCanvas.setWidth(60);
 		transitionCanvas.setHeight(60);
@@ -237,13 +238,20 @@ public class AppManager {
 		transition.setNode(transitionCanvas);
 		transition.play();
 		boardPane.getChildren().add(transitionCanvas);
+		System.out.println("end");
 
-		return transitionCanvas;
+	}
+	
+	public static void startCastlingAnimation(Point startKing, Point endKing, Entity king, Point startRook, Point endRook, Entity rook) {
+		startAnimation(startKing, endKing, king);
+		startAnimation(startRook, endRook, rook);
 	}
 
-	public static void removeTransitionCanvas(Canvas canvas) {
-		if (boardPane.getChildren().contains(canvas))
-			boardPane.getChildren().remove(canvas);
+	public static void removeTransitionCanvas() {
+		for (Node n : boardPane.getChildren()) {
+			if (n instanceof Canvas)
+				boardPane.getChildren().remove(n);
+		}
 	}
 
 	public static boolean isCastling() {

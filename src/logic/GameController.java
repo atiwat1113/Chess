@@ -4,6 +4,8 @@ import game.*;
 import game.base.Board;
 import game.base.CheckMateAble;
 import game.base.Games;
+import javafx.application.Platform;
+import javafx.util.Duration;
 import myException.IsPromotingException;
 import myException.NullEntityException;
 import myException.NullPointException;
@@ -14,6 +16,7 @@ import java.util.Random;
 
 import Resource.Sprites;
 import application.AppManager;
+import entity.Rook;
 
 public abstract class GameController {
 	protected static Board board;
@@ -180,11 +183,7 @@ public abstract class GameController {
 		}
 	}
 	public static void startAnimation(Point oldPoint, Point newPoint) {
-		for (Point movePoint : moveList(oldPoint)) {
-			if (movePoint.equals(newPoint)) {
-				board.startAnimation(oldPoint, newPoint);
-			}
-		}
+		board.startAnimation(oldPoint, newPoint);	
 	}
 	public static void continueMove() {
 		board.continueMove();
