@@ -12,29 +12,33 @@ import game.base.Games;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import logic.Side;
 
 public class RunBoard extends Application {
 	public void start(Stage primaryStage) {
 		String gameType = Games.NORMAL;
-		Scene scene = null;
-		SettingMenu settingMenu = new SettingMenu();
-		TimeSelectPane timeSelect = new TimeSelectPane();
 		PromotionPane promotionPane = new PromotionPane();
 		SettingPane setting = new SettingPane();
+
 		
-		AppManager.setRotateStatus(true);
-		AppManager.setScene(scene);
-		AppManager.setSettingMenu(settingMenu);
-		AppManager.setTimeSelectPane(timeSelect);
+		AppManager.setRotateStatus(false);
+	
 		AppManager.setPromotionPane(promotionPane);
 		AppManager.setSetting(setting);
 		AppManager.setStage(primaryStage);
 		AppManager.setGameType(gameType);
 		//AppManager.setGamePane(gamePane);
 		AppManager.setBoardPane(new BoardPane(gameType));
-		AppManager.setSpareTime(30);
+		GamePane gamePane = new GamePane(AppManager.getBoardPane());
+		AppManager.setGamePane(gamePane);
+		AppManager.setSpareTime(0);
+		Scene scene = new Scene(AppManager.getGamePane());
+		AppManager.setScene(scene);
 		AppManager.showGamePane();
+		AppManager.getStatusDisplay(Side.WHITE).startTurn();
+		
 		primaryStage.setTitle("Chess");
+		primaryStage.setScene(scene);
 		primaryStage.sizeToScene();
 		primaryStage.setResizable(false);
 		primaryStage.show();

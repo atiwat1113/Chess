@@ -40,8 +40,8 @@ public class SettingPane extends VBox {
 
 		soundEffect.setSelected(true);
 		setRotationListener(rotation);
-		setSoundEffectListener(soundEffect);
-		setReturnBtnListener(returnBtn);
+		//setSoundEffectListener(soundEffect);
+		//setReturnBtnListener(returnBtn);
 
 		this.getChildren().addAll(rotation, soundEffect, returnBtn);
 	}
@@ -50,7 +50,7 @@ public class SettingPane extends VBox {
 
 		public MyCheckBox(String text) {
 			super(text);
-			this.setFont(Font.loadFont(Resource.ROMAN_FONT, 15));
+			//this.setFont(Font.loadFont(Resource.ROMAN_FONT, 15));
 
 		}
 	}
@@ -61,7 +61,7 @@ public class SettingPane extends VBox {
 
 		public ReturnButton(String text, double fontSize) {
 			super(text, fontSize);
-			this.setFont(Font.loadFont(Resource.ROMAN_FONT, 14));
+			//this.setFont(Font.loadFont(Resource.ROMAN_FONT, 14));
 			this.setPrefWidth(250);
 			this.setBackground(new Background(new BackgroundFill(color, new CornerRadii(10), Insets.EMPTY)));
 			this.setBorder(new Border(
@@ -71,14 +71,14 @@ public class SettingPane extends VBox {
 
 		@Override
 		protected void setMouseEnteredTextFont() {
-			this.setFont(Font.loadFont(Resource.ROMAN_FONT, this.fontSize-1));
+			//this.setFont(Font.loadFont(Resource.ROMAN_FONT, this.fontSize-1));
 			// System.out.println(Resource.ROMAN_FONT);
 
 		}
 
 		@Override
 		protected void setMouseExitedTextFont() {
-			this.setFont(Font.loadFont(Resource.ROMAN_FONT, fontSize));
+			//this.setFont(Font.loadFont(Resource.ROMAN_FONT, fontSize));
 
 		}
 

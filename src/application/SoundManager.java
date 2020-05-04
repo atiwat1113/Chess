@@ -8,12 +8,12 @@ import javafx.util.Duration;
 
 public class SoundManager {
 
-	private static MediaPlayer clickingSound = new MediaPlayer(new Media(Resource.BUTTON_CLICK));
-	private static MediaPlayer bgm = new MediaPlayer(new Media(Resource.GAME_MENU));
-	private static MediaPlayer clockTick = new MediaPlayer(new Media(Resource.CLOCK_TICKING));
-	private static MediaPlayer wrongSelected = new MediaPlayer(new Media(Resource.WRONG_SELECTED));
-	private static MediaPlayer promotionSound = new MediaPlayer(new Media(Resource.PROMOTION_SOUND));
-	private static MediaPlayer winning = new MediaPlayer(new Media(Resource.WINNING_SOUND));
+//	private static MediaPlayer clickingSound = new MediaPlayer(new Media(Resource.BUTTON_CLICK));
+//	private static MediaPlayer bgm = new MediaPlayer(new Media(Resource.GAME_MENU));
+//	private static MediaPlayer clockTick = new MediaPlayer(new Media(Resource.CLOCK_TICKING));
+//	private static MediaPlayer wrongSelected = new MediaPlayer(new Media(Resource.WRONG_SELECTED));
+//	private static MediaPlayer promotionSound = new MediaPlayer(new Media(Resource.PROMOTION_SOUND));
+//	private static MediaPlayer winning = new MediaPlayer(new Media(Resource.WINNING_SOUND));
 	private static boolean soundEffectStatus;
 
 	public static boolean getSoundEffectStatus() {

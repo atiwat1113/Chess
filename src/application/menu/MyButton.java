@@ -24,14 +24,7 @@ public class MyButton extends Button {
 		setBackgroundWithImage(new Image(Resource.BUTTON_FRAME));
 		setListener();
 
-//		try {
-//			font = URLDecoder.decode(Resource.ROMAN_FONT,"UTF-8");
-//			soundUrl = URLDecoder.decode(Resource.BUTTON_CLICK,"UTF-8");
-//			} catch (UnsupportedEncodingException e) {
-//				e.printStackTrace();
-//			}
-
-		this.setFont(Font.loadFont(Resource.ROMAN_FONT, this.fontSize));
+		//this.setFont(Font.loadFont(Resource.ROMAN_FONT, this.fontSize));
 		this.setTextFill(Color.BLACK);
 
 	}
