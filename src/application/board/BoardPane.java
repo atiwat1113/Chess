@@ -31,7 +31,7 @@ public class BoardPane extends GridPane {
 	private Cell[][] cellMap;
 	private static final int row = 8;
 	private static final int column = 8;
-	private static final Color redTile = new Color((double) 200 / 255, (double) 200 / 255, (double) 200 / 255, 1);
+	private static final Color whiteTile = new Color((double) 200 / 255, (double) 200 / 255, (double) 200 / 255, 1);
 	private static final Color blackTile = new Color((double) 89 / 255, (double) 89 / 255, (double) 89 / 255, 1);
 	private BoardCell bc; // use for creating board cell
 	private Point currentSelectedPoint; // contain point of selected entity
@@ -51,7 +51,7 @@ public class BoardPane extends GridPane {
 		for (int i = 0; i < row; i++) { // Point (y,x) => (i,j)
 			for (int j = 0; j < column; j++) {
 				if ((i + j) % 2 == 0) {
-					bc = new BoardCell(cellMap[i][j], new Point(i, j), redTile);
+					bc = new BoardCell(cellMap[i][j], new Point(i, j), whiteTile);
 				} else {
 					bc = new BoardCell(cellMap[i][j], new Point(i, j), blackTile);
 				}
