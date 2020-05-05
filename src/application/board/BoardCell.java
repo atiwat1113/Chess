@@ -83,8 +83,9 @@ public class BoardCell extends Pane {
 		this.moveable = false;
 	}
 
-	// getter and setter -------------------------------------------------------------------------------------
-	
+	// getter and setter
+	// -------------------------------------------------------------------------------------
+
 	public void setMyCell(Cell myCell) {
 		this.myCell = myCell;
 	}

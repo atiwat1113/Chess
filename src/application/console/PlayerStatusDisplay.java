@@ -49,6 +49,7 @@ public class PlayerStatusDisplay extends VBox {
 		}
 
 		turn.setFont(Font.loadFont(Resource.ROMAN_FONT, 25));
+		turn.setTextFill(Color.BLACK);
 		spareTimeText.setFont(Font.loadFont(Resource.ROMAN_FONT, 25));
 		timePerTurnText.setFont(Font.loadFont(Resource.ROMAN_FONT, 25));
 

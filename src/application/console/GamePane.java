@@ -23,12 +23,12 @@ public class GamePane extends StackPane {
 	public GamePane(BoardPane boardPane) {
 		HBox gameBox = new HBox();
 		console = new Console();
-		
+
 		this.setBackground(new Background(new BackgroundFill(Color.GRAY, CornerRadii.EMPTY, Insets.EMPTY)));
 		this.setPadding(new Insets(10));
 		this.setPrefHeight(500);
 		this.setAlignment(Pos.CENTER);
-		
+
 		gameBox.setSpacing(20);
 		gameBox.getChildren().addAll(boardPane, console);
 		this.getChildren().add(gameBox);

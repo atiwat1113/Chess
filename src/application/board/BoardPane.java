@@ -78,18 +78,18 @@ public class BoardPane extends GridPane {
 				}
 			});
 		}
-	} 
+	}
 
 	// add handler for board cell
 	private void addOnClickHandler(BoardCell myBoardCell) throws Exception {
 		if (myBoardCell.isMoveable()) {
-			GameController.startAnimation(currentSelectedPoint,myBoardCell.getP());					
+			GameController.startAnimation(currentSelectedPoint, myBoardCell.getP());
 			updateBoard();
-			
+
 			Thread thread = new Thread(() -> {
 				try {
 					Thread.sleep(330); // wait for moving animation to be finished
-					Platform.runLater(new Runnable() { 
+					Platform.runLater(new Runnable() {
 						@Override
 						public void run() {
 							GameController.continueMove();
@@ -160,14 +160,15 @@ public class BoardPane extends GridPane {
 		VBox endBox = new VBox();
 		Label endText = new Label(text);
 		MyButton returnBtn = new MyButton("Return to Menu", 20);
-		
+
 		endBox.setSpacing(20);
 		endBox.setAlignment(Pos.CENTER);
 		endBox.setPrefSize(AppManager.getGamePane().getPrefWidth(), AppManager.getGamePane().getPrefHeight());
-		endBox.setBackground(new Background(new BackgroundFill(new Color((double)200/255,(double)200/255,(double)200/255,0.6), CornerRadii.EMPTY, Insets.EMPTY)));
-		
-		endText.setFont(Font.loadFont(Resource.ROMAN_FONT,50));
-		endText.setTextFill(Color.BLACK); 
+		endBox.setBackground(new Background(new BackgroundFill(
+				new Color((double) 200 / 255, (double) 200 / 255, (double) 200 / 255, 0.6), CornerRadii.EMPTY, Insets.EMPTY)));
+
+		endText.setFont(Font.loadFont(Resource.ROMAN_FONT, 50));
+		endText.setTextFill(Color.BLACK);
 
 		returnBtn.setOnMouseClicked(new EventHandler<MouseEvent>() {
 
@@ -178,13 +179,13 @@ public class BoardPane extends GridPane {
 				SoundManager.playMenuBgm();
 			}
 		});
-	
-		endBox.getChildren().addAll(endText,returnBtn);
+
+		endBox.getChildren().addAll(endText, returnBtn);
 		AppManager.getGamePane().getChildren().add(endBox);
 		AppManager.stopTimer();
 		SoundManager.playWinningSound();
 	}
-	
+
 	public void updateBoard() {
 		if (move) {
 			this.cellMap = GameController.getDisplayCellMap();

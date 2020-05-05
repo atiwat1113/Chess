@@ -18,20 +18,21 @@ import javafx.scene.text.Font;
 public class TimeSelectPane extends VBox {
 
 	public TimeSelectPane() {
-		this.setPrefSize(750, 600);
-		this.setSpacing(14);
-		this.setAlignment(Pos.CENTER);
-		setBackgroundWithImage();
-
 		Label select = new Label("Select Time Limit");
-		select.setFont(Font.loadFont(Resource.ROMAN_FONT, 35));
-		select.setTextFill(Color.BLACK);
-
 		TimeSelectButton thirtyMin = new TimeSelectButton("30 Minutes", 20);
 		TimeSelectButton fifteenMin = new TimeSelectButton("15 Minutes", 20);
 		TimeSelectButton fiveMin = new TimeSelectButton("5 Minutes", 20);
 		TimeSelectButton noLimit = new TimeSelectButton("No time limit", 20);
 		MyButton returnBtn = new MyButton("Return to Select Mode", 16);
+
+		this.setPrefSize(750, 600);
+		this.setSpacing(14);
+		this.setAlignment(Pos.CENTER);
+		setBackgroundWithImage();
+
+		select.setFont(Font.loadFont(Resource.ROMAN_FONT, 35));
+		select.setTextFill(Color.BLACK);
+
 		setReturnBtnListener(returnBtn);
 
 		this.getChildren().addAll(select, thirtyMin, fifteenMin, fiveMin, noLimit, returnBtn);
@@ -49,7 +50,6 @@ public class TimeSelectPane extends VBox {
 
 			@Override
 			public void handle(MouseEvent arg0) {
-				// TODO Auto-generated method stub
 				SoundManager.playClickingSound();
 				AppManager.showSelectMode();
 			}

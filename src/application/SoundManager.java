@@ -23,11 +23,11 @@ public class SoundManager {
 					Platform.runLater(new Runnable() {
 						@Override
 						public void run() {
-							clickingSound.play();		
+							clickingSound.play();
 							clickingSound.seek(new Duration(0));
 						}
 					});
-				} catch (Exception e) {					
+				} catch (Exception e) {
 					e.printStackTrace();
 				}
 			});
@@ -41,8 +41,8 @@ public class SoundManager {
 				try {
 					Platform.runLater(new Runnable() {
 						@Override
-						public void run() {						
-							wrongSelected.play();						
+						public void run() {
+							wrongSelected.play();
 							wrongSelected.seek(new Duration(0));
 						}
 					});

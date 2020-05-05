@@ -19,27 +19,24 @@ import javafx.scene.layout.VBox;
 
 public class MenuPane extends StackPane {
 
-	private static final Image background = new Image(Resource.BACKGROUND);
-	private static final Image icon = new Image(Resource.ICON);
-
 	public MenuPane() {
+		VBox menu = new VBox();
+		Canvas title = new Canvas();
+		GraphicsContext gc = title.getGraphicsContext2D();
+		MyButton playButton = new MyButton("Play", 20);
+		MyButton settingButton = new MyButton("Setting", 20);
+		MyButton exitButton = new MyButton("Exit", 20);
+
 		this.setPrefSize(750, 600);
 		setBackgroundWithImage();
 
-		VBox menu = new VBox();
 		menu.setAlignment(Pos.CENTER);
 		menu.setSpacing(15);
 		menu.setTranslateY(-50);
 
-		Canvas title = new Canvas();
 		title.setHeight(300);
 		title.setWidth(300);
-		GraphicsContext gc = title.getGraphicsContext2D();
 		setTitleImage(gc);
-
-		MyButton playButton = new MyButton("Play", 20);
-		MyButton settingButton = new MyButton("Setting", 20);
-		MyButton exitButton = new MyButton("Exit", 20);
 
 		playButton.setPrefWidth(200);
 		settingButton.setPrefWidth(200);
@@ -57,12 +54,12 @@ public class MenuPane extends StackPane {
 	}
 
 	private void setTitleImage(GraphicsContext gc) {
-		gc.drawImage(icon, 0, 0, 300, 300);
+		gc.drawImage(new Image(Resource.ICON), 0, 0, 300, 300);
 	}
 
 	private void setBackgroundWithImage() {
 		BackgroundSize bgSize = new BackgroundSize(this.getPrefWidth(), this.getPrefHeight(), false, false, false, false);
-		BackgroundImage bgImg = new BackgroundImage(background, null, null, null, bgSize);
+		BackgroundImage bgImg = new BackgroundImage(new Image(Resource.BACKGROUND), null, null, null, bgSize);
 		BackgroundImage[] bgImgA = { bgImg };
 		this.setBackground(new Background(bgImgA));
 	}
@@ -72,7 +69,6 @@ public class MenuPane extends StackPane {
 
 			@Override
 			public void handle(MouseEvent arg0) {
-				// TODO Auto-generated method stub
 				SoundManager.playClickingSound();
 				Alert alert = new Alert(AlertType.CONFIRMATION);
 				alert.setTitle("Exit");

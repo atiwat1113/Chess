@@ -29,6 +29,21 @@ public class SettingMenu extends VBox {
 	private SoundButton sfxSoundButton;
 
 	public SettingMenu() {
+		HBox bgmPane = new HBox();
+		HBox bgmBox = new HBox();
+		bgmSlider = new Slider();
+		Label bgmLabel = new Label("BGM");
+		bgmSoundButton = new SoundButton("bgm", bgmSlider, bgmValue);
+
+		HBox sfxPane = new HBox();
+		HBox sfxBox = new HBox();
+		sfxSlider = new Slider();
+		Label sfxLabel = new Label("SFX");
+		sfxSoundButton = new SoundButton("sfx", sfxSlider, sfxValue);
+
+		Label setting = new Label("Setting");
+		MyButton returnBtn = new MyButton("Return to Menu", 20);
+
 		this.setPrefSize(750, 600);
 		this.setSpacing(55);
 		this.setAlignment(Pos.CENTER);
@@ -36,55 +51,53 @@ public class SettingMenu extends VBox {
 		// ---------------------------------------------------------------------------------------------------------
 
 		// BGM Pane
-		HBox bgmPane = new HBox();
+
 		bgmPane.setAlignment(Pos.CENTER);
 		bgmPane.setPrefWidth(490);
-		HBox bgmBox = new HBox();
+
 		bgmBox.setPrefWidth(490);
 		bgmBox.setSpacing(10);
 		bgmBox.setAlignment(Pos.CENTER_LEFT);
-		bgmSlider = new Slider();
+
 		bgmSlider.setValue(SoundManager.getMenuBgmVolume() * 100);
-		Label bgmLabel = new Label("BGM");
+
 		bgmValue = new Label(String.format("%.1f", bgmSlider.valueProperty().getValue()));
-		bgmLabel.setFont(Font.loadFont(Resource.ROMAN_FONT, 25));
 		bgmValue.setFont(Font.loadFont(Resource.ROMAN_FONT, 20));
-		bgmSoundButton = new SoundButton("bgm", bgmSlider, bgmValue);
+
+		bgmLabel.setFont(Font.loadFont(Resource.ROMAN_FONT, 25));
+
 		bgmBox.getChildren().addAll(bgmLabel, bgmSoundButton, bgmSlider, bgmValue);
 		bgmPane.getChildren().add(bgmBox);
 
 		// ---------------------------------------------------------------------------------------------------------
 
 		// SFX Pane
-		HBox sfxPane = new HBox();
+
 		sfxPane.setAlignment(Pos.CENTER);
 		sfxPane.setPrefWidth(475);
-		HBox sfxBox = new HBox();
+
 		sfxBox.setPrefWidth(475);
 		sfxBox.setSpacing(10);
 		sfxBox.setAlignment(Pos.CENTER_LEFT);
 		sfxBox.setTranslateX(10);
-		sfxSlider = new Slider();
+
 		sfxSlider.setValue(SoundManager.getSoundEffectVolume() * 100);
-		Label sfxLabel = new Label("SFX");
+
 		sfxValue = new Label(String.format("%.1f", sfxSlider.valueProperty().getValue()));
-		sfxLabel.setFont(Font.loadFont(Resource.ROMAN_FONT, 25));
 		sfxValue.setFont(Font.loadFont(Resource.ROMAN_FONT, 20));
-		sfxSoundButton = new SoundButton("sfx", sfxSlider, sfxValue);
+
+		sfxLabel.setFont(Font.loadFont(Resource.ROMAN_FONT, 25));
+
 		sfxBox.getChildren().addAll(sfxLabel, sfxSoundButton, sfxSlider, sfxValue);
 		sfxPane.getChildren().add(sfxBox);
 
 		// ---------------------------------------------------------------------------------------------------------
 
-		Label setting = new Label("Setting");
 		setting.setFont(Font.loadFont(Resource.ROMAN_FONT, 35));
 
-		MyButton returnBtn = new MyButton("Return to Menu", 20);
 		setReturnBtnListener(returnBtn);
-
 		setBgmSliderListener();
 		setSoundEffectSliderListener();
-
 		setBackgroundWithImage();
 		this.getChildren().addAll(setting, bgmPane, sfxPane, returnBtn);
 	}
@@ -105,7 +118,6 @@ public class SettingMenu extends VBox {
 
 				@Override
 				public void handle(MouseEvent arg0) {
-					// TODO Auto-generated method stub
 					SoundManager.playClickingSound();
 					if (isMuted) {
 						isMuted = false;
@@ -157,11 +169,9 @@ public class SettingMenu extends VBox {
 
 			@Override
 			public void invalidated(Observable arg0) {
-				// TODO Auto-generated method stub
 				SoundManager.setMenuBgmVolume(bgmSlider.getValue() / 100);
 				bgmValue.setText(String.format("%.1f", bgmSlider.valueProperty().getValue()));
 				bgmSoundButton.setBackgroundImageByVolume(bgmSlider);
-				// System.out.println(bgmSlider.getValue()/100);
 				String style = String.format(
 						"-fx-background-color: linear-gradient(to right, #2D819D %d%%, #CCCCCC %d%%);" + "-fx-pref-height:10;",
 						(int) bgmSlider.getValue(), (int) bgmSlider.getValue());
@@ -173,9 +183,7 @@ public class SettingMenu extends VBox {
 
 			@Override
 			public void handle(MouseEvent arg0) {
-				// TODO Auto-generated method stub
 				SoundManager.playClickingSound();
-
 			}
 		});
 	}
@@ -185,11 +193,9 @@ public class SettingMenu extends VBox {
 
 			@Override
 			public void invalidated(Observable arg0) {
-				// TODO Auto-generated method stub
 				SoundManager.setSoundEffectVolume(sfxSlider.getValue() / 100);
 				sfxValue.setText(String.format("%.1f", sfxSlider.valueProperty().getValue()));
 				sfxSoundButton.setBackgroundImageByVolume(sfxSlider);
-				// System.out.println(soundEffectSlider.getValue() / 100);
 				String style = String.format(
 						"-fx-background-color: linear-gradient(to right, #2D819D %d%%, #CCCCCC %d%%);" + "-fx-pref-height:10;",
 						(int) sfxSlider.getValue(), (int) sfxSlider.getValue());
@@ -201,7 +207,6 @@ public class SettingMenu extends VBox {
 
 			@Override
 			public void handle(MouseEvent arg0) {
-				// TODO Auto-generated method stub
 				SoundManager.playClickingSound();
 			}
 		});
@@ -212,7 +217,6 @@ public class SettingMenu extends VBox {
 
 			@Override
 			public void handle(MouseEvent arg0) {
-				// TODO Auto-generated method stub
 				SoundManager.playClickingSound();
 				AppManager.showMenu();
 			}

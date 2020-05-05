@@ -27,16 +27,16 @@ public class PromotionPane extends VBox {
 		PromotionButton rook = new PromotionButton("R");
 		PromotionButton bishop = new PromotionButton("B");
 		PromotionButton knight = new PromotionButton("K");
-		
+
 		this.setPrefSize(200, 100);
 		this.setBackground(new Background(new BackgroundFill(Color.GRAY, CornerRadii.EMPTY, Insets.EMPTY)));
 		this.setAlignment(Pos.TOP_LEFT);
 		this.setSpacing(15);
-		
+
 		promotion.setAlignment(Pos.TOP_LEFT);
 		promotion.setSpacing(15);
-	
-		selection.setAlignment(Pos.CENTER_LEFT); 
+
+		selection.setAlignment(Pos.CENTER_LEFT);
 		selection.setSpacing(4);
 
 		label.setFont(Font.loadFont(Resource.ROMAN_FONT, 15));

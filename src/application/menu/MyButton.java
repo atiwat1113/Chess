@@ -11,6 +11,7 @@ import javafx.scene.layout.BackgroundImage;
 import javafx.scene.layout.BackgroundSize;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
+
 public class MyButton extends Button {
 
 	protected String font;
@@ -34,7 +35,6 @@ public class MyButton extends Button {
 
 			@Override
 			public void handle(MouseEvent arg0) {
-				// TODO Auto-generated method stub
 				setMouseEnteredTextFont();
 			}
 		});
@@ -43,7 +43,6 @@ public class MyButton extends Button {
 
 			@Override
 			public void handle(MouseEvent arg0) {
-				// TODO Auto-generated method stub
 				setMouseExitedTextFont();
 			}
 		});
@@ -51,7 +50,6 @@ public class MyButton extends Button {
 
 	protected void setMouseEnteredTextFont() {
 		this.setFont(Font.loadFont(Resource.ROMAN_FONT, fontSize + 2));
-		// System.out.println(Resource.ROMAN_FONT);
 		setBackgroundWithImage(new Image(Resource.HIGHLIGHT_BUTTON_FRAME));
 	}
 

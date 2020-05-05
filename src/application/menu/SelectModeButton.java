@@ -47,7 +47,6 @@ public class SelectModeButton extends MyButton {
 
 			@Override
 			public void handle(MouseEvent arg0) {
-				// TODO Auto-generated method stub
 				setGame();
 			}
 		});

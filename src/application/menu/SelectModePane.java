@@ -21,14 +21,22 @@ public class SelectModePane extends VBox {
 	private static final Image background = new Image(Resource.BACKGROUND);
 
 	public SelectModePane() {
+		HBox selectBox = new HBox();
+		VBox left = new VBox();
+		VBox right = new VBox();
+		Label select = new Label("Select Mode");
+		SelectModeButton normal = new SelectModeButton("Normal", 20);
+		SelectModeButton atomic = new SelectModeButton("Atomic", 20);
+		SelectModeButton kingOfTheHill = new SelectModeButton("King of the hill", 20);
+		SelectModeButton threeCheck = new SelectModeButton("Three check", 20);
+		SelectModeButton chess960 = new SelectModeButton("Chess960", 20);
+		SelectModeButton horde = new SelectModeButton("Horde", 20);
+		MyButton returnBtn = new MyButton("Return to Menu", 20);
+
 		this.setAlignment(Pos.CENTER);
 		this.setSpacing(35);
 		this.setPrefSize(750, 600);
 		setBackgroundWithImage();
-
-		HBox selectBox = new HBox();
-		VBox left = new VBox();
-		VBox right = new VBox();
 
 		selectBox.setAlignment(Pos.CENTER);
 		selectBox.setSpacing(25);
@@ -37,17 +45,9 @@ public class SelectModePane extends VBox {
 		right.setAlignment(Pos.CENTER);
 		right.setSpacing(12);
 
-		Label select = new Label("Select Mode");
 		select.setFont(Font.loadFont(Resource.ROMAN_FONT, 35));
 		select.setTextFill(Color.BLACK);
 
-		SelectModeButton normal = new SelectModeButton("Normal", 20);
-		SelectModeButton atomic = new SelectModeButton("Atomic", 20);
-		SelectModeButton kingOfTheHill = new SelectModeButton("King of the hill", 20);
-		SelectModeButton threeCheck = new SelectModeButton("Three check", 20);
-		SelectModeButton chess960 = new SelectModeButton("Chess960", 20);
-		SelectModeButton horde = new SelectModeButton("Horde", 20);
-		MyButton returnBtn = new MyButton("Return to Menu", 20);
 		setReturnBtnListener(returnBtn);
 
 		left.getChildren().addAll(normal, atomic, kingOfTheHill);

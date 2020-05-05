@@ -26,7 +26,7 @@ public class Main extends Application {
 		AppManager.setPromotionPane(promotionPane);
 		AppManager.setSetting(setting);
 		AppManager.setStage(primaryStage);
-		SoundManager.setSoundEffectStatus(true); 
+		SoundManager.setSoundEffectStatus(true);
 		SoundManager.playMenuBgm();
 
 		Scene scene = new Scene(menu);
