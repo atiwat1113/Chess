@@ -161,6 +161,10 @@ public class AppManager { // for Classes to communicate with each other.
 			boardPane.getChildren().remove(n);
 		}
 	}
+	
+	public static void updateSettingMenu() {
+		settingMenu.update();
+	}
 
 	// getter and setter
 	// ----------------------------------------------------------------------------------------

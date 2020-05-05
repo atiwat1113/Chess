@@ -33,13 +33,13 @@ public class SettingMenu extends VBox {
 		HBox bgmBox = new HBox();
 		bgmSlider = new Slider();
 		Label bgmLabel = new Label("BGM");
-		bgmSoundButton = new SoundButton("bgm", bgmSlider, bgmValue);
+
 
 		HBox sfxPane = new HBox();
 		HBox sfxBox = new HBox();
 		sfxSlider = new Slider();
 		Label sfxLabel = new Label("SFX");
-		sfxSoundButton = new SoundButton("sfx", sfxSlider, sfxValue);
+
 
 		Label setting = new Label("Setting");
 		MyButton returnBtn = new MyButton("Return to Menu", 20);
@@ -63,6 +63,8 @@ public class SettingMenu extends VBox {
 
 		bgmValue = new Label(String.format("%.1f", bgmSlider.valueProperty().getValue()));
 		bgmValue.setFont(Font.loadFont(Resource.ROMAN_FONT, 20));
+		
+		bgmSoundButton = new SoundButton("bgm", bgmSlider, bgmValue);
 
 		bgmLabel.setFont(Font.loadFont(Resource.ROMAN_FONT, 25));
 
@@ -85,6 +87,8 @@ public class SettingMenu extends VBox {
 
 		sfxValue = new Label(String.format("%.1f", sfxSlider.valueProperty().getValue()));
 		sfxValue.setFont(Font.loadFont(Resource.ROMAN_FONT, 20));
+		
+		sfxSoundButton = new SoundButton("sfx", sfxSlider, sfxValue);
 
 		sfxLabel.setFont(Font.loadFont(Resource.ROMAN_FONT, 25));
 
@@ -121,7 +125,7 @@ public class SettingMenu extends VBox {
 					SoundManager.playClickingSound();
 					if (isMuted) {
 						isMuted = false;
-						if (sound.equals("bgm"))
+						if (sound.equals("bgm")) 
 							SoundManager.setMenuBgmVolume(slider.getValue() / 100);
 						else
 							SoundManager.setSoundEffectStatus(true);
@@ -130,7 +134,7 @@ public class SettingMenu extends VBox {
 						value.setDisable(false);
 					} else {
 						isMuted = true;
-						if (sound.equals("bgm"))
+						if (sound.equals("bgm")) 
 							SoundManager.setMenuBgmVolume(0);
 						else
 							SoundManager.setSoundEffectStatus(false);
@@ -160,8 +164,14 @@ public class SettingMenu extends VBox {
 			BackgroundImage[] bgImgA = { bgImg };
 			this.setBackground(new Background(bgImgA));
 		}
-	}
 
+		public void setMuted(boolean isMuted) {
+			this.isMuted = isMuted;
+		}
+		
+		
+	}
+		
 	// ---------------------------------------------------------------------------------------
 
 	private void setBgmSliderListener() {
@@ -230,6 +240,17 @@ public class SettingMenu extends VBox {
 		this.setBackground(new Background(bgImgA));
 	}
 
+	public void update() {
+		sfxSoundButton.setMuted(!SoundManager.getSoundEffectStatus());
+		sfxSlider.setDisable(!SoundManager.getSoundEffectStatus());
+		sfxValue.setDisable(!SoundManager.getSoundEffectStatus());
+		if(SoundManager.getSoundEffectStatus())
+			sfxSoundButton.setBackgroundImageByVolume(sfxSlider);
+		else 
+			sfxSoundButton.setBackgroundWithImage(new Image(Resource.MUTE_VOLUME_IMAGE));
+		
+	}
+	
 	public Slider getBgmSlider() {
 		return bgmSlider;
 	}

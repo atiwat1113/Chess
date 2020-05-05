@@ -103,6 +103,7 @@ public class MenuPane extends StackPane {
 			public void handle(MouseEvent arg0) {
 				// TODO Auto-generated method stub
 				SoundManager.playClickingSound();
+				AppManager.updateSettingMenu();
 				AppManager.showSettingMenu();
 				AppManager.setSliderStyle();
 			}

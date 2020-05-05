@@ -3,6 +3,7 @@ package application.menu;
 import application.AppManager;
 import application.SoundManager;
 import application.console.GamePane;
+import application.console.SettingPane;
 import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
 import logic.Side;
@@ -45,6 +46,8 @@ public class TimeSelectButton extends MyButton {
 
 	private void startGame() {
 		AppManager.setSpareTime(spareTime);
+		SettingPane setting = new SettingPane();
+		AppManager.setSetting(setting);
 		GamePane gamePane = new GamePane(AppManager.getBoardPane());
 		AppManager.setGamePane(gamePane);
 		AppManager.showGamePane();
