@@ -48,9 +48,9 @@ public class PlayerStatusDisplay extends VBox {
 			timePerTurnText.setText("-----");
 		}
 
-		//turn.setFont(Font.loadFont(Resource.ROMAN_FONT, 25));
-		//spareTimeText.setFont(Font.loadFont(Resource.ROMAN_FONT, 25));
-		//timePerTurnText.setFont(Font.loadFont(Resource.ROMAN_FONT, 25));
+		turn.setFont(Font.loadFont(Resource.ROMAN_FONT, 25));
+		spareTimeText.setFont(Font.loadFont(Resource.ROMAN_FONT, 25));
+		timePerTurnText.setFont(Font.loadFont(Resource.ROMAN_FONT, 25));
 
 		timePane = new HBox();
 		timePane.getChildren().addAll(spareTimeText, timePerTurnText);

@@ -30,8 +30,6 @@ public class PromotionButton extends Button {
 		super();
 		this.text = text;
 		this.setPrefSize(40, 40);
-		// this.setBackground(new Background(new BackgroundFill(Color.WHITE,
-		// CornerRadii.EMPTY, Insets.EMPTY)));
 		setBackgroundWithImage();
 		this.setListener();
 	}
@@ -41,7 +39,7 @@ public class PromotionButton extends Button {
 			@Override
 			public void handle(MouseEvent arg0) {
 				// TODO Auto-generated method stub
-				//SoundManager.playPromotionSound();
+				SoundManager.playPromotionSound();
 				AppManager.hidePromotion();
 				AppManager.setPromotionListener(text);
 			}

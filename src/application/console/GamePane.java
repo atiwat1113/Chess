@@ -48,7 +48,7 @@ public class GamePane extends StackPane {
 			AppManager.setWhiteDisplay(whiteDisplay);
 			AppManager.setBlackDisplay(blackDisplay);
 
-			//gameMode.setFont(Font.loadFont(Resource.ROMAN_FONT, 20));
+			gameMode.setFont(Font.loadFont(Resource.ROMAN_FONT, 20));
 			gameMode.setTextFill(Color.BLACK);
 
 			topBox.getChildren().addAll(AppManager.getPromotionPane(), AppManager.getSetting());

@@ -24,7 +24,7 @@ public class MyButton extends Button {
 		setBackgroundWithImage(new Image(Resource.BUTTON_FRAME));
 		setListener();
 
-		//this.setFont(Font.loadFont(Resource.ROMAN_FONT, this.fontSize));
+		this.setFont(Font.loadFont(Resource.ROMAN_FONT, this.fontSize));
 		this.setTextFill(Color.BLACK);
 
 	}

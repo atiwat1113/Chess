@@ -23,8 +23,8 @@ public class BoardCell extends Pane {
 	private Cell myCell;
 	private Point p;
 	private Color color;
-	private boolean isClicked;
-	private boolean moveable;
+	private boolean isClicked; // true if this board cell has an entity and is clicked.
+	private boolean moveable; // true if this board cell is able to move to when an entity is clicked.
 
 	public BoardCell(Cell cell, Point p, Color color) {
 		this.myCell = cell;
@@ -49,17 +49,14 @@ public class BoardCell extends Pane {
 	}
 
 	public boolean hasEntity() {
-		// TODO Auto-generated method stub
 		return !this.myCell.IsEmpty();
 	}
 
 	public void setBackgroundTileColor() {
-		// TODO Auto-generated method stub
 		this.setBackground(new Background(new BackgroundFill(this.color, CornerRadii.EMPTY, Insets.EMPTY)));
 	}
 
 	public void setBackgroundTileColor(Image image) {
-		// TODO Auto-generated method stub
 		BackgroundFill bgFill = new BackgroundFill(this.color, CornerRadii.EMPTY, Insets.EMPTY);
 		BackgroundFill[] bgFillA = { bgFill };
 		BackgroundSize bgSize = new BackgroundSize(60, 60, false, false, false, false);
@@ -69,7 +66,6 @@ public class BoardCell extends Pane {
 	}
 
 	public void setBackgroundTileColor(Image redDot, Image entity) {
-		// TODO Auto-generated method stub
 		BackgroundFill bgFill = new BackgroundFill(this.color, CornerRadii.EMPTY, Insets.EMPTY);
 		BackgroundFill[] bgFillA = { bgFill };
 		BackgroundSize bgSize = new BackgroundSize(60, 60, false, false, false, false);
@@ -88,6 +84,8 @@ public class BoardCell extends Pane {
 		this.moveable = false;
 	}
 
+	// getter and setter -------------------------------------------------------------------------------------
+	
 	public void setMyCell(Cell myCell) {
 		this.myCell = myCell;
 	}

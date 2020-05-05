@@ -9,8 +9,8 @@ import javafx.stage.Stage;
 public class Main extends Application {
 	public void start(Stage primaryStage) {
 
-		//SoundManager.setMenuBgmVolume(0.5);
-		//SoundManager.setSoundEffectVolume(0.5);
+		SoundManager.setMenuBgmVolume(0.4);
+		SoundManager.setSoundEffectVolume(0.4);
 
 		MenuPane menu = new MenuPane();
 		SelectModePane selectMode = new SelectModePane();
@@ -26,8 +26,8 @@ public class Main extends Application {
 		AppManager.setPromotionPane(promotionPane);
 		AppManager.setSetting(setting);
 		AppManager.setStage(primaryStage);
-		//SoundManager.setSoundEffectStatus(true); 
-		//SoundManager.playMenuBgm();
+		SoundManager.setSoundEffectStatus(true); 
+		SoundManager.playMenuBgm();
 
 		Scene scene = new Scene(menu);
 

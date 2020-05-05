@@ -16,7 +16,7 @@ import logic.Side;
 
 public class RunBoard extends Application {
 	public void start(Stage primaryStage) {
-		String gameType = Games.NORMAL;
+		String gameType = Games.ATOMIC;
 		PromotionPane promotionPane = new PromotionPane();
 		SettingPane setting = new SettingPane();
 

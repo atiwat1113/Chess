@@ -6,10 +6,6 @@ import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.canvas.Canvas;
-import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
@@ -29,10 +25,7 @@ import application.menu.MyButton;
 import entity.base.Entity;
 import java.awt.Point;
 import java.util.ArrayList;
-import java.util.concurrent.CopyOnWriteArrayList;
-
 import game.base.Board;
-import game.base.Games;
 
 public class BoardPane extends GridPane {
 	private ObservableList<BoardCell> boardCellList = FXCollections.observableArrayList();
@@ -50,17 +43,10 @@ public class BoardPane extends GridPane {
 	private boolean moved;
 	private String promotionPiece;
 	private boolean isPromoted;
-	private Canvas normalTransitionCanvas;
-	private Canvas castlingTransitionCanvas;
-	private BoardCell castlingBoardCell;
-	private BoardCell enPassantBoardCell;
-	private ArrayList<BoardCell> explosionBoardCellList;
 
 	public BoardPane(String gameType) {
 		super();
 		this.isPromoted = false;
-		if(gameType.equals(Games.ATOMIC)) explosionBoardCellList = new ArrayList<BoardCell>();
-
 		GameController.InitializeMap(gameType);
 		this.cellMap = GameController.getDisplayCellMap();// setting rotate-----
 		createBoardCell();
@@ -232,17 +218,14 @@ public class BoardPane extends GridPane {
 	public void showEndGameWindow(String text) {
 		AppManager.stopTimer();
 		SoundManager.playWinningSound();
-//		Alert alert = new Alert(AlertType.INFORMATION);
-//		alert.setTitle("End Game");
-//		alert.setHeaderText(null);
-//		alert.setContentText(text);
-//		alert.showAndWait();
 		VBox endBox = new VBox();
+		Label endText = new Label(text);
+		
 		endBox.setSpacing(20);
 		endBox.setAlignment(Pos.CENTER);
 		endBox.setPrefSize(AppManager.getGamePane().getPrefWidth(), AppManager.getGamePane().getPrefHeight());
 		endBox.setBackground(new Background(new BackgroundFill(new Color((double)200/255,(double)200/255,(double)200/255,0.6), CornerRadii.EMPTY, Insets.EMPTY)));
-		Label endText = new Label(text);
+		
 		endText.setFont(Font.loadFont(Resource.ROMAN_FONT,50));
 		endText.setTextFill(Color.BLACK); 
 		MyButton returnBtn = new MyButton("Return to Menu", 20);
@@ -258,60 +241,6 @@ public class BoardPane extends GridPane {
 	
 		endBox.getChildren().addAll(endText,returnBtn);
 		AppManager.getGamePane().getChildren().add(endBox);
-	}
- 
-	
-	// update board for Atomic board --------------------------------------------------------------------------
-	
-	public void updateBoard(BoardCell myBoardCell,ArrayList<Point> explosionList) {
-		// TODO Auto-generated method stub
-		if (moved) {
-			this.cellMap = GameController.getDisplayCellMap();// setting rotate-----------
-			for (BoardCell bc : this.getBoardCellList()) {
-				bc.setMyCell(cellMap[bc.getP().x][bc.getP().y]);
-				moved = false;
-			}
-			if (AppManager.getRotateStatus()) 
-				AppManager.rotateBoard();
-				
-		}
-		for (BoardCell bc : this.getBoardCellList()) {
-			if (!bc.equals(myBoardCell) && !explosionList.contains(bc.getP()))
-				bc.update();
-			if(explosionList.contains(bc.getP()) && bc.getP().equals(currentSelectedPoint))
-				bc.update();
-			if(explosionList.contains(bc.getP())) {
-				explosionBoardCellList.add(bc);
-				AppManager.removeExplosionPoint(bc.getP());
-			}
-		}
-		AppManager.displayMessage("");
-	}
-	
-	// update board for castling and en passant------------------------------------------------------------------------------------
-	
-	public void updateBoard(BoardCell myBoardCell,Point p) {
-		// TODO Auto-generated method stub
-		if (moved) {
-			this.cellMap = GameController.getDisplayCellMap();// setting rotate-----------
-			for (BoardCell bc : this.getBoardCellList()) {
-				bc.setMyCell(cellMap[bc.getP().x][bc.getP().y]);
-				moved = false;
-			}
-			if (AppManager.getRotateStatus()) 
-				AppManager.rotateBoard();
-				
-				
-		}
-		for (BoardCell bc : this.getBoardCellList()) {
-			if (!bc.equals(myBoardCell) && !bc.getP().equals(p))
-				bc.update();
-			if(bc.getP().equals(p)) {
-				if(AppManager.isCastling()) castlingBoardCell = bc;
-				if(AppManager.isEnPassnt()) enPassantBoardCell = bc;
-			}
-		}
-		AppManager.displayMessage("");
 	}
 	
 	// normal update board -----------------------------------------------------------------------------------------------

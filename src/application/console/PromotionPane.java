@@ -33,7 +33,7 @@ public class PromotionPane extends VBox {
 		selection.setSpacing(4);
 
 		Label label = new Label("Select promotion");
-		//label.setFont(Font.loadFont(Resource.ROMAN_FONT, 15));
+		label.setFont(Font.loadFont(Resource.ROMAN_FONT, 15));
 		// change color label
 		PromotionButton queen = new PromotionButton("Q");
 		PromotionButton rook = new PromotionButton("R");
@@ -41,7 +41,7 @@ public class PromotionPane extends VBox {
 		PromotionButton knight = new PromotionButton("K");
 
 		text = new Text();
-		//text.setFont(Font.loadFont(Resource.ROMAN_FONT, 14));
+		text.setFont(Font.loadFont(Resource.ROMAN_FONT, 14));
 		text.setFill(Color.DARKRED);
 
 		selection.getChildren().addAll(queen, rook, bishop, knight);
