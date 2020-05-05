@@ -22,7 +22,6 @@ import Resource.Sprites;
 import application.AppManager;
 import application.SoundManager;
 import application.menu.MyButton;
-import entity.base.Entity;
 import java.awt.Point;
 import java.util.ArrayList;
 import game.base.Board;
@@ -35,9 +34,7 @@ public class BoardPane extends GridPane {
 	private static final int column = 8;
 	private static final Color redTile = new Color((double) 200 / 255, (double) 200 / 255, (double) 200 / 255, 1);
 	private static final Color blackTile = new Color((double) 89 / 255, (double) 89 / 255, (double) 89 / 255, 1);
-	private BoardCell bc;
-	private BoardCell currenntSelectedBoardCell;
-	private Entity currentSelectedEntity;
+	private BoardCell bc; // use for creating board cell
 	private Point currentSelectedPoint;
 	private ArrayList<Point> currentSelectedMoveList;
 	private boolean moved;
@@ -46,15 +43,15 @@ public class BoardPane extends GridPane {
 
 	public BoardPane(String gameType) {
 		super();
-		this.isPromoted = false;
 		GameController.InitializeMap(gameType);
+		this.isPromoted = false;
 		this.cellMap = GameController.getDisplayCellMap();// setting rotate-----
 		createBoardCell();
 		setBoardCellListener();
 	}
 
 	private void createBoardCell() {
-		for (int i = 0; i < row; i++) {// Point (y,x) => (i,j)
+		for (int i = 0; i < row; i++) { // Point (y,x) => (i,j)
 			for (int j = 0; j < column; j++) {
 				if ((i + j) % 2 == 0) {
 					bc = new BoardCell(cellMap[i][j], new Point(i, j), redTile);
@@ -97,7 +94,6 @@ public class BoardPane extends GridPane {
 	private void addOnClickHandler(BoardCell myBoardCell) throws Exception {
 		// TODO Auto-generated method stub
 		// System.out.println("clicked");
-		currenntSelectedBoardCell = myBoardCell;
 		if (myBoardCell.isMoveable()) {
 			
 			GameController.startAnimation(currentSelectedPoint,myBoardCell.getP());// , currentSelectedMoveList);
@@ -144,7 +140,6 @@ public class BoardPane extends GridPane {
 							}
 							moved = true;
 							currentSelectedPoint = null;
-							currentSelectedEntity = null;
 							// currentSelectedMoveList = null;
 							if (!isPromoted) {
 								AppManager.getStatusDisplay(GameController.getTurn()).endTurn();
@@ -172,7 +167,6 @@ public class BoardPane extends GridPane {
 				if (!myBoardCell.isClicked()) {
 					showWalkPath();
 					currentSelectedPoint = myBoardCell.getP();
-					currentSelectedEntity = myBoardCell.getMyCell().getEntity();
 					myBoardCell.setBackgroundTileColor(new Image(myBoardCell.getMyCell().getEntity().getHighlightSymbol()));
 					// currentSelectedMoveList =
 					// myBoardCell.getMyCell().getEntity().moveList(GameController.getBoard());
@@ -182,7 +176,6 @@ public class BoardPane extends GridPane {
 						bc.update();
 					}
 					currentSelectedPoint = null;
-					currentSelectedEntity = null;
 					// currentSelectedMoveList = null;
 				}
 			}
@@ -297,8 +290,7 @@ public class BoardPane extends GridPane {
 		AppManager.getStatusDisplay(GameController.getTurn()).endTurn();
 		GameController.nextTurn();
 		AppManager.getStatusDisplay(GameController.getTurn()).startTurn();
-		updateBoard(this.getCurrenntSelectedBoardCell());
-		getCurrenntSelectedBoardCell().update();
+		updateBoard();
 		GameController.setPromotion(null, Side.EMPTY);
 	}
 
@@ -308,10 +300,6 @@ public class BoardPane extends GridPane {
 
 	public void setPromoted(boolean isPromoted) {
 		this.isPromoted = isPromoted;
-	}
-
-	public BoardCell getCurrenntSelectedBoardCell() {
-		return currenntSelectedBoardCell;
 	}
 
 	public void setCurrentSelectedPoint(Point currentSelectedPoint) {
