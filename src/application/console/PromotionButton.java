@@ -23,7 +23,7 @@ import logic.Side;
 
 public class PromotionButton extends Button {
 
-	private String text;
+	private String text; // for setting image of the button
 	private String imgURL;
 
 	public PromotionButton(String text) {
@@ -31,14 +31,13 @@ public class PromotionButton extends Button {
 		this.text = text;
 		this.setPrefSize(40, 40);
 		setBackgroundWithImage();
-		this.setListener();
+		setListener();
 	}
 
 	public void setListener() {
 		this.setOnMouseClicked(new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent arg0) {
-				// TODO Auto-generated method stub
 				SoundManager.playPromotionSound();
 				AppManager.hidePromotion();
 				AppManager.setPromotionListener(text);
@@ -49,7 +48,6 @@ public class PromotionButton extends Button {
 
 			@Override
 			public void handle(MouseEvent arg0) {
-				// TODO Auto-generated method stub
 				highlightButton();
 			}
 		});
@@ -58,7 +56,6 @@ public class PromotionButton extends Button {
 
 			@Override
 			public void handle(MouseEvent arg0) {
-				// TODO Auto-generated method stub
 				unhighlightButton();
 			}
 		});

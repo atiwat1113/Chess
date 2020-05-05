@@ -24,7 +24,6 @@ import application.SoundManager;
 import application.menu.MyButton;
 import java.awt.Point;
 import java.util.ArrayList;
-import game.base.Board;
 
 public class BoardPane extends GridPane {
 	private ObservableList<BoardCell> boardCellList = FXCollections.observableArrayList();
@@ -35,9 +34,9 @@ public class BoardPane extends GridPane {
 	private static final Color redTile = new Color((double) 200 / 255, (double) 200 / 255, (double) 200 / 255, 1);
 	private static final Color blackTile = new Color((double) 89 / 255, (double) 89 / 255, (double) 89 / 255, 1);
 	private BoardCell bc; // use for creating board cell
-	private Point currentSelectedPoint;
-	private ArrayList<Point> currentSelectedMoveList;
-	private boolean move; // check wheter the entity move
+	private Point currentSelectedPoint; // contain point of selected entity
+	private ArrayList<Point> currentSelectedMoveList; // contain move list of selected entity
+	private boolean move; // check whether the entity move
 	private String promotionPiece;
 
 	public BoardPane(String gameType) {
@@ -146,7 +145,7 @@ public class BoardPane extends GridPane {
 	}
 
 	private void showWalkPath() {
-		for (BoardCell bc : this.getBoardCellList()) {
+		for (BoardCell bc : boardCellList) {
 			if (currentSelectedMoveList.contains(bc.getP())) {
 				if (bc.hasEntity())
 					bc.setBackgroundTileColor(new Image(Sprites.WALKPATH), new Image(bc.getMyCell().getEntity().getSymbol()));
@@ -158,10 +157,9 @@ public class BoardPane extends GridPane {
 	}
 
 	public void showEndGameWindow(String text) {
-		AppManager.stopTimer();
-		SoundManager.playWinningSound();
 		VBox endBox = new VBox();
 		Label endText = new Label(text);
+		MyButton returnBtn = new MyButton("Return to Menu", 20);
 		
 		endBox.setSpacing(20);
 		endBox.setAlignment(Pos.CENTER);
@@ -170,7 +168,7 @@ public class BoardPane extends GridPane {
 		
 		endText.setFont(Font.loadFont(Resource.ROMAN_FONT,50));
 		endText.setTextFill(Color.BLACK); 
-		MyButton returnBtn = new MyButton("Return to Menu", 20);
+
 		returnBtn.setOnMouseClicked(new EventHandler<MouseEvent>() {
 
 			@Override
@@ -183,31 +181,31 @@ public class BoardPane extends GridPane {
 	
 		endBox.getChildren().addAll(endText,returnBtn);
 		AppManager.getGamePane().getChildren().add(endBox);
+		AppManager.stopTimer();
+		SoundManager.playWinningSound();
 	}
 	
 	public void updateBoard() {
-		// TODO Auto-generated method stub
 		if (move) {
-			this.cellMap = GameController.getDisplayCellMap();// setting rotate-----------
-			for (BoardCell bc : this.getBoardCellList()) {
+			this.cellMap = GameController.getDisplayCellMap();
+			for (BoardCell bc : boardCellList) {
 				bc.setMyCell(cellMap[bc.getP().x][bc.getP().y]);
 				move = false;
 			}
 			if (AppManager.getRotateStatus())
 				AppManager.rotateBoard();
 		}
-		for (BoardCell bc : this.getBoardCellList()) {
+		for (BoardCell bc : boardCellList) {
 			bc.update();
 		}
 		AppManager.displayMessage("");
 	}
 
 	public void rotateBoard() {
-		for (BoardCell bc : this.getBoardCellList()) {
+		for (BoardCell bc : boardCellList) {
 			bc.setP(new Point(7 - bc.getP().x, 7 - bc.getP().y));
 			bc.setMyCell(cellMap[bc.getP().x][bc.getP().y]);
 		}
-
 	}
 
 	public void promotion(String text) {
@@ -230,10 +228,6 @@ public class BoardPane extends GridPane {
 
 	public void setPromotionPiece(String promotionPiece) {
 		this.promotionPiece = promotionPiece;
-	}
-
-	public ObservableList<BoardCell> getBoardCellList() {
-		return boardCellList;
 	}
 
 }

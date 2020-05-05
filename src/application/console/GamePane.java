@@ -21,17 +21,15 @@ public class GamePane extends StackPane {
 	private Console console;
 
 	public GamePane(BoardPane boardPane) {
+		HBox gameBox = new HBox();
+		console = new Console();
+		
 		this.setBackground(new Background(new BackgroundFill(Color.GRAY, CornerRadii.EMPTY, Insets.EMPTY)));
 		this.setPadding(new Insets(10));
 		this.setPrefHeight(500);
-		//this.setSpacing(20);
 		this.setAlignment(Pos.CENTER);
 		
-		HBox gameBox = new HBox();
 		gameBox.setSpacing(20);
-
-		console = new Console();
-
 		gameBox.getChildren().addAll(boardPane, console);
 		this.getChildren().add(gameBox);
 	}
@@ -62,7 +60,6 @@ public class GamePane extends StackPane {
 
 		public void rotateStatusDisplay() {
 			this.getChildren().add(this.getChildren().remove(2));
-			// System.out.println("rotate");
 		}
 	}
 

@@ -159,7 +159,7 @@ public abstract class GameController {
 		if (board.getEntity(p).getSide() != turn) {
 			throw new WrongPieceException("It's not your piece.");
 		}
-		if (AppManager.getBoardPane().isPromoted()) {
+		if (isPromotion()) {
 			throw new IsPromotingException("Select your promotion");
 		}
 		return true;

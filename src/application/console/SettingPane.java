@@ -27,16 +27,16 @@ import logic.Side;
 
 public class SettingPane extends VBox {
 	public SettingPane() {
-		setPrefSize(200, 100);
+		MyCheckBox rotation = new MyCheckBox("rotate");
+		MyCheckBox soundEffect = new MyCheckBox("sound effect");
+		ReturnButton returnBtn = new ReturnButton("return to menu", 14);	
+		
+		this.setPrefSize(200, 100);
 		this.setBackground(new Background(new BackgroundFill(Color.GRAY, new CornerRadii(5), Insets.EMPTY)));
 		this.setSpacing(15);
 		this.setAlignment(Pos.TOP_LEFT);
 
-		MyCheckBox rotation = new MyCheckBox("rotate");
-		MyCheckBox soundEffect = new MyCheckBox("sound effect");
-		ReturnButton returnBtn = new ReturnButton("return to menu", 14);
-
-		soundEffect.setSelected(true);
+		soundEffect.setSelected(SoundManager.getSoundEffectStatus());
 		setRotationListener(rotation);
 		setSoundEffectListener(soundEffect);
 		setReturnBtnListener(returnBtn);
@@ -49,7 +49,6 @@ public class SettingPane extends VBox {
 		public MyCheckBox(String text) {
 			super(text);
 			this.setFont(Font.loadFont(Resource.ROMAN_FONT, 15));
-
 		}
 	}
 
@@ -70,14 +69,11 @@ public class SettingPane extends VBox {
 		@Override
 		protected void setMouseEnteredTextFont() {
 			this.setFont(Font.loadFont(Resource.ROMAN_FONT, this.fontSize-1));
-			// System.out.println(Resource.ROMAN_FONT);
-
 		}
 
 		@Override
 		protected void setMouseExitedTextFont() {
 			this.setFont(Font.loadFont(Resource.ROMAN_FONT, fontSize));
-
 		}
 
 	}
@@ -87,16 +83,12 @@ public class SettingPane extends VBox {
 
 			@Override
 			public void handle(MouseEvent arg0) {
-				// TODO Auto-generated method stub
 				if (rotation.isSelected()) {
-					// System.out.println("selected");
 					AppManager.setRotateStatus(true);
 				} else {
-					// System.out.println("deselected");
 					AppManager.setRotateStatus(false);
 				}
 				if (GameController.getTurn() == Side.BLACK) {
-					// System.out.println(GameController.getTurn());
 					AppManager.rotateBoard();
 				}
 				AppManager.getBoardPane().updateBoard();
@@ -109,12 +101,9 @@ public class SettingPane extends VBox {
 
 			@Override
 			public void handle(MouseEvent arg0) {
-				// TODO Auto-generated method stub
 				if (clickSound.isSelected()) {
-					// System.out.println("selected");
 					SoundManager.setSoundEffectStatus(true);
 				} else {
-					// System.out.println("deselected");
 					SoundManager.setSoundEffectStatus(false);
 					SoundManager.stopClockTick();
 				}
@@ -127,9 +116,9 @@ public class SettingPane extends VBox {
 
 			@Override
 			public void handle(MouseEvent arg0) {
-				// TODO Auto-generated method stub
-				SoundManager.playClickingSound();
 				Alert alert = new Alert(AlertType.CONFIRMATION);
+				SoundManager.playClickingSound();
+				
 				alert.setTitle("Return to menu");
 				alert.setHeaderText(null);
 				alert.setContentText("Do you want to return to menu?");

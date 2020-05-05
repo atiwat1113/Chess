@@ -19,28 +19,28 @@ public class PromotionPane extends VBox {
 	private HBox selection;
 
 	public PromotionPane() {
-		this.setPrefSize(200, 100);
-		this.setBackground(new Background(new BackgroundFill(Color.GRAY, CornerRadii.EMPTY, Insets.EMPTY)));
-		this.setAlignment(Pos.TOP_LEFT);
-		this.setSpacing(15);
-
 		promotion = new VBox();
-		promotion.setAlignment(Pos.TOP_LEFT);
-		promotion.setSpacing(15);
-
 		selection = new HBox();
-		selection.setAlignment(Pos.CENTER_LEFT); 
-		selection.setSpacing(4);
-
 		Label label = new Label("Select promotion");
-		label.setFont(Font.loadFont(Resource.ROMAN_FONT, 15));
-		// change color label
+		text = new Text();
 		PromotionButton queen = new PromotionButton("Q");
 		PromotionButton rook = new PromotionButton("R");
 		PromotionButton bishop = new PromotionButton("B");
 		PromotionButton knight = new PromotionButton("K");
+		
+		this.setPrefSize(200, 100);
+		this.setBackground(new Background(new BackgroundFill(Color.GRAY, CornerRadii.EMPTY, Insets.EMPTY)));
+		this.setAlignment(Pos.TOP_LEFT);
+		this.setSpacing(15);
+		
+		promotion.setAlignment(Pos.TOP_LEFT);
+		promotion.setSpacing(15);
+	
+		selection.setAlignment(Pos.CENTER_LEFT); 
+		selection.setSpacing(4);
 
-		text = new Text();
+		label.setFont(Font.loadFont(Resource.ROMAN_FONT, 15));
+
 		text.setFont(Font.loadFont(Resource.ROMAN_FONT, 14));
 		text.setFill(Color.DARKRED);
 
@@ -52,11 +52,6 @@ public class PromotionPane extends VBox {
 
 	public void hidePromotionPane() {
 		this.getChildren().remove(this.getChildren().indexOf(promotion));
-//		canvas = new Canvas(150,150);
-//		GraphicsContext gc = canvas.getGraphicsContext2D();
-//		gc.setFill(color);
-//		gc.fillRect(0, 0, 150, 150);
-//		this.getChildren().add(canvas);
 	}
 
 	public void showPromotionPane() {
@@ -64,7 +59,6 @@ public class PromotionPane extends VBox {
 		for (Node pb : selection.getChildren()) {
 			((PromotionButton) pb).setBackgroundWithImage();
 		}
-		// this.getChildren().remove(1);
 	}
 
 	public void setMessage(String message) {

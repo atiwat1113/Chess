@@ -24,8 +24,8 @@ public class PlayerStatusDisplay extends VBox {
 
 	private Label turn;
 	private Side side;
-	private int timePerTurn;
 	private int spareTime;
+	private int timePerTurn;
 	private boolean hasTimeLimit;
 	private Thread timerThread;
 	private Text spareTimeText;
@@ -79,7 +79,6 @@ public class PlayerStatusDisplay extends VBox {
 			timerThread = new Thread(() -> {
 				while (true) {
 					try {
-
 						Thread.sleep(1000);
 						if (timePerTurn != 0) {
 							if (spareTime <= 30 || timePerTurn <= 10)
@@ -94,7 +93,6 @@ public class PlayerStatusDisplay extends VBox {
 							Platform.runLater(new Runnable() {
 								@Override
 								public void run() {
-									// TODO Auto-generated method stub
 									AppManager.getBoardPane().showEndGameWindow(GameController.getTurn() + " time out!\n"
 											+ GameController.getAnotherSide(GameController.getTurn()) + " Win!!!\nReturn to Menu");
 								}
@@ -105,7 +103,6 @@ public class PlayerStatusDisplay extends VBox {
 						else
 							update();
 					} catch (Exception e) {
-						// e.printStackTrace();
 						SoundManager.stopClockTick();
 						break;
 					}
@@ -120,7 +117,6 @@ public class PlayerStatusDisplay extends VBox {
 			try {
 				stop();
 			} catch (Exception e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			timePerTurn = 30;
@@ -130,7 +126,6 @@ public class PlayerStatusDisplay extends VBox {
 	}
 
 	public void stop() throws Exception {
-		// TODO Auto-generated method stub
 		this.timerThread.interrupt();
 	}
 
@@ -172,10 +167,6 @@ public class PlayerStatusDisplay extends VBox {
 			turn.setText(this.side + " TURN");
 		else
 			turn.setText(this.side.toString());
-	}
-
-	public Thread getTimerThread() {
-		return timerThread;
 	}
 
 }
