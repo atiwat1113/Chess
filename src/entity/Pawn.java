@@ -5,7 +5,7 @@ import java.util.ArrayList;
 
 import Resource.Sprites;
 import entity.base.Entity;
-import logic.*;
+import logic.Side;
 import game.base.Board;
 
 public class Pawn extends Entity {
@@ -14,21 +14,20 @@ public class Pawn extends Entity {
 		super(p, side);
 	}
 
-	@Override
 	public String getSymbol() {
-		// TODO Auto-generated method stub
-		if (this.side == Side.BLACK) {
-			return Sprites.B_PAWN;
-		}
-		return Sprites.W_PAWN;
+		return (this.side == Side.BLACK) ? Sprites.B_PAWN : Sprites.W_PAWN;
 	}
 
-	@Override
+	public String getHighlightSymbol() {
+		return (this.side == Side.BLACK) ? Sprites.HIGHLIGHT_B_PAWN : Sprites.HIGHLIGHT_W_PAWN;
+	}
+
 	public ArrayList<Point> moveList(Board board) {
 		ArrayList<Point> returnPoint = new ArrayList<Point>();
+		Point nextPoint, extraPoint;
 		if (side == Side.WHITE) {
-			Point nextPoint = new Point(point.x - 1, point.y);
-			Point extraPoint = new Point(point.x - 2, point.y);
+			nextPoint = new Point(point.x - 1, point.y);
+			extraPoint = new Point(point.x - 2, point.y);
 			if (board.getEntity(nextPoint) == null) {
 				if (board.getEntity(extraPoint) == null && point.x >= 6) {
 					returnPoint.add(extraPoint);
@@ -36,8 +35,8 @@ public class Pawn extends Entity {
 				returnPoint.add(nextPoint);
 			}
 		} else {
-			Point nextPoint = new Point(point.x + 1, point.y);
-			Point extraPoint = new Point(point.x + 2, point.y);
+			nextPoint = new Point(point.x + 1, point.y);
+			extraPoint = new Point(point.x + 2, point.y);
 			if (board.getEntity(nextPoint) == null) {
 				if (board.getEntity(extraPoint) == null && point.x <= 1) {
 					returnPoint.add(extraPoint);
@@ -66,7 +65,7 @@ public class Pawn extends Entity {
 				continue;
 			if (board.getEntity(pp) == null)
 				continue;
-			if (board.getEntity(pp).getSide() == GameController.getAnotherSide(side)) {
+			if (board.getEntity(pp).getSide() != side) {
 				returnPoint.add(pp);
 			}
 		}
@@ -75,15 +74,6 @@ public class Pawn extends Entity {
 
 	public String toString() {
 		return "Pawn [point=" + point + ", side=" + side + "]";
-	}
-
-	@Override
-	public String getHighlightSymbol() {
-		// TODO Auto-generated method stub
-		if (this.side == Side.BLACK) {
-			return Sprites.HIGHLIGHT_B_PAWN;
-		}
-		return Sprites.HIGHLIGHT_W_PAWN;
 	}
 
 }

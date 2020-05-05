@@ -4,8 +4,9 @@ import java.awt.Point;
 import java.util.ArrayList;
 
 import Resource.Sprites;
-import entity.base.*;
-import logic.*;
+import entity.base.Entity;
+import entity.base.HaveCastling;
+import logic.Side;
 import game.base.Board;
 
 public class King extends Entity implements HaveCastling {
@@ -16,15 +17,14 @@ public class King extends Entity implements HaveCastling {
 		neverMove = true;
 	}
 
-	@Override
 	public String getSymbol() {
-		if (this.side == Side.BLACK) {
-			return Sprites.B_KING;
-		}
-		return Sprites.W_KING;
+		return (this.side == Side.BLACK) ? Sprites.B_KING : Sprites.W_KING;
 	}
 
-	@Override
+	public String getHighlightSymbol() {
+		return (this.side == Side.BLACK) ? Sprites.HIGHLIGHT_B_KING : Sprites.HIGHLIGHT_W_KING;
+	}
+
 	public ArrayList<Point> moveList(Board board) {
 		ArrayList<Point> returnPoint = new ArrayList<Point>();
 		for (Point p : Board.getKingWalk()) {
@@ -43,6 +43,7 @@ public class King extends Entity implements HaveCastling {
 		return "King [point=" + point + ", side=" + side + "]";
 	}
 
+	// getter and setter
 	public void setNeverMove() {
 		this.neverMove = false;
 	}
@@ -51,12 +52,4 @@ public class King extends Entity implements HaveCastling {
 		return neverMove;
 	}
 
-	@Override
-	public String getHighlightSymbol() {
-		// TODO Auto-generated method stub
-		if (this.side == Side.BLACK) {
-			return Sprites.HIGHLIGHT_B_KING;
-		}
-		return Sprites.HIGHLIGHT_W_KING;
-	}
 }

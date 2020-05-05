@@ -5,32 +5,23 @@ import java.util.ArrayList;
 
 import Resource.Sprites;
 import entity.base.Entity;
-import logic.*;
+import logic.Side;
 import game.base.Board;
 
 public class Bishop extends Entity {
-	private boolean isFromPawn;
 
 	public Bishop(Point p, Side side) {
 		super(p, side);
-		isFromPawn = false;
 	}
 
-	public Bishop(Point p, Side side, Boolean isFromPawn) {
-		super(p, side);
-		this.isFromPawn = isFromPawn;
-	}
-
-	@Override
 	public String getSymbol() {
-		// TODO Auto-generated method stub
-		if (this.side == Side.BLACK) {
-			return Sprites.B_BISHOP;
-		}
-		return Sprites.W_BISHOP;
+		return (this.side == Side.BLACK) ? Sprites.B_BISHOP : Sprites.W_BISHOP;
 	}
 
-	@Override
+	public String getHighlightSymbol() {
+		return (this.side == Side.BLACK) ? Sprites.HIGHLIGHT_B_BISHOP : Sprites.HIGHLIGHT_W_BISHOP;
+	}
+
 	public ArrayList<Point> moveList(Board board) {
 		ArrayList<Point> returnPoint = new ArrayList<Point>();
 		for (Point p : moveList(board, point, new Point(1, 1)))
@@ -44,20 +35,8 @@ public class Bishop extends Entity {
 		return returnPoint;
 	}
 
-	public boolean isFromPawn() {
-		return isFromPawn;
-	}
-
 	public String toString() {
 		return "Bishop [point=" + point + ", side=" + side + "]";
 	}
 
-	@Override
-	public String getHighlightSymbol() {
-		// TODO Auto-generated method stub
-		if (this.side == Side.BLACK) {
-			return Sprites.HIGHLIGHT_B_BISHOP;
-		}
-		return Sprites.HIGHLIGHT_W_BISHOP;
-	}
 }

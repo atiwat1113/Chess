@@ -4,37 +4,27 @@ import java.awt.Point;
 import java.util.ArrayList;
 
 import Resource.Sprites;
-import entity.base.*;
-import logic.*;
+import entity.base.Entity;
+import entity.base.HaveCastling;
+import logic.Side;
 import game.base.Board;
 
 public class Rook extends Entity implements HaveCastling {
-
-	private boolean neverMove;
-	private boolean isFromPawn;
+	private boolean neverMove;// for castling
 
 	public Rook(Point p, Side side) {
 		super(p, side);
 		this.neverMove = true;
-		isFromPawn = false;
 	}
 
-	public Rook(Point p, Side side, Boolean isFromPawn) {
-		super(p, side);
-		this.neverMove = true;
-		this.isFromPawn = isFromPawn;
-	}
-
-	@Override
 	public String getSymbol() {
-		// TODO Auto-generated method stub
-		if (this.side == Side.BLACK) {
-			return Sprites.B_ROOK;
-		}
-		return Sprites.W_ROOK;
+		return (this.side == Side.BLACK) ? Sprites.B_ROOK : Sprites.W_ROOK;
 	}
 
-	@Override
+	public String getHighlightSymbol() {
+		return (this.side == Side.BLACK) ? Sprites.HIGHLIGHT_B_ROOK : Sprites.HIGHLIGHT_W_ROOK;
+	}
+
 	public ArrayList<Point> moveList(Board board) {
 		ArrayList<Point> returnPoint = new ArrayList<Point>();
 		for (Point p : moveList(board, point, new Point(1, 0)))
@@ -48,28 +38,17 @@ public class Rook extends Entity implements HaveCastling {
 		return returnPoint;
 	}
 
-	public boolean isFromPawn() {
-		return isFromPawn;
-	}
-
 	public String toString() {
 		return "Rook [point=" + point + ", side=" + side + "]";
+	}
+
+	// getter and setter
+	public void setNeverMove() {
+		this.neverMove = false;
 	}
 
 	public boolean isNeverMove() {
 		return neverMove;
 	}
 
-	public void setNeverMove() {
-		this.neverMove = false;
-	}
-
-	@Override
-	public String getHighlightSymbol() {
-		// TODO Auto-generated method stub
-		if (this.side == Side.BLACK) {
-			return Sprites.HIGHLIGHT_B_ROOK;
-		}
-		return Sprites.HIGHLIGHT_W_ROOK;
-	}
 }
