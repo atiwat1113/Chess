@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import application.AppManager;
 import entity.*;
 import entity.base.Entity;
-import entity.base.HaveCastling;
+import entity.base.Castling;
 import logic.Side;
 import game.base.*;
 import javafx.application.Platform;
@@ -57,8 +57,8 @@ public class NormalBoard extends Board implements CheckMateAble {
 	// move
 	public void move(Point oldPoint, Point newPoint) {
 		Entity moveEntity = this.getEntity(oldPoint);
-		if (moveEntity instanceof HaveCastling)
-			((HaveCastling) moveEntity).setNeverMove();
+		if (moveEntity instanceof Castling)
+			((Castling) moveEntity).setNeverMove();
 		if (moveEntity instanceof Pawn) {
 			if (twoWalkPawn != null && twoWalkPawn.equals(new Point(oldPoint.x, newPoint.y))) {
 				//AppManager.setEnPassant(true,new Point(oldPoint.x, newPoint.y));// for moving animation ------------------------
@@ -84,8 +84,8 @@ public class NormalBoard extends Board implements CheckMateAble {
 	public void startAnimation(Point oldPoint, Point newPoint) {
 		removePoint = new ArrayList<Point>();
 		Entity moveEntity = this.getEntity(oldPoint);
-		if (moveEntity instanceof HaveCastling)
-			((HaveCastling) moveEntity).setNeverMove();
+		if (moveEntity instanceof Castling)
+			((Castling) moveEntity).setNeverMove();
 		if (moveEntity instanceof Pawn) {
 			if (twoWalkPawn != null && twoWalkPawn.equals(new Point(oldPoint.x, newPoint.y))) {
 				//AppManager.setEnPassant(true,new Point(oldPoint.x, newPoint.y));// for moving animation ------------------------

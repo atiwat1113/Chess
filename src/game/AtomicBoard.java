@@ -8,7 +8,7 @@ import entity.King;
 import entity.Knight;
 import entity.Pawn;
 import entity.base.Entity;
-import entity.base.HaveCastling;
+import entity.base.Castling;
 import game.base.Board;
 import game.base.CheckMateAble;
 import javafx.application.Platform;
@@ -74,8 +74,8 @@ public class AtomicBoard extends Board implements CheckMateAble {
 	// move
 	public void move(Point oldPoint, Point newPoint) {
 		Entity moveEntity = this.getEntity(oldPoint);
-		if (moveEntity instanceof HaveCastling)
-			((HaveCastling) moveEntity).setNeverMove();
+		if (moveEntity instanceof Castling)
+			((Castling) moveEntity).setNeverMove();
 		if (moveEntity instanceof Pawn) {
 			if (twoWalkPawn != null && twoWalkPawn.equals(new Point(oldPoint.x, newPoint.y))) {
 				remove(twoWalkPawn);
@@ -107,8 +107,8 @@ public class AtomicBoard extends Board implements CheckMateAble {
 	public void startAnimation (Point oldPoint, Point newPoint) {
 		removePoint = new ArrayList<Point>();
 		Entity moveEntity = this.getEntity(oldPoint);
-		if (moveEntity instanceof HaveCastling)
-			((HaveCastling) moveEntity).setNeverMove();
+		if (moveEntity instanceof Castling)
+			((Castling) moveEntity).setNeverMove();
 		if (moveEntity instanceof Pawn) {
 			if (twoWalkPawn != null && twoWalkPawn.equals(new Point(oldPoint.x, newPoint.y))) {
 				remove(twoWalkPawn);

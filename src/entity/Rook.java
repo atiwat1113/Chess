@@ -5,11 +5,11 @@ import java.util.ArrayList;
 
 import Resource.Sprites;
 import entity.base.Entity;
-import entity.base.HaveCastling;
+import entity.base.Castling;
 import logic.Side;
 import game.base.Board;
 
-public class Rook extends Entity implements HaveCastling {
+public class Rook extends Entity implements Castling {
 	private boolean neverMove;// for castling
 
 	public Rook(Point p, Side side) {

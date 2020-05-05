@@ -7,7 +7,7 @@ import logic.Side;
 
 public abstract class Entity { // private --> protected
 	protected Point point;
-	protected Side side;
+	final protected Side side;
 
 	public Entity(Point point, Side side) {// Point (y,x)
 		this.point = point;
@@ -45,12 +45,12 @@ public abstract class Entity { // private --> protected
 		return point;
 	}
 
-	public void setPoint(Point point) {
-		this.point = point;
-	}
-
 	public Side getSide() {
 		return side;
+	}
+
+	public void setPoint(Point point) {
+		this.point = point;
 	}
 
 	public abstract String toString();
