@@ -37,15 +37,13 @@ public class BoardPane extends GridPane {
 	private BoardCell bc; // use for creating board cell
 	private Point currentSelectedPoint;
 	private ArrayList<Point> currentSelectedMoveList;
-	private boolean moved;
+	private boolean move; // check wheter the entity move
 	private String promotionPiece;
-	private boolean isPromoted;
 
 	public BoardPane(String gameType) {
 		super();
 		GameController.InitializeMap(gameType);
-		this.isPromoted = false;
-		this.cellMap = GameController.getDisplayCellMap();// setting rotate-----
+		this.cellMap = GameController.getDisplayCellMap();
 		createBoardCell();
 		setBoardCellListener();
 	}
@@ -70,78 +68,39 @@ public class BoardPane extends GridPane {
 			bc.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
 				@Override
 				public void handle(MouseEvent e) {
-					// TODO fill in this method
 					try {
 						addOnClickHandler(bc);
-					} catch (Exception e1) {// NullEntityException WrongPieceException
-						// TODO Auto-generated catch block
+					} catch (Exception e1) {// NullEntityException WrongPieceException IsPromotingException
 						if (!(e1 instanceof NullPointerException)) {
 							SoundManager.playWrongSelected();
 							AppManager.displayMessage(e1.getMessage());
 						}
-						// System.out.println(e1.getMessage());
-//						Alert alert = new Alert(AlertType.WARNING);
-//						alert.setTitle("Warning");
-//						alert.setHeaderText(null);
-//						alert.setContentText(e1.getMessage());
-//						alert.showAndWait();
 					}
 				}
 			});
 		}
 	} 
 
+	// add handler for board cell
 	private void addOnClickHandler(BoardCell myBoardCell) throws Exception {
-		// TODO Auto-generated method stub
-		// System.out.println("clicked");
 		if (myBoardCell.isMoveable()) {
-			
-			GameController.startAnimation(currentSelectedPoint,myBoardCell.getP());// , currentSelectedMoveList);
-			
-			//check condition and update board ---------------------------------------------------------------------
-			
+			GameController.startAnimation(currentSelectedPoint,myBoardCell.getP());					
 			updateBoard();
-			
-			// moving animation ------------------------------------------------------------------------------------
-//			if(AppManager.getRotateStatus() && GameController.getTurn().equals(Side.BLACK)) {			
-//				normalTransitionCanvas = AppManager.moveAnimation(new Point(7-currentSelectedPoint.x,7-currentSelectedPoint.y), new Point(7-myBoardCell.getP().x,7-myBoardCell.getP().y), currentSelectedEntity);
-//				if(AppManager.isCastling()) {
-//					castlingTransitionCanvas = AppManager.moveAnimation(AppManager.getOldRotateRookCastlingPoint(), AppManager.getNewRotateRookCastlingPoint(), AppManager.getRookEntity());					
-//
-//				}
-//			}
-//			else {
-//				normalTransitionCanvas = AppManager.moveAnimation(currentSelectedPoint, myBoardCell.getP(), currentSelectedEntity);
-//				
-//				if(AppManager.isCastling()) {
-//					castlingTransitionCanvas = AppManager.moveAnimation(AppManager.getOldRookCastlingPoint(), AppManager.getNewRookCastlingPoint(), AppManager.getRookEntity());
-//
-//				}
-//			}
-//			
-			// wait for moving animation to finish---------------------------------------------------------------------
 			
 			Thread thread = new Thread(() -> {
 				try {
-					Thread.sleep(330);
-					Platform.runLater(new Runnable() {
+					Thread.sleep(330); // wait for moving animation to be finished
+					Platform.runLater(new Runnable() { 
 						@Override
 						public void run() {
-							// TODO Auto-generated method stub
-							
-							// reset parameter and update remained board cell -------------------------------------------------
 							GameController.continueMove();
 							AppManager.removeTransitionCanvas();
-							myBoardCell.update();
-							if (GameController.isPromotion()) {
-								setPromoted(true);
-								AppManager.showPromotion();
-								// AppManager.hidePromotion();
-							}
-							moved = true;
+							move = true;
 							currentSelectedPoint = null;
-							// currentSelectedMoveList = null;
-							if (!isPromoted) {
+							if (GameController.isPromotion()) {
+								myBoardCell.update();
+								AppManager.showPromotion();
+							} else {
 								AppManager.getStatusDisplay(GameController.getTurn()).endTurn();
 								GameController.nextTurn();
 								checkEndGame();
@@ -151,39 +110,29 @@ public class BoardPane extends GridPane {
 						}
 					});
 				} catch (Exception e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			});
 			thread.start();
 
 		} else {
-			updateBoard(myBoardCell);
-			currentSelectedMoveList = GameController.moveList(myBoardCell.getP());// setting rotate-----
-			// GameController.printPointList(currentSelectedMoveList);
+			updateBoard();
+			currentSelectedMoveList = GameController.moveList(myBoardCell.getP());
 			if (myBoardCell.hasEntity() && GameController.isTurn(myBoardCell.getP(), GameController.getTurn())) {
-				// AppManager.playEntitySelected();
 				SoundManager.playClickingSound();
 				if (!myBoardCell.isClicked()) {
 					showWalkPath();
 					currentSelectedPoint = myBoardCell.getP();
 					myBoardCell.setBackgroundTileColor(new Image(myBoardCell.getMyCell().getEntity().getHighlightSymbol()));
-					// currentSelectedMoveList =
-					// myBoardCell.getMyCell().getEntity().moveList(GameController.getBoard());
 					myBoardCell.setClicked(true);
 				} else {
-					for (BoardCell bc : this.boardCellList) {
-						bc.update();
-					}
+					updateBoard();
+					myBoardCell.setClicked(false);
 					currentSelectedPoint = null;
-					// currentSelectedMoveList = null;
 				}
 			}
 		}
-		// print(GameController.getBoard());//---------------------------------
 		if (GameController.isCheck()) {
-			// System.out.println(GameController.getAnotherSide(GameController.getTurn()).toString()
-			// + " Check");
 			AppManager.displayMessage(GameController.getAnotherSide(GameController.getTurn()).toString() + " Check");
 		}
 
@@ -236,35 +185,13 @@ public class BoardPane extends GridPane {
 		AppManager.getGamePane().getChildren().add(endBox);
 	}
 	
-	// normal update board -----------------------------------------------------------------------------------------------
-	
-	public void updateBoard(BoardCell myBoardCell) {
-		// TODO Auto-generated method stub
-		if (moved) {
-			this.cellMap = GameController.getDisplayCellMap();// setting rotate-----------
-			for (BoardCell bc : this.getBoardCellList()) {
-				bc.setMyCell(cellMap[bc.getP().x][bc.getP().y]);
-				moved = false;
-			}
-			if (AppManager.getRotateStatus()) 
-				AppManager.rotateBoard();
-				
-				
-		}
-		for (BoardCell bc : this.getBoardCellList()) {
-			if (!bc.equals(myBoardCell))
-				bc.update();
-		}
-		AppManager.displayMessage("");
-	}
-
 	public void updateBoard() {
 		// TODO Auto-generated method stub
-		if (moved) {
+		if (move) {
 			this.cellMap = GameController.getDisplayCellMap();// setting rotate-----------
 			for (BoardCell bc : this.getBoardCellList()) {
 				bc.setMyCell(cellMap[bc.getP().x][bc.getP().y]);
-				moved = false;
+				move = false;
 			}
 			if (AppManager.getRotateStatus())
 				AppManager.rotateBoard();
@@ -286,7 +213,6 @@ public class BoardPane extends GridPane {
 	public void promotion(String text) {
 		setPromotionPiece(text);
 		GameController.promotion(this.getPromotionPiece());
-		setPromoted(false);
 		AppManager.getStatusDisplay(GameController.getTurn()).endTurn();
 		GameController.nextTurn();
 		AppManager.getStatusDisplay(GameController.getTurn()).startTurn();
@@ -294,20 +220,8 @@ public class BoardPane extends GridPane {
 		GameController.setPromotion(null, Side.EMPTY);
 	}
 
-	public boolean isPromoted() {
-		return isPromoted;
-	}
-
-	public void setPromoted(boolean isPromoted) {
-		this.isPromoted = isPromoted;
-	}
-
 	public void setCurrentSelectedPoint(Point currentSelectedPoint) {
 		this.currentSelectedPoint = currentSelectedPoint;
-	}
-
-	public void setMoved(boolean moved) {
-		this.moved = moved;
 	}
 
 	public String getPromotionPiece() {
@@ -320,24 +234,6 @@ public class BoardPane extends GridPane {
 
 	public ObservableList<BoardCell> getBoardCellList() {
 		return boardCellList;
-	}
-
-	public static void print(Board board) {
-		System.out.println("  -a---b---c---d---e---f---g---h--");
-		for (int i = 0; i < 8; i++) {
-			System.out.print("" + (8 - i) + " ");
-			for (int j = 0; j < 8; j++) {
-				if (board.getEntity(new Point(i, j)) == null) {
-					System.out.print("---|");
-					continue;
-				}
-				String pr = board.getEntity(new Point(i, j)).getSymbol().substring(0, 4);
-				if (pr.substring(2, 4).equals("Kn"))
-					pr = pr.substring(0, 2) + "N";
-				System.out.print(pr.substring(0, 3) + "|");
-			}
-			System.out.println();
-		}
 	}
 
 }

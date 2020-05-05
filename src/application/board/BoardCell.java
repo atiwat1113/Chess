@@ -80,7 +80,6 @@ public class BoardCell extends Pane {
 			this.setBackgroundTileColor(new Image(this.myCell.getEntity().getSymbol()));
 		else
 			setBackgroundTileColor();
-		this.isClicked = false;
 		this.moveable = false;
 	}
 
