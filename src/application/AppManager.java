@@ -154,8 +154,9 @@ public class AppManager { // for Classes to communicate with each other.
 	public static void removeTransitionCanvas() {
 		ObservableList<Node> removedCanvas = FXCollections.observableArrayList();
 		for (Node n : boardPane.getChildren()) {
-			if (n instanceof Canvas)
+			if (n instanceof Canvas) {
 				removedCanvas.add(n);
+			}
 		}
 		for (Node n : removedCanvas) {
 			boardPane.getChildren().remove(n);
@@ -254,10 +255,11 @@ public class AppManager { // for Classes to communicate with each other.
 	}
 
 	public static PlayerStatusDisplay getStatusDisplay(Side side) {
-		if (side == Side.BLACK)
+		if (side == Side.BLACK) {
 			return blackDisplay;
-		else
+		} else {
 			return whiteDisplay;
+		}
 
 	}
 

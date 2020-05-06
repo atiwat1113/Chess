@@ -137,19 +137,21 @@ public class BoardPane extends GridPane {
 	}
 
 	private void checkEndGame() {
-		if (GameController.isDraw())
+		if (GameController.isDraw()) {
 			showEndGameWindow("DRAW!!!\n");
-		else if (GameController.isWin())
+		} else if (GameController.isWin()) {
 			showEndGameWindow(GameController.getAnotherSide(GameController.getTurn()).toString() + " WIN!!!\n");
+		}
 	}
 
 	private void showWalkPath() {
 		for (BoardCell bc : boardCellList) {
 			if (currentSelectedMoveList.contains(bc.getP())) {
-				if (bc.hasEntity())
+				if (bc.hasEntity()) {
 					bc.setBackgroundTileColor(new Image(Sprites.WALKPATH), new Image(bc.getMyCell().getEntity().getSymbol()));
-				else
+				} else {
 					bc.setBackgroundTileColor(new Image(Sprites.WALKPATH));
+				}
 				bc.setMoveable(true);
 			}
 		}
@@ -188,8 +190,9 @@ public class BoardPane extends GridPane {
 	public void updateBoard(BoardCell myBoardCell) {
 		
 		for (BoardCell bc : boardCellList) {
-			if(!bc.equals(myBoardCell))
+			if(!bc.equals(myBoardCell)) {
 				bc.update();
+			}
 		}
 		AppManager.displayMessage("");
 	}
@@ -201,8 +204,9 @@ public class BoardPane extends GridPane {
 				bc.setMyCell(cellMap[bc.getP().x][bc.getP().y]);
 				move = false;
 			}
-			if (AppManager.getRotateStatus())
+			if (AppManager.getRotateStatus()) {
 				AppManager.rotateBoard();
+			}
 		}
 		for (BoardCell bc : boardCellList) {
 			bc.update();

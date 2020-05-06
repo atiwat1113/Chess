@@ -82,12 +82,14 @@ public class PlayerStatusDisplay extends VBox {
 					try {
 						Thread.sleep(1000);
 						if (timePerTurn != 0) {
-							if (spareTime <= 30 || timePerTurn <= 10)
+							if (spareTime <= 30 || timePerTurn <= 10) {
 								SoundManager.playClockTick();
+							}
 							timePerTurn -= 1;
 						} else {
-							if (spareTime > 30)
+							if (spareTime > 30) {
 								SoundManager.stopClockTick();
+							}
 							spareTime -= 1;
 						}
 						if (spareTime < 0) {
@@ -99,10 +101,9 @@ public class PlayerStatusDisplay extends VBox {
 								}
 							});
 							stop();
-						}
-
-						else
+						} else {
 							update();
+						}
 					} catch (Exception e) {
 						SoundManager.stopClockTick();
 						break;
@@ -137,37 +138,42 @@ public class PlayerStatusDisplay extends VBox {
 
 	private void setSpareTimeText() {
 		if (spareTime < 60) {
-			if (spareTime >= 10)
+			if (spareTime >= 10) {
 				spareTimeText.setText("00:" + spareTime);
-			else
+			} else {
 				spareTimeText.setText("00:0" + spareTime);
+			}
 		} else {
 			if (spareTime / 60 >= 10) {
-				if (spareTime % 60 >= 10)
+				if (spareTime % 60 >= 10) {
 					spareTimeText.setText(spareTime / 60 + ":" + spareTime % 60);
-				else
+				} else {
 					spareTimeText.setText(spareTime / 60 + ":0" + spareTime % 60);
+				}
 			} else {
-				if (spareTime % 60 >= 10)
+				if (spareTime % 60 >= 10) {
 					spareTimeText.setText("0" + spareTime / 60 + ":" + spareTime % 60);
-				else
+				} else {
 					spareTimeText.setText("0" + spareTime / 60 + ":0" + spareTime % 60);
+				}
 			}
 		}
 	}
 
 	private void setTimePerTurnText() {
-		if (timePerTurn >= 10)
+		if (timePerTurn >= 10) {
 			timePerTurnText.setText("00:" + timePerTurn);
-		else
+		} else {
 			timePerTurnText.setText("00:0" + timePerTurn);
+		}
 	}
 
 	public void setTurnText(boolean isTurn) {
-		if (isTurn)
+		if (isTurn) {
 			turn.setText(this.side + " TURN");
-		else
+		} else {
 			turn.setText(this.side.toString());
+		}
 	}
 
 }

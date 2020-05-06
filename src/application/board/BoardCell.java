@@ -76,10 +76,11 @@ public class BoardCell extends Pane {
 	}
 
 	public void update() {
-		if (hasEntity())
+		if (hasEntity()) {
 			this.setBackgroundTileColor(new Image(this.myCell.getEntity().getSymbol()));
-		else
+		} else {
 			setBackgroundTileColor();
+		}
 		this.isClicked = false;
 		this.moveable = false;
 	}

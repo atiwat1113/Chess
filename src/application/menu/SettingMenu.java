@@ -34,12 +34,10 @@ public class SettingMenu extends VBox {
 		bgmSlider = new Slider();
 		Label bgmLabel = new Label("BGM");
 
-
 		HBox sfxPane = new HBox();
 		HBox sfxBox = new HBox();
 		sfxSlider = new Slider();
 		Label sfxLabel = new Label("SFX");
-
 
 		Label setting = new Label("Setting");
 		MyButton returnBtn = new MyButton("Return to Menu", 20);
@@ -125,19 +123,21 @@ public class SettingMenu extends VBox {
 					SoundManager.playClickingSound();
 					if (isMuted) {
 						isMuted = false;
-						if (sound.equals("bgm")) 
+						if (sound.equals("bgm")) {
 							SoundManager.setMenuBgmVolume(slider.getValue() / 100);
-						else
+						} else {
 							SoundManager.setSoundEffectStatus(true);
+						}
 						setBackgroundImageByVolume(slider);
 						slider.setDisable(false);
 						value.setDisable(false);
 					} else {
 						isMuted = true;
-						if (sound.equals("bgm")) 
+						if (sound.equals("bgm")) {
 							SoundManager.setMenuBgmVolume(0);
-						else
+						} else {
 							SoundManager.setSoundEffectStatus(false);
+						}
 						setBackgroundWithImage(new Image(Resource.MUTE_VOLUME_IMAGE));
 						slider.setDisable(true);
 						value.setDisable(true);
@@ -148,14 +148,15 @@ public class SettingMenu extends VBox {
 		}
 
 		public void setBackgroundImageByVolume(Slider slider) {
-			if (slider.getValue() >= 70)
+			if (slider.getValue() >= 70) {
 				setBackgroundWithImage(new Image(Resource.HIGH_VOLUME_IMAGE));
-			else if (slider.getValue() >= 35)
+			} else if (slider.getValue() >= 35) {
 				setBackgroundWithImage(new Image(Resource.MID_VOLUME_IMAGE));
-			else if (slider.getValue() >= 15)
+			} else if (slider.getValue() >= 15) {
 				setBackgroundWithImage(new Image(Resource.LOW_VOLUME_IMAGE));
-			else
+			} else {
 				setBackgroundWithImage(new Image(Resource.VERY_LOW_VOLUME_IMAGE));
+			}
 		}
 
 		private void setBackgroundWithImage(Image img) {
@@ -244,10 +245,11 @@ public class SettingMenu extends VBox {
 		sfxSoundButton.setMuted(!SoundManager.getSoundEffectStatus());
 		sfxSlider.setDisable(!SoundManager.getSoundEffectStatus());
 		sfxValue.setDisable(!SoundManager.getSoundEffectStatus());
-		if(SoundManager.getSoundEffectStatus())
+		if(SoundManager.getSoundEffectStatus()) {
 			sfxSoundButton.setBackgroundImageByVolume(sfxSlider);
-		else 
+		} else {
 			sfxSoundButton.setBackgroundWithImage(new Image(Resource.MUTE_VOLUME_IMAGE));
+		}
 		
 	}
 	

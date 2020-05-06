@@ -91,8 +91,9 @@ public class SoundManager {
 	}
 
 	public static void stopMenuBgm() {
-		if (bgm.getStatus().equals(MediaPlayer.Status.PLAYING))
+		if (bgm.getStatus().equals(MediaPlayer.Status.PLAYING)) {
 			bgm.stop();
+		}
 	}
 
 	public static void playClockTick() {
@@ -115,8 +116,9 @@ public class SoundManager {
 	}
 
 	public static void stopClockTick() {
-		if (clockTick.getStatus().equals(MediaPlayer.Status.PLAYING))
+		if (clockTick.getStatus().equals(MediaPlayer.Status.PLAYING)) {
 			clockTick.stop();
+		}
 	}
 
 	public static void playWinningSound() {

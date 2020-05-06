@@ -74,28 +74,32 @@ public class PromotionButton extends Button {
 	public void setBackgroundWithImage() {
 		switch (text) {
 		case "Q":
-			if (GameController.getTurn() == Side.BLACK)
+			if (GameController.getTurn() == Side.BLACK) {
 				this.imgURL = Sprites.B_QUEEN;
-			else
+			} else {
 				this.imgURL = Sprites.W_QUEEN;
+			}
 			break;
 		case "R":
-			if (GameController.getTurn() == Side.BLACK)
+			if (GameController.getTurn() == Side.BLACK) {
 				this.imgURL = Sprites.B_ROOK;
-			else
+			} else {
 				this.imgURL = Sprites.W_ROOK;
+			}
 			break;
 		case "B":
-			if (GameController.getTurn() == Side.BLACK)
+			if (GameController.getTurn() == Side.BLACK) {
 				this.imgURL = Sprites.B_BISHOP;
-			else
+			} else {
 				this.imgURL = Sprites.W_BISHOP;
+			}
 			break;
 		case "K":
-			if (GameController.getTurn() == Side.BLACK)
+			if (GameController.getTurn() == Side.BLACK) {
 				this.imgURL = Sprites.B_KNIGHT;
-			else
+			} else {
 				this.imgURL = Sprites.W_KNIGHT;
+			}
 			break;
 		default:
 		}
