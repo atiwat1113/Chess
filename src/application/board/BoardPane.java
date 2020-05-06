@@ -115,7 +115,7 @@ public class BoardPane extends GridPane {
 			thread.start();
 
 		} else {
-			updateBoard();
+			updateBoard(myBoardCell);
 			currentSelectedMoveList = GameController.moveList(myBoardCell.getP());
 			if (myBoardCell.hasEntity() && GameController.isTurn(myBoardCell.getP(), GameController.getTurn())) {
 				SoundManager.playClickingSound();
@@ -126,7 +126,6 @@ public class BoardPane extends GridPane {
 					myBoardCell.setClicked(true);
 				} else {
 					updateBoard();
-					myBoardCell.setClicked(false);
 					currentSelectedPoint = null;
 				}
 			}
@@ -186,6 +185,15 @@ public class BoardPane extends GridPane {
 		SoundManager.playWinningSound();
 	}
 
+	public void updateBoard(BoardCell myBoardCell) {
+		
+		for (BoardCell bc : boardCellList) {
+			if(!bc.equals(myBoardCell))
+				bc.update();
+		}
+		AppManager.displayMessage("");
+	}
+	
 	public void updateBoard() {
 		if (move) {
 			this.cellMap = GameController.getDisplayCellMap();
