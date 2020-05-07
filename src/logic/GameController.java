@@ -38,10 +38,7 @@ public abstract class GameController {
 			whiteRow };
 	private static final String[][] hordeBoard = { blackRow, blackPawn, blank, fourWhitePawn, whitePawn, whitePawn,
 			whitePawn, whitePawn };
-//	private static final String[][] hordeCheck = { blackRow, blackPawn, blank, fourWhitePawn, blank, blank, blank,
-//			blank };
-//	private static final String[][] noPawnBoard = { blackRow, blank, blank, blank, blank, blank, blank, whiteRow };
-
+	
 	public static void InitializeMap(String gameType) {
 		promotionPoint = null;
 		String[][] map = normalBoard;
@@ -49,7 +46,6 @@ public abstract class GameController {
 		size = new Point(map.length, map[0].length);
 		switch (gameType) {
 		case Games.NORMAL:
-			// map = noPawnBoard;
 			board = new NormalBoard(map);
 			break;
 		case Games.ATOMIC:

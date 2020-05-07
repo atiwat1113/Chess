@@ -49,7 +49,7 @@ public class BoardCell extends Pane {
 	}
 
 	public boolean hasEntity() {
-		return !this.myCell.IsEmpty();
+		return this.myCell.getEntity() != null;
 	}
 
 	public void setBackgroundTileColor() {

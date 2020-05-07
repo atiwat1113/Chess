@@ -326,12 +326,12 @@ public abstract class Board {
 		addEntity(null, p);
 	}
 
-	public boolean addEntity(Entity e, Point p) {
-		return cellMap[p.x][p.y].setEntity(e);
+	public void addEntity(Entity e, Point p) {
+		cellMap[p.x][p.y].setEntity(e);
 	}
 
 	public Entity getEntity(Point p) {
-		if (!isInBoard(p) || cellMap[p.x][p.y].IsEmpty()) {
+		if (!isInBoard(p)) {
 			return null;
 		}
 		return cellMap[p.x][p.y].getEntity();

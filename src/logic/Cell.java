@@ -4,23 +4,11 @@ import entity.base.Entity;
 
 public class Cell {
 	private Entity myEntity;
-	private boolean isEmpty;
-
-	public Cell() {
-		isEmpty = true;
+	public Cell(){
+		myEntity = null;
 	}
-
-	public boolean IsEmpty() {
-		return isEmpty;
-	}
-
-	public boolean setEntity(Entity e) {
+	public void setEntity(Entity e) {
 		myEntity = e;
-		if (e == null)
-			isEmpty = true;
-		else
-			isEmpty = false;
-		return true;
 	}
 
 	public Entity getEntity() {
@@ -29,7 +17,6 @@ public class Cell {
 
 	public void removeEntity() {
 		myEntity = null;
-		isEmpty = true;
 	}
 
 }
