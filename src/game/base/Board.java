@@ -1,18 +1,17 @@
 package game.base;
 
-import logic.*;
-import entity.base.*;
-import game.Chess960Board;
-import javafx.application.Platform;
-import entity.*;
-import java.awt.*;
+import java.awt.Point;
 import java.util.ArrayList;
+import javafx.application.Platform;
 
+import entity.base.*;
+import entity.*;
+import game.base.Board;
+import game.Chess960Board;
+import logic.*;
 import Resource.Sprites;
 import application.AppManager;
 
-//import java.lang.Math;
-//remain: win, draw
 public abstract class Board {
 	protected Point twoWalkPawn;
 	private Cell[][] cellMap;
@@ -90,14 +89,44 @@ public abstract class Board {
 
 	// iswin
 	public abstract boolean isWin(Side side);// opposite side win
-
 	public abstract boolean isDraw(Side side);
-
 	public abstract boolean isCheck(Side side);
 
 	// move
-	public abstract void move(Point oldPoint, Point newPoint);
-	public abstract void startAnimation(Point oldPoint, Point newPoint);
+	public void startAnimation(Point oldPoint, Point newPoint) {
+		removePoint = new ArrayList<Point>();
+		Entity moveEntity = this.getEntity(oldPoint);
+		if (moveEntity instanceof Castling)
+			((Castling) moveEntity).setNeverMove();
+		if (moveEntity instanceof Pawn) {
+			if (twoWalkPawn != null && twoWalkPawn.equals(new Point(oldPoint.x, newPoint.y))) {
+				//AppManager.setEnPassant(true,new Point(oldPoint.x, newPoint.y));// for moving animation ------------------------
+				removePoint.add(twoWalkPawn);
+			} else if (Math.abs(oldPoint.x - newPoint.x) == 2) {
+				twoWalkPawn = newPoint;
+			} else
+				twoWalkPawn = null;
+		} else {
+			twoWalkPawn = null;
+		}
+		if (moveEntity instanceof King && isCastlingPoint(moveEntity.getSide(), newPoint)) {
+			castling(moveEntity.getSide(), oldPoint, newPoint);
+		} else {
+			movePiece = moveEntity;
+			movePoint = newPoint;
+			remove(oldPoint);
+			Platform.runLater(new Runnable() {
+				public void run() {
+					AppManager.startAnimation(oldPoint, newPoint, moveEntity);
+				}
+			});
+			int s = (moveEntity.getSide() == Side.BLACK) ? 7 : 0;
+			if (moveEntity instanceof Pawn && newPoint.x == s) {
+				havePromotion(newPoint, moveEntity.getSide());
+			}
+		}
+	}
+	
 	public void continueMove() {
 		if (castlingRook!=null) {
 			castlingRook.setPoint(newRookPoint);
@@ -117,15 +146,49 @@ public abstract class Board {
 	public ArrayList<Point> moveList(Point point) {
 		Entity moveEntity = getEntity(point);
 		ArrayList<Point> movePoint = moveEntity.moveList(this);
-		// GameController.printPointList(movePoint);
 		return editMovePoint(point, movePoint);
 	}
 
 	// moveList
-	protected abstract ArrayList<Point> editMovePoint(Point oldPoint, ArrayList<Point> movePoint);
-
-	public boolean checkCannotMovePoint(ArrayList<Point> oldPoint, Point newPoint, Point kingPoint, Side side) {
-		// System.out.println(print(oldPoint)+"->"+print(newPoint)+"K"+print(kingPoint));
+	protected ArrayList<Point> editMovePoint(Point oldPoint, ArrayList<Point> movePoint) {
+		Entity moveEntity = this.getEntity(oldPoint);
+		Side side = moveEntity.getSide();
+		ArrayList<Point> op = new ArrayList<Point>();
+		op.add(oldPoint);
+		if (moveEntity instanceof King) {
+			for (int i = movePoint.size() - 1; i >= 0; i--) {
+				if (checkCannotMovePoint(op, new Point(-1, -1), movePoint.get(i), side))
+					movePoint.remove(i);
+			}
+			for (Point p : castingPoint(side)) {// for castling
+				movePoint.add(p);
+			}
+		} else {
+			Point kingPoint = getKing(side).getPoint();
+			for (int i = movePoint.size() - 1; i >= 0; i--) {
+				if (checkCannotMovePoint(op, movePoint.get(i), kingPoint, side)) {
+					movePoint.remove(i);
+				}
+			}
+			if (moveEntity instanceof Pawn) {
+				if (twoWalkPawn != null) {
+					if (oldPoint.x == twoWalkPawn.x && Math.abs(oldPoint.y - twoWalkPawn.y) == 1) {
+						Point newPoint;
+						op.add(twoWalkPawn);
+						if (side == Side.BLACK)
+							newPoint = new Point(twoWalkPawn.x + 1, twoWalkPawn.y);
+						else
+							newPoint = new Point(twoWalkPawn.x - 1, twoWalkPawn.y);
+						if (!checkCannotMovePoint(op, newPoint, kingPoint, side)) {
+							movePoint.add(newPoint);
+						}
+					}
+				}
+			}
+		}
+		return movePoint;
+	}
+	protected boolean checkCannotMovePoint(ArrayList<Point> oldPoint, Point newPoint, Point kingPoint, Side side) {
 		Point[] rookVector = { new Point(1, 0), new Point(-1, 0), new Point(0, 1), new Point(0, -1) };
 		Point[] bishopVector = { new Point(1, 1), new Point(-1, 1), new Point(1, -1), new Point(-1, -1) };
 		if (checkOther(newPoint, kingPoint, side))
@@ -141,7 +204,7 @@ public abstract class Board {
 		return false;
 	}
 
-	public boolean checkOther(Point newPoint, Point kingPoint, Side side) {
+	protected boolean checkOther(Point newPoint, Point kingPoint, Side side) {
 		Point[] blackPawnWalk = { new Point(1, 1), new Point(1, -1) };
 		Point[] whitePawnWalk = { new Point(-1, 1), new Point(-1, -1) };
 		Point[] pawnWalk = (side == Side.BLACK) ? blackPawnWalk : whitePawnWalk;
@@ -184,7 +247,7 @@ public abstract class Board {
 		return false;
 	}
 
-	public boolean checkRook(Point point, Point vector, ArrayList<Point> oldPoint, Point newPoint, Side side) {
+	protected boolean checkRook(Point point, Point vector, ArrayList<Point> oldPoint, Point newPoint, Side side) {
 		Point nextPoint = addPoint(point, vector);
 		if (!isInBoard(nextPoint)) {
 			return false;
@@ -203,7 +266,7 @@ public abstract class Board {
 		return false;
 	}
 
-	public boolean checkBishop(Point point, Point vector, ArrayList<Point> oldPoint, Point newPoint, Side side) {
+	protected boolean checkBishop(Point point, Point vector, ArrayList<Point> oldPoint, Point newPoint, Side side) {
 		Point nextPoint = addPoint(point, vector);
 		if (!isInBoard(nextPoint)) {
 			return false;
@@ -224,6 +287,7 @@ public abstract class Board {
 
 	// other
 	public void havePromotion(Point point, Side side) {
+		// set promotion point in GameController
 		GameController.setPromotion(point, side);
 	}
 
@@ -245,7 +309,7 @@ public abstract class Board {
 		}
 	}
 
-	public boolean isEatenPoint(Point point, Side side) {
+	protected boolean isEatenPoint(Point point, Side side) {
 		ArrayList<Entity> allEntity = getAllPieces(getAnotherSide(side));
 		for (Entity e : allEntity) {
 			ArrayList<Point> moveablePoint = e.moveList(this);

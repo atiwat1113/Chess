@@ -3,20 +3,61 @@ package game;
 import java.awt.Point;
 import java.util.ArrayList;
 
+import entity.base.Entity;
 import entity.King;
 import entity.Rook;
-import entity.base.Entity;
-
+import game.base.Board;
+import game.base.CheckMateAble;
 import logic.Side;
 
-public class Chess960Board extends NormalBoard {
+public class Chess960Board extends Board implements CheckMateAble {
 	public Chess960Board(String[][] map) {
 		super(map);
 	}
+
+	// win
+	public boolean isWin(Side side) {
+		return winByCheckmate(side);
+	}
+
+	public boolean winByCheckmate(Side side) {
+		Entity king = getKing(side);
+		if (king == null)
+			return false;
+		if (!isEatenPoint(king.getPoint(), side)) {
+			return false;
+		}
+		return drawCannotMove(side);
+	}
+
+	// draw
+	public boolean isDraw(Side side) {
+		return drawCannotMove(side);
+	}
+
+	public boolean drawCannotMove(Side side) {
+		ArrayList<Entity> allEntity = getAllPieces(side);
+		for (Entity entity : allEntity) {
+			if (entity == null)
+				continue;
+			ArrayList<Point> moveList = moveList(entity.getPoint());
+			if (moveList.size() != 0)
+				return false;
+		}
+		return true;
+	}
+
+	// check
+	public boolean isCheck(Side side) {
+		Point kingPoint = getKing(side).getPoint();
+		return isEatenPoint(kingPoint, side);
+	}
+
 	public boolean isCastlingPoint(Side side, Point point) {
 		Entity entity = getEntity(point);
 		return (entity instanceof Rook && entity.getSide() == side);
 	}
+
 	public ArrayList<Point> castingPoint(Side side) {
 		ArrayList<Point> returnPoint = new ArrayList<Point>();
 		Entity king = getKing(side);
@@ -56,7 +97,7 @@ public class Chess960Board extends NormalBoard {
 		if (leftRook != null) {
 			Point newKing = new Point(s, 2);
 			Point newRook = new Point(s, 3);
-			if (isNull(king.getPoint(), leftRook, newKing, newRook) && isFree(king.getPoint(), newKing, side)) { 
+			if (isNull(king.getPoint(), leftRook, newKing, newRook) && isFree(king.getPoint(), newKing, side)) {
 				returnPoint.add(leftRook);
 			}
 		}
