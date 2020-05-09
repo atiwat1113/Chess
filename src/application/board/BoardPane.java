@@ -231,10 +231,6 @@ public class BoardPane extends GridPane {
 		GameController.setPromotion(null, Side.EMPTY);
 	}
 
-	public void setCurrentSelectedPoint(Point currentSelectedPoint) {
-		this.currentSelectedPoint = currentSelectedPoint;
-	}
-
 	public String getPromotionPiece() {
 		return promotionPiece;
 	}
