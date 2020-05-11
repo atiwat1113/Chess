@@ -103,8 +103,10 @@ public class BoardPane extends GridPane {
 								AppManager.getStatusDisplay(GameController.getTurn()).endTurn();
 								GameController.nextTurn();
 								updateBoard();
-								AppManager.getStatusDisplay(GameController.getTurn()).startTurn();
-								checkEndGame();
+								if(!checkEndGame()) {
+									AppManager.getStatusDisplay(GameController.getTurn()).startTurn();
+								}
+								
 							}
 						}
 					});
@@ -136,12 +138,15 @@ public class BoardPane extends GridPane {
 
 	}
 
-	private void checkEndGame() {
+	private boolean checkEndGame() {
 		if (GameController.isDraw()) {
 			showEndGameWindow("DRAW!!!\n");
+			return true;
 		} else if (GameController.isWin()) {
 			showEndGameWindow(GameController.getAnotherSide(GameController.getTurn()).toString() + " WIN!!!\n");
+			return true;
 		}
+		return false;
 	}
 
 	private void showWalkPath() {
