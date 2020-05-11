@@ -97,7 +97,7 @@ public class PlayerStatusDisplay extends VBox {
 								@Override
 								public void run() {
 									AppManager.getBoardPane().showEndGameWindow(GameController.getTurn() + " time out!\n"
-											+ GameController.getAnotherSide(GameController.getTurn()) + " Win!!!\nReturn to Menu");
+											+ GameController.getAnotherSide(GameController.getTurn()) + " Win!!!");
 								}
 							});
 							stop();

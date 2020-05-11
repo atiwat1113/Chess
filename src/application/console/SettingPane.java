@@ -119,6 +119,7 @@ public class SettingPane extends VBox {
 				Alert alert = new Alert(AlertType.CONFIRMATION);
 				SoundManager.playClickingSound();
 
+				AppManager.stopTimer();
 				alert.setTitle("Return to menu");
 				alert.setHeaderText(null);
 				alert.setContentText("Do you want to return to menu?");
@@ -128,6 +129,8 @@ public class SettingPane extends VBox {
 						AppManager.stopTimer();
 						AppManager.showMenu();
 						SoundManager.playMenuBgm();
+					} else {
+						AppManager.getStatusDisplay(GameController.getTurn()).startTurn();
 					}
 				});
 			}

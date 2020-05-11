@@ -102,9 +102,9 @@ public class BoardPane extends GridPane {
 							} else {
 								AppManager.getStatusDisplay(GameController.getTurn()).endTurn();
 								GameController.nextTurn();
-								checkEndGame();
 								updateBoard();
 								AppManager.getStatusDisplay(GameController.getTurn()).startTurn();
+								checkEndGame();
 							}
 						}
 					});
