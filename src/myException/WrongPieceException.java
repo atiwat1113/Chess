@@ -1,20 +1,9 @@
 package myException;
 
-public class WrongPieceException extends Exception {
-
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
-
-	private String message;
+public class WrongPieceException extends MyException {
 
 	public WrongPieceException(String message) {
-		this.message = message;
+		super(message);
 	}
 
-	@Override
-	public String getMessage() {
-		return message;
-	} 
 }

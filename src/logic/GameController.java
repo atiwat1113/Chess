@@ -4,19 +4,12 @@ import game.*;
 import game.base.Board;
 import game.base.CheckMateAble;
 import game.base.Games;
-import javafx.application.Platform;
-import javafx.util.Duration;
 import myException.IsPromotingException;
-import myException.NullEntityException;
-import myException.NullPointException;
 import myException.WrongPieceException;
 import java.awt.*;
 import java.util.*;
 import java.util.Random;
-
 import Resource.Sprites;
-import application.AppManager;
-import entity.Rook;
 
 public abstract class GameController {
 	protected static Board board;
@@ -146,12 +139,6 @@ public abstract class GameController {
 	}
 
 	public static boolean isTurn(Point p, Side turn) throws Exception {
-		if (p == null) {
-			throw new NullPointException("Don't have this point.");
-		}
-		if (board.getEntity(p) == null) {
-			throw new NullEntityException("It is empty.");
-		}
 		if (board.getEntity(p).getSide() != turn) {
 			throw new WrongPieceException("It's not your piece.");
 		}

@@ -1,17 +1,14 @@
 package myException;
 
-public class IsPromotingException extends Exception {
+public class IsPromotingException extends MyException {
 
+	/**
+	 * 
+	 */
 	private static final long serialVersionUID = 1L;
 
-	private String message;
-
 	public IsPromotingException(String message) {
-		this.message = message;
+		super(message);
 	}
 
-	@Override
-	public String getMessage() {
-		return message;
-	}
 }

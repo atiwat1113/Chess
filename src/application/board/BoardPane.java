@@ -17,6 +17,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import logic.*;
+import myException.MyException;
 import Resource.Resource;
 import Resource.Sprites;
 import application.AppManager;
@@ -69,8 +70,8 @@ public class BoardPane extends GridPane {
 				public void handle(MouseEvent e) {
 					try {
 						addOnClickHandler(bc);
-					} catch (Exception e1) {// NullEntityException WrongPieceException IsPromotingException
-						if (!(e1 instanceof NullPointerException)) {
+					} catch (Exception e1) {// WrongPieceException IsPromotingException
+						if(e1 instanceof MyException)	{
 							SoundManager.playWrongSelected();
 							AppManager.displayMessage(e1.getMessage());
 						}
@@ -84,6 +85,7 @@ public class BoardPane extends GridPane {
 	private void addOnClickHandler(BoardCell myBoardCell) throws Exception {
 		if (myBoardCell.isMoveable()) {
 			GameController.startAnimation(currentSelectedPoint, myBoardCell.getP());
+			disableBoardCell();
 			updateBoard();
 
 			Thread thread = new Thread(() -> {
@@ -105,6 +107,7 @@ public class BoardPane extends GridPane {
 								updateBoard();
 								if(!checkEndGame()) {
 									AppManager.getStatusDisplay(GameController.getTurn()).startTurn();
+									enableBoardCell();
 								}
 								
 							}
@@ -138,6 +141,18 @@ public class BoardPane extends GridPane {
 
 	}
 
+	private void disableBoardCell() {
+		for (BoardCell bc : boardCellList) {
+			bc.setDisable(true);
+		}
+	}
+	
+	private void enableBoardCell() {
+		for (BoardCell bc : boardCellList) {
+			bc.setDisable(false);
+		}
+	}
+	
 	private boolean checkEndGame() {
 		if (GameController.isDraw()) {
 			showEndGameWindow("DRAW!!!\n");
