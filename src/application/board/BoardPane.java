@@ -154,11 +154,12 @@ public class BoardPane extends GridPane {
 	}
 	
 	private boolean checkEndGame() {
+		if (GameController.isWin()) {
+			showEndGameWindow(GameController.getAnotherSide(GameController.getTurn()).toString() + " WIN!!!\n");
+			return true;
+		}
 		if (GameController.isDraw()) {
 			showEndGameWindow("DRAW!!!\n");
-			return true;
-		} else if (GameController.isWin()) {
-			showEndGameWindow(GameController.getAnotherSide(GameController.getTurn()).toString() + " WIN!!!\n");
 			return true;
 		}
 		return false;
