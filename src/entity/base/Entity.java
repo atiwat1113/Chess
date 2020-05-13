@@ -23,7 +23,7 @@ public abstract class Entity { // private --> protected
 	protected ArrayList<Point> moveList(Board board, Point point, Point vector) {
 		// add movePoint in vector direction for rook, bishop and queen
 		ArrayList<Point> returnList = new ArrayList<Point>();
-		Point nextPoint = Board.addPoint(point, vector);
+		Point nextPoint = new Point(point.x + vector.x, point.y + vector.y);
 		if (!board.isInBoard(nextPoint)) {
 			return returnList;
 		}

@@ -12,19 +12,22 @@ import logic.Side;
 import application.AppManager;
 
 public class AtomicBoard extends Board implements CheckMateAble {
+	// In this game, there are special rule that eating piece and all surrounding
+	// white and black pieces other than pawns are exploded.
 	public AtomicBoard(String[][] map) {
 		super(map);
 	}
 
-	// iswin
+	// win
 	public boolean isWin(Side side) {
-		//System.out.println(winByLosingKing(side));
-		return winByLosingKing(side)|| winByCheckmate(side);
+		// System.out.println(winByLosingKing(side));
+		return winByLosingKing(side) || winByCheckmate(side);
 	}
-	
+
 	public boolean winByLosingKing(Side side) {
 		for (Entity entity : getAllPieces(side)) {
-			if (entity instanceof King) return false;
+			if (entity instanceof King)
+				return false;
 		}
 		return true;
 	}
@@ -37,8 +40,10 @@ public class AtomicBoard extends Board implements CheckMateAble {
 		return drawCannotMove(side) || drawByLosing2King();
 	}
 
+	// draw
 	public boolean isDraw(Side side) {
-		if(winByLosingKing(side)) return false;
+		if (winByLosingKing(side))
+			return false;
 		return drawCannotMove(side);
 	}
 
@@ -55,12 +60,14 @@ public class AtomicBoard extends Board implements CheckMateAble {
 	}
 
 	public boolean drawByLosing2King() {
-		//System.out.println("Error");
+		// System.out.println("Error");
 		return winByLosingKing(Side.WHITE) && winByLosingKing(Side.BLACK);
 	}
 
+	// check
 	public boolean isCheck(Side side) {
-		if(winByLosingKing(side)) return false;
+		if (winByLosingKing(side))
+			return false;
 		Point kingPoint = getKing(side).getPoint();
 		Point anotherKingPoint = getKing(getAnotherSide(side)).getPoint();
 		if (Math.abs(anotherKingPoint.x - kingPoint.x) <= 1 && Math.abs(anotherKingPoint.y - kingPoint.y) <= 1)
@@ -68,8 +75,8 @@ public class AtomicBoard extends Board implements CheckMateAble {
 		return isEatenPoint(kingPoint, side);
 	}
 
-	// move
-	public void startAnimation (Point oldPoint, Point newPoint) {
+	@Override
+	public void startAnimation(Point oldPoint, Point newPoint) {
 		removePoint = new ArrayList<Point>();
 		Entity moveEntity = this.getEntity(oldPoint);
 		if (moveEntity instanceof Castling)
@@ -110,6 +117,7 @@ public class AtomicBoard extends Board implements CheckMateAble {
 		}
 	}
 
+	@Override
 	protected ArrayList<Point> editMovePoint(Point oldPoint, ArrayList<Point> movePoint) {
 		Entity moveEntity = this.getEntity(oldPoint);
 		Side side = moveEntity.getSide();
@@ -168,7 +176,8 @@ public class AtomicBoard extends Board implements CheckMateAble {
 		return movePoint;
 	}
 
-	public boolean checkOther(Point newPoint, Point kingPoint, Side side) {
+	@Override
+	protected boolean checkOther(Point newPoint, Point kingPoint, Side side) {
 		Point[] blackPawnWalk = { new Point(1, 1), new Point(1, -1) };
 		Point[] whitePawnWalk = { new Point(-1, 1), new Point(-1, -1) };
 		Point[] pawnWalk = whitePawnWalk;
@@ -206,9 +215,10 @@ public class AtomicBoard extends Board implements CheckMateAble {
 		if (!isInBoard(point))
 			return;
 		if (!(getEntity(point) instanceof Pawn)) {
-			if(!(getEntity(point) == null)) {
+			if (!(getEntity(point) == null)) {
 				removePoint.add(point);
 			}
 		}
 	}
+
 }

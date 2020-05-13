@@ -8,7 +8,9 @@ import game.base.Board;
 import game.base.CheckMateAble;
 import logic.Side;
 
-public class ThreeCheckBoard extends Board implements CheckMateAble{
+public class ThreeCheckBoard extends Board implements CheckMateAble {
+	// this game can win by checkmate or win by putting their opponent in check
+	// three times.
 	private int whiteCheck, blackCheck;
 
 	public ThreeCheckBoard(String[][] map) {
@@ -16,7 +18,7 @@ public class ThreeCheckBoard extends Board implements CheckMateAble{
 		whiteCheck = blackCheck = 0;
 	}
 
-	@Override
+	// win
 	public boolean isWin(Side side) {
 		return winByCheckmate(side) || winByThreeCheck(side);
 	}
@@ -30,11 +32,11 @@ public class ThreeCheckBoard extends Board implements CheckMateAble{
 		}
 		return drawCannotMove(side);
 	}
-	
+
 	public boolean winByThreeCheck(Side side) {
 		return (side == Side.BLACK) ? whiteCheck == 3 : blackCheck == 3;
 	}
-	
+
 	// draw
 	public boolean isDraw(Side side) {
 		return drawCannotMove(side);
@@ -51,13 +53,14 @@ public class ThreeCheckBoard extends Board implements CheckMateAble{
 		}
 		return true;
 	}
-	
+
 	// check
 	public boolean isCheck(Side side) {
 		Point kingPoint = getKing(side).getPoint();
 		return isEatenPoint(kingPoint, side);
 	}
-	
+
+	@Override
 	public void continueMove() {
 		super.continueMove();
 		Side side = getAnotherSide(movePiece.getSide());
@@ -73,4 +76,5 @@ public class ThreeCheckBoard extends Board implements CheckMateAble{
 		int[] re = { whiteCheck, blackCheck };
 		return re;
 	}
+
 }

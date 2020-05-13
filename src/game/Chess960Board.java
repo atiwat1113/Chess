@@ -11,6 +11,13 @@ import game.base.CheckMateAble;
 import logic.Side;
 
 public class Chess960Board extends Board implements CheckMateAble {
+	/*
+	 * this game is opening with random board and still have castling
+	 * random board conditions
+	 * 1. The bishops must be placed on opposite-color squares.
+	 * 2. The king must be placed on a square between the rooks.
+	 */
+
 	public Chess960Board(String[][] map) {
 		super(map);
 	}
@@ -52,14 +59,15 @@ public class Chess960Board extends Board implements CheckMateAble {
 		Point kingPoint = getKing(side).getPoint();
 		return isEatenPoint(kingPoint, side);
 	}
-	
+
 	@Override
 	public boolean isCastlingPoint(Side side, Point point) {
 		Entity entity = getEntity(point);
 		return (entity instanceof Rook && entity.getSide() == side);
 	}
 
-	public ArrayList<Point> castingPoint(Side side) {
+	@Override
+	protected ArrayList<Point> castingPoint(Side side) {
 		ArrayList<Point> returnPoint = new ArrayList<Point>();
 		Entity king = getKing(side);
 		int s = (side == Side.BLACK) ? 0 : 7;
@@ -104,4 +112,5 @@ public class Chess960Board extends Board implements CheckMateAble {
 		}
 		return returnPoint;
 	}
+	
 }

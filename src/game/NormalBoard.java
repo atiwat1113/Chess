@@ -28,7 +28,7 @@ public class NormalBoard extends Board implements CheckMateAble {
 		}
 		return drawCannotMove(side);
 	}
-	
+
 	// draw
 	public boolean isDraw(Side side) {
 		return drawCannotMove(side);
@@ -45,10 +45,11 @@ public class NormalBoard extends Board implements CheckMateAble {
 		}
 		return true;
 	}
-	
+
 	// check
 	public boolean isCheck(Side side) {
 		Point kingPoint = getKing(side).getPoint();
 		return isEatenPoint(kingPoint, side);
 	}
+	
 }

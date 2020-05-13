@@ -1,14 +1,11 @@
 package logic;
 
 import game.*;
-import game.base.Board;
-import game.base.CheckMateAble;
-import game.base.Games;
+import game.base.*;
 import myException.IsPromotingException;
 import myException.WrongPieceException;
 import java.awt.*;
 import java.util.*;
-import java.util.Random;
 import Resource.Sprites;
 
 public class GameController {
@@ -19,19 +16,21 @@ public class GameController {
 	private static Side promotionSide;
 	private static final String[] blackRow = { "BRook", "BKnight", "BBishop", "BQueen", "BKing", "BBishop", "BKnight",
 			"BRook" };
-	private static final String[] blackPawn = { "BPawn", "BPawn", "BPawn", "BPawn", "BPawn", "BPawn", "BPawn", "BPawn" };
+	private static final String[] blackPawn = { "BPawn", "BPawn", "BPawn", "BPawn", "BPawn", "BPawn", "BPawn",
+			"BPawn" };
 	private static final String[] blank = { Sprites.BLANK, Sprites.BLANK, Sprites.BLANK, Sprites.BLANK, Sprites.BLANK,
 			Sprites.BLANK, Sprites.BLANK, Sprites.BLANK };
 	private static final String[] fourWhitePawn = { Sprites.BLANK, "WPawn", "WPawn", Sprites.BLANK, Sprites.BLANK,
 			"WPawn", "WPawn", Sprites.BLANK };
-	private static final String[] whitePawn = { "WPawn", "WPawn", "WPawn", "WPawn", "WPawn", "WPawn", "WPawn", "WPawn" };
+	private static final String[] whitePawn = { "WPawn", "WPawn", "WPawn", "WPawn", "WPawn", "WPawn", "WPawn",
+			"WPawn" };
 	private static final String[] whiteRow = { "WRook", "WKnight", "WBishop", "WQueen", "WKing", "WBishop", "WKnight",
 			"WRook" };
 	private static final String[][] normalBoard = { blackRow, blackPawn, blank, blank, blank, blank, whitePawn,
 			whiteRow };
 	private static final String[][] hordeBoard = { blackRow, blackPawn, blank, fourWhitePawn, whitePawn, whitePawn,
 			whitePawn, whitePawn };
-	
+
 	public static void InitializeMap(String gameType) {
 		promotionPoint = null;
 		String[][] map = normalBoard;
@@ -52,10 +51,10 @@ public class GameController {
 			break;
 		case Games.CHESS960:
 			int[] key = randomKey();
-			String[] randomBlack = { blackRow[key[0]], blackRow[key[1]], blackRow[key[2]], blackRow[key[3]], blackRow[key[4]],
-					blackRow[key[5]], blackRow[key[6]], blackRow[key[7]] };
-			String[] randomWhite = { whiteRow[key[0]], whiteRow[key[1]], whiteRow[key[2]], whiteRow[key[3]], whiteRow[key[4]],
-					whiteRow[key[5]], whiteRow[key[6]], whiteRow[key[7]] };
+			String[] randomBlack = { blackRow[key[0]], blackRow[key[1]], blackRow[key[2]], blackRow[key[3]],
+					blackRow[key[4]], blackRow[key[5]], blackRow[key[6]], blackRow[key[7]] };
+			String[] randomWhite = { whiteRow[key[0]], whiteRow[key[1]], whiteRow[key[2]], whiteRow[key[3]],
+					whiteRow[key[4]], whiteRow[key[5]], whiteRow[key[6]], whiteRow[key[7]] };
 			// write random pieces--------------------------------------------
 			String[][] randomBoard = { randomBlack, blackPawn, blank, blank, blank, blank, whitePawn, randomWhite };
 			map = randomBoard;
@@ -71,6 +70,7 @@ public class GameController {
 	}
 
 	public static int[] randomKey() {// "BRook","BKnight","BBishop","BQueen","BKing"
+		// for random map in chess960
 		int[] returnKey = { -1, -1, -1, -1, -1, -1, -1, -1 };
 		Random ran = new Random();
 		int ranInt;
@@ -91,6 +91,7 @@ public class GameController {
 	}
 
 	public static int[] put(int[] l, int value, int index) {
+		// for randomKey
 		int c = -1;
 		for (int i = 0; i < size.y; i++) {
 			if (l[i] == -1)
@@ -136,6 +137,7 @@ public class GameController {
 
 	public static void promotion(String piece) {
 		board.promotion(promotionPoint, promotionSide, piece);
+		promotionPoint = null;
 	}
 
 	public static boolean isTurn(Point p, Side turn) throws Exception {
@@ -157,12 +159,13 @@ public class GameController {
 	}
 
 	public static void startAnimation(Point oldPoint, Point newPoint) {
-		board.startAnimation(oldPoint, newPoint);	
+		board.startAnimation(oldPoint, newPoint);
 	}
+
 	public static void continueMove() {
 		board.continueMove();
 	}
-	
+
 	public static Side getTurn() {
 		return turn;
 	}

@@ -13,6 +13,18 @@ import Resource.Sprites;
 import application.AppManager;
 
 public abstract class Board {
+	/* 
+	 * topic: move, moveList, promotion, castling and other
+	 * promotion: can choose queen, rook, bishop and knight
+	 * castling // 01234567
+	 *             r   k  r
+	 *               kr rk
+	 * 1. right side move king and rook to 6 and 5
+	 * 2. left side move king and rook to 2 and 3
+	 * 3. all king walk (2,3,4 or 4,5,6) cannot eaten by opposite side
+	 * 4. between rook and king must empty
+	 * 5. for chess960 final cell must be empty too 
+	 */
 	protected Point twoWalkPawn;
 	private Cell[][] cellMap;
 	private Entity whiteKing, blackKing;
@@ -25,7 +37,6 @@ public abstract class Board {
 			new Point(-1, -1), new Point(-1, 0), new Point(-1, 1), new Point(0, 1) };
 	private int width, height;
 
-	// private Game game;//enum game
 	public Board(String[][] map) {
 		twoWalkPawn = null;
 		int column = map[0].length;
@@ -89,18 +100,20 @@ public abstract class Board {
 
 	// iswin
 	public abstract boolean isWin(Side side);// opposite side win
+
 	public abstract boolean isDraw(Side side);
+
 	public abstract boolean isCheck(Side side);
 
 	// move
 	public void startAnimation(Point oldPoint, Point newPoint) {
+		// remove oldPoint and tell AppManager to start animation
 		removePoint = new ArrayList<Point>();
 		Entity moveEntity = this.getEntity(oldPoint);
 		if (moveEntity instanceof Castling)
 			((Castling) moveEntity).setNeverMove();
 		if (moveEntity instanceof Pawn) {
 			if (twoWalkPawn != null && twoWalkPawn.equals(new Point(oldPoint.x, newPoint.y))) {
-				//AppManager.setEnPassant(true,new Point(oldPoint.x, newPoint.y));// for moving animation ------------------------
 				removePoint.add(twoWalkPawn);
 			} else if (Math.abs(oldPoint.x - newPoint.x) == 2) {
 				twoWalkPawn = newPoint;
@@ -116,6 +129,7 @@ public abstract class Board {
 			movePoint = newPoint;
 			remove(oldPoint);
 			Platform.runLater(new Runnable() {
+				@Override
 				public void run() {
 					AppManager.startAnimation(oldPoint, newPoint, moveEntity);
 				}
@@ -126,22 +140,23 @@ public abstract class Board {
 			}
 		}
 	}
-	
+
 	public void continueMove() {
-		if (castlingRook!=null) {
+		// remove eaten point and add moveEntity to newPoint
+		if (castlingRook != null) {
 			castlingRook.setPoint(newRookPoint);
 			addEntity(castlingRook, newRookPoint);
 			castlingRook = null;
 		}
-		if (movePiece!=null) {
+		if (movePiece != null) {
 			movePiece.setPoint(movePoint);
 			addEntity(movePiece, movePoint);
 		}
-		for(Point point : removePoint) {
+		for (Point point : removePoint) {
 			remove(point);
 		}
 	}
-	
+
 	// complete moveList to display
 	public ArrayList<Point> moveList(Point point) {
 		Entity moveEntity = getEntity(point);
@@ -151,6 +166,7 @@ public abstract class Board {
 
 	// moveList
 	protected ArrayList<Point> editMovePoint(Point oldPoint, ArrayList<Point> movePoint) {
+		// check in case that walk then make King can eat
 		Entity moveEntity = this.getEntity(oldPoint);
 		Side side = moveEntity.getSide();
 		ArrayList<Point> op = new ArrayList<Point>();
@@ -188,7 +204,9 @@ public abstract class Board {
 		}
 		return movePoint;
 	}
+
 	protected boolean checkCannotMovePoint(ArrayList<Point> oldPoint, Point newPoint, Point kingPoint, Side side) {
+		// check bishop, rook and queen
 		Point[] rookVector = { new Point(1, 0), new Point(-1, 0), new Point(0, 1), new Point(0, -1) };
 		Point[] bishopVector = { new Point(1, 1), new Point(-1, 1), new Point(1, -1), new Point(-1, -1) };
 		if (checkOther(newPoint, kingPoint, side))
@@ -205,6 +223,7 @@ public abstract class Board {
 	}
 
 	protected boolean checkOther(Point newPoint, Point kingPoint, Side side) {
+		// check pawn, knight and king
 		Point[] blackPawnWalk = { new Point(1, 1), new Point(1, -1) };
 		Point[] whitePawnWalk = { new Point(-1, 1), new Point(-1, -1) };
 		Point[] pawnWalk = (side == Side.BLACK) ? blackPawnWalk : whitePawnWalk;
@@ -292,6 +311,7 @@ public abstract class Board {
 	}
 
 	public void promotion(Point point, Side side, String piece) {
+		// promotion listener
 		switch (piece.charAt(0)) {
 		case 'Q':
 			addEntity(new Queen(point, side), point);
@@ -309,93 +329,9 @@ public abstract class Board {
 		}
 	}
 
-	protected boolean isEatenPoint(Point point, Side side) {
-		ArrayList<Entity> allEntity = getAllPieces(getAnotherSide(side));
-		for (Entity e : allEntity) {
-			ArrayList<Point> moveablePoint = e.moveList(this);
-			for (Point p : moveablePoint) {
-				if (p.x == point.x && p.y == point.y) {
-					return true;
-				}
-			}
-		}
-		return false;
-	}
-
-	public void remove(Point p) {
-		addEntity(null, p);
-	}
-
-	public void addEntity(Entity e, Point p) {
-		cellMap[p.x][p.y].setEntity(e);
-	}
-
-	public Entity getEntity(Point p) {
-		if (!isInBoard(p)) {
-			return null;
-		}
-		return cellMap[p.x][p.y].getEntity();
-	}
-
-	public boolean isInBoard(Point p) {
-		if (p.x < 0 || p.x >= height)
-			return false;
-		if (p.y < 0 || p.y >= width)
-			return false;
-		return true;
-	}
-
-	public ArrayList<Entity> getAllPieces(Side side) {
-		ArrayList<Entity> returnList = new ArrayList<Entity>();
-		for (int i = 0; i < 8; i++) {
-			for (int j = 0; j < 8; j++) {
-				Entity e = getEntity(new Point(i, j));
-				if (e != null && e.getSide() == side) {
-					returnList.add(e);
-				}
-			}
-		}
-		return returnList;
-	}
-
-	public int getWidth() {
-		return width;
-	}
-
-	public int getHeight() {
-		return height;
-	}
-
-	public Entity getKing(Side side) {
-		if (side == Side.WHITE)
-			return whiteKing;
-		return blackKing;
-	}
-
-	public static Side getAnotherSide(Side side) {
-		if (side == Side.BLACK)
-			return Side.WHITE;
-		return Side.BLACK;
-	}
-
-	public static Point[] getKnightWalk() {
-		return knightWalk;
-	}
-
-	public static Point[] getKingWalk() {
-		return KingWalk;
-	}
-
-	public static Point addPoint(Point p1, Point p2) {
-		return new Point(p1.x + p2.x, p1.y + p2.y);
-	}
-
-	public Cell[][] getCellMap() {
-		return cellMap;
-	}
-
 	// castling
-	public ArrayList<Point> castingPoint(Side side) {
+	protected ArrayList<Point> castingPoint(Side side) {
+		// list of castingPoint for moveList
 		ArrayList<Point> returnPoint = new ArrayList<Point>();
 		Entity king = getKing(side);
 		int s = (side == Side.BLACK) ? 0 : 7;
@@ -442,48 +378,16 @@ public abstract class Board {
 		}
 		return returnPoint;
 	}
-	
+
 	public boolean isCastlingPoint(Side side, Point point) {
-		return Math.abs(point.y-4)>1;
-	}
-
-	public static int min(int i1, int i2, int i3, int i4) {
-		return Math.min(i1, Math.min(i2, Math.min(i3, i4)));
-	}
-
-	public static int max(int i1, int i2, int i3, int i4) {
-		return Math.max(i1, Math.max(i2, Math.max(i3, i4)));
-	}
-
-	public boolean isFree(Point start, Point stop, Side side) {// king -> king
-		for (int i = Math.min(start.y, stop.y); i <= Math.max(start.y, stop.y); i++) {
-			Point point = new Point(start.x, i);
-			if (isEatenPoint(point, side)) {
-				return false;
-			}
-		}
-		return true;
-	}
-
-	public boolean isNull(Point oldKing, Point oldRook, Point newKing, Point newRook) {
-		if (oldKing.x != oldRook.x && oldRook.x != newKing.x && newKing.x != newRook.x) {
-			System.out.println("error");
-		}
-		for (int i = min(oldKing.y, oldRook.y, newKing.y, newRook.y); i <= max(oldKing.y, oldRook.y, newKing.y,
-				newRook.y); i++) {
-			Point point = new Point(oldKing.x, i);
-			if (point.equals(oldRook) || point.equals(oldKing))
-				continue;
-			if (getEntity(point) != null)
-				return false;
-		}
-		return true;
+		return Math.abs(point.y - 4) > 1;
 	}
 
 	public void castling(Side side, Point oldPoint, Point newPoint) {
+		// startAnimation for castling
 		Entity moveEntity = getEntity(oldPoint);
 		int s = (side == Side.BLACK) ? 0 : 7;
-		int ss =  (oldPoint.y > newPoint.y) ? 0 : 7;
+		int ss = (oldPoint.y > newPoint.y) ? 0 : 7;
 		Point rookPoint = (this instanceof Chess960Board) ? newPoint : new Point(s, ss);
 		Point moveKing;
 		if (oldPoint.y > newPoint.y) {
@@ -501,9 +405,123 @@ public abstract class Board {
 		Platform.runLater(new Runnable() {
 			@Override
 			public void run() {
-				AppManager.startCastlingAnimation(oldPoint, moveKing, moveEntity, rookPoint, newRookPoint, castlingRook);
+				AppManager.startCastlingAnimation(oldPoint, moveKing, moveEntity, rookPoint, newRookPoint,
+						castlingRook);
 			}
 		});
-	
 	}
+
+	// other
+	protected static int min(int i1, int i2, int i3, int i4) {
+		return Math.min(i1, Math.min(i2, Math.min(i3, i4)));
+	}
+
+	protected static int max(int i1, int i2, int i3, int i4) {
+		return Math.max(i1, Math.max(i2, Math.max(i3, i4)));
+	}
+
+	protected boolean isFree(Point start, Point stop, Side side) {
+		// for castling
+		for (int i = Math.min(start.y, stop.y); i <= Math.max(start.y, stop.y); i++) {
+			Point point = new Point(start.x, i);
+			if (isEatenPoint(point, side)) {
+				return false;
+			}
+		}
+		return true;
+	}
+
+	protected boolean isNull(Point oldKing, Point oldRook, Point newKing, Point newRook) {
+		// for castling
+		if (oldKing.x != oldRook.x && oldRook.x != newKing.x && newKing.x != newRook.x) {
+			System.out.println("error");
+		}
+		for (int i = min(oldKing.y, oldRook.y, newKing.y, newRook.y); i <= max(oldKing.y, oldRook.y, newKing.y,
+				newRook.y); i++) {
+			Point point = new Point(oldKing.x, i);
+			if (point.equals(oldRook) || point.equals(oldKing))
+				continue;
+			if (getEntity(point) != null)
+				return false;
+		}
+		return true;
+	}
+
+	protected boolean isEatenPoint(Point point, Side side) {
+		ArrayList<Entity> allEntity = getAllPieces(getAnotherSide(side));
+		for (Entity e : allEntity) {
+			ArrayList<Point> moveablePoint = e.moveList(this);
+			for (Point p : moveablePoint) {
+				if (p.x == point.x && p.y == point.y) {
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+
+	protected void remove(Point p) {
+		addEntity(null, p);
+	}
+
+	protected void addEntity(Entity e, Point p) {
+		cellMap[p.x][p.y].setEntity(e);
+	}
+
+	public Entity getEntity(Point p) {
+		if (!isInBoard(p)) {
+			return null;
+		}
+		return cellMap[p.x][p.y].getEntity();
+	}
+
+	public boolean isInBoard(Point p) {
+		if (p.x < 0 || p.x >= height)
+			return false;
+		if (p.y < 0 || p.y >= width)
+			return false;
+		return true;
+	}
+
+	protected ArrayList<Entity> getAllPieces(Side side) {
+		ArrayList<Entity> returnList = new ArrayList<Entity>();
+		for (int i = 0; i < 8; i++) {
+			for (int j = 0; j < 8; j++) {
+				Entity e = getEntity(new Point(i, j));
+				if (e != null && e.getSide() == side) {
+					returnList.add(e);
+				}
+			}
+		}
+		return returnList;
+	}
+
+	protected Entity getKing(Side side) {
+		if (side == Side.WHITE)
+			return whiteKing;
+		return blackKing;
+	}
+
+	protected static Side getAnotherSide(Side side) {
+		if (side == Side.BLACK)
+			return Side.WHITE;
+		return Side.BLACK;
+	}
+
+	public static Point[] getKnightWalk() {
+		return knightWalk;
+	}
+
+	public static Point[] getKingWalk() {
+		return KingWalk;
+	}
+
+	protected static Point addPoint(Point p1, Point p2) {
+		return new Point(p1.x + p2.x, p1.y + p2.y);
+	}
+
+	public Cell[][] getCellMap() {
+		return cellMap;
+	}
+
 }

@@ -8,7 +8,9 @@ import game.base.Board;
 import game.base.CheckMateAble;
 import logic.Side;
 
-public class KingOfTheHillBoard extends Board implements CheckMateAble{
+public class KingOfTheHillBoard extends Board implements CheckMateAble {
+	// this game can win by checkmate or win by moving their king to one of the
+	// central four squares.
 	private ArrayList<Point> centerPoint;
 
 	public KingOfTheHillBoard(String[][] map) {
@@ -20,7 +22,7 @@ public class KingOfTheHillBoard extends Board implements CheckMateAble{
 		centerPoint.add(new Point(4, 4));
 	}
 
-	@Override
+	// win
 	public boolean isWin(Side side) {
 		return winByCheckmate(side) || winByCenterKing(side);
 	}
@@ -30,7 +32,7 @@ public class KingOfTheHillBoard extends Board implements CheckMateAble{
 		Point pointKing = king.getPoint();
 		return centerPoint.contains(pointKing);
 	}
-	
+
 	public boolean winByCheckmate(Side side) {
 		Entity king = getKing(side);
 		if (king == null)
@@ -40,7 +42,7 @@ public class KingOfTheHillBoard extends Board implements CheckMateAble{
 		}
 		return drawCannotMove(side);
 	}
-	
+
 	// draw
 	public boolean isDraw(Side side) {
 		return drawCannotMove(side);
@@ -63,5 +65,5 @@ public class KingOfTheHillBoard extends Board implements CheckMateAble{
 		Point kingPoint = getKing(side).getPoint();
 		return isEatenPoint(kingPoint, side);
 	}
-	
+
 }

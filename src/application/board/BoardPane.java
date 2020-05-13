@@ -249,7 +249,6 @@ public class BoardPane extends GridPane {
 		GameController.nextTurn();
 		AppManager.getStatusDisplay(GameController.getTurn()).startTurn();
 		updateBoard();
-		GameController.setPromotion(null, Side.EMPTY);
 	}
 
 	public String getPromotionPiece() {

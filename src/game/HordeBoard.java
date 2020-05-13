@@ -8,20 +8,23 @@ import game.base.Board;
 import game.base.CheckMateAble;
 import logic.Side;
 
-public class HordeBoard extends Board implements CheckMateAble{
+public class HordeBoard extends Board implements CheckMateAble {
+	// this game is opening which white side has 36 pawns, and black side has
+	// standard chess pieces.
 	public HordeBoard(String[][] map) {
 		super(map);
 	}
 
+	// win
 	public boolean isWin(Side side) {
-		return (side==Side.BLACK) ? winByEatenAll(side) : winByCheckmate(side);
+		return (side == Side.BLACK) ? winByEatenAll(side) : winByCheckmate(side);
 	}
 
 	public boolean winByEatenAll(Side side) {
 		ArrayList<Entity> allPieces = getAllPieces(side);
 		return allPieces.size() == 0;
 	}
-	
+
 	public boolean winByCheckmate(Side side) {
 		Entity king = getKing(side);
 		if (!isEatenPoint(king.getPoint(), side)) {
@@ -29,11 +32,12 @@ public class HordeBoard extends Board implements CheckMateAble{
 		}
 		return drawCannotMove(side);
 	}
-	
+
+	// draw
 	public boolean isDraw(Side side) {
 		return drawCannotMove(side);
 	}
-	
+
 	public boolean drawCannotMove(Side side) {
 		ArrayList<Entity> allEntity = getAllPieces(side);
 		for (Entity entity : allEntity) {
@@ -46,6 +50,7 @@ public class HordeBoard extends Board implements CheckMateAble{
 		return true;
 	}
 
+	// check
 	public boolean isCheck(Side side) {
 		if (side == Side.BLACK)
 			return false;
@@ -53,10 +58,12 @@ public class HordeBoard extends Board implements CheckMateAble{
 		return isEatenPoint(kingPoint, side);
 	}
 
+	@Override
 	protected ArrayList<Point> editMovePoint(Point oldPoint, ArrayList<Point> movePoint) {
 		if (getEntity(oldPoint).getSide() == Side.BLACK) {
 			return super.editMovePoint(oldPoint, movePoint);
 		}
 		return movePoint;
 	}
+
 }
