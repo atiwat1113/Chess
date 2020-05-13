@@ -58,10 +58,6 @@ public class MyButton extends Button {
 
 	}
 
-	public void setFontSize(int fontSize) {
-		this.fontSize = fontSize;
-	}
-
 	public void setBackgroundWithImage(Image img) {
 		BackgroundSize bgSize = new BackgroundSize(this.getPrefWidth(), this.getPrefHeight(), false, false, false, false);
 		BackgroundImage bgImg = new BackgroundImage(img, null, null, null, bgSize);
