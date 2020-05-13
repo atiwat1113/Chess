@@ -52,7 +52,8 @@ public class Chess960Board extends Board implements CheckMateAble {
 		Point kingPoint = getKing(side).getPoint();
 		return isEatenPoint(kingPoint, side);
 	}
-
+	
+	@Override
 	public boolean isCastlingPoint(Side side, Point point) {
 		Entity entity = getEntity(point);
 		return (entity instanceof Rook && entity.getSide() == side);
