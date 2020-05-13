@@ -443,7 +443,6 @@ public abstract class Board {
 		return returnPoint;
 	}
 	public boolean isCastlingPoint(Side side, Point point) {
-		//Entity entity = getEntity(point);
 		return Math.abs(point.y-4)>1;
 	}
 
@@ -501,12 +500,9 @@ public abstract class Board {
 		Platform.runLater(new Runnable() {
 			@Override
 			public void run() {
-				// TODO Auto-generated method stub
 				AppManager.startCastlingAnimation(oldPoint, moveKing, moveEntity, rookPoint, newRookPoint, castlingRook);
 			}
 		});
 	
-		//AppManager.startCastlingAnimation(Point startKing, Point endKing, Entity king, Point startRook, Point endRook, Entity rook);
-		
 	}
 }

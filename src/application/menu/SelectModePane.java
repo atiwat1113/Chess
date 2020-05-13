@@ -18,8 +18,6 @@ import javafx.scene.text.Font;
 
 public class SelectModePane extends VBox {
 
-	private static final Image background = new Image(Resource.BACKGROUND);
-
 	public SelectModePane() {
 		HBox selectBox = new HBox();
 		VBox left = new VBox();
@@ -59,7 +57,7 @@ public class SelectModePane extends VBox {
 
 	private void setBackgroundWithImage() {
 		BackgroundSize bgSize = new BackgroundSize(this.getPrefWidth(), this.getPrefHeight(), false, false, false, false);
-		BackgroundImage bgImg = new BackgroundImage(background, null, null, null, bgSize);
+		BackgroundImage bgImg = new BackgroundImage(new Image(Resource.BACKGROUND), null, null, null, bgSize);
 		BackgroundImage[] bgImgA = { bgImg };
 		this.setBackground(new Background(bgImgA));
 	}
