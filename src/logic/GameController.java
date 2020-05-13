@@ -163,10 +163,7 @@ public abstract class GameController {
 		board.continueMove();
 	}
 
-	public static Board getBoard() {
-		return board;
-	}
-
+	
 	public static Side getTurn() {
 		return turn;
 	}
