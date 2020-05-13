@@ -13,8 +13,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 
 public class MyButton extends Button {
-
-	protected String font;
+	
 	protected double fontSize;
 
 	public MyButton(String text, double fontSize) { // decorate button here.
