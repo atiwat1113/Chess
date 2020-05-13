@@ -11,12 +11,12 @@ import java.util.*;
 import java.util.Random;
 import Resource.Sprites;
 
-public abstract class GameController {
-	protected static Board board;
-	protected static Side turn;
-	protected static Point size;
-	protected static Point promotionPoint;
-	protected static Side promotionSide;
+public class GameController {
+	private static Board board;
+	private static Side turn;
+	private static Point size;
+	private static Point promotionPoint;
+	private static Side promotionSide;
 	private static final String[] blackRow = { "BRook", "BKnight", "BBishop", "BQueen", "BKing", "BBishop", "BKnight",
 			"BRook" };
 	private static final String[] blackPawn = { "BPawn", "BPawn", "BPawn", "BPawn", "BPawn", "BPawn", "BPawn", "BPawn" };
@@ -173,7 +173,7 @@ public abstract class GameController {
 		return Side.WHITE;
 	}
 
-	public int[] getCheckNumber() {
+	public static int[] getCheckNumber() {
 		if (board instanceof ThreeCheckBoard) {
 			return ((ThreeCheckBoard) board).getCheckNumber();
 		}

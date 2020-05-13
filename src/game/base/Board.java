@@ -372,7 +372,7 @@ public abstract class Board {
 		return blackKing;
 	}
 
-	public Side getAnotherSide(Side side) {
+	public static Side getAnotherSide(Side side) {
 		if (side == Side.BLACK)
 			return Side.WHITE;
 		return Side.BLACK;
@@ -442,15 +442,16 @@ public abstract class Board {
 		}
 		return returnPoint;
 	}
+	
 	public boolean isCastlingPoint(Side side, Point point) {
 		return Math.abs(point.y-4)>1;
 	}
 
-	public int min(int i1, int i2, int i3, int i4) {
+	public static int min(int i1, int i2, int i3, int i4) {
 		return Math.min(i1, Math.min(i2, Math.min(i3, i4)));
 	}
 
-	public int max(int i1, int i2, int i3, int i4) {
+	public static int max(int i1, int i2, int i3, int i4) {
 		return Math.max(i1, Math.max(i2, Math.max(i3, i4)));
 	}
 
