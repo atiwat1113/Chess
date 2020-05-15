@@ -138,7 +138,7 @@
   </class>  
   <class id="16" language="java" name="entity.Bishop" project="Chess_project" 
     file="/Chess_project/src/entity/Bishop.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="776" y="1517"/>    
+    <position height="-1" width="-1" x="775" y="1457"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -147,7 +147,7 @@
   </class>  
   <class id="17" language="java" name="entity.King" project="Chess_project" file="/Chess_project/src/entity/King.java" 
     binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="1215" y="1544"/>    
+    <position height="-1" width="-1" x="1214" y="1484"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -156,7 +156,7 @@
   </class>  
   <class id="18" language="java" name="entity.Knight" project="Chess_project" 
     file="/Chess_project/src/entity/Knight.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="998" y="1516"/>    
+    <position height="-1" width="-1" x="997" y="1456"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -165,7 +165,7 @@
   </class>  
   <class id="19" language="java" name="entity.Pawn" project="Chess_project" file="/Chess_project/src/entity/Pawn.java" 
     binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="554" y="1524"/>    
+    <position height="-1" width="-1" x="553" y="1464"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -174,7 +174,7 @@
   </class>  
   <class id="20" language="java" name="entity.Queen" project="Chess_project" file="/Chess_project/src/entity/Queen.java" 
     binary="false" corner="BOTTOM_RIGHT">    
-    <position height="153" width="235" x="189" y="1439"/>    
+    <position height="153" width="235" x="188" y="1379"/>    
     <display autosize="false" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -183,7 +183,7 @@
   </class>  
   <class id="21" language="java" name="entity.Rook" project="Chess_project" file="/Chess_project/src/entity/Rook.java" 
     binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="1421" y="1544"/>    
+    <position height="-1" width="-1" x="1420" y="1484"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -192,7 +192,7 @@
   </class>  
   <class id="22" language="java" name="entity.base.Entity" project="Chess_project" 
     file="/Chess_project/src/entity/base/Entity.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="870" y="1165"/>    
+    <position height="-1" width="-1" x="869" y="1105"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -201,7 +201,7 @@
   </class>  
   <interface id="23" language="java" name="entity.base.Castling" project="Chess_project" 
     file="/Chess_project/src/entity/base/Castling.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="1277" y="1083"/>    
+    <position height="-1" width="-1" x="1326" y="1737"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
