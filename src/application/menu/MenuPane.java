@@ -17,7 +17,7 @@ import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 
-public class MenuPane extends StackPane {
+public class MenuPane extends StackPane implements UnchangeableBackground{
 
 	public MenuPane() {
 		VBox menu = new VBox();
@@ -57,7 +57,7 @@ public class MenuPane extends StackPane {
 		gc.drawImage(new Image(Resource.ICON), 0, 0, 300, 300);
 	}
 
-	private void setBackgroundWithImage() {
+	public void setBackgroundWithImage() {
 		BackgroundSize bgSize = new BackgroundSize(this.getPrefWidth(), this.getPrefHeight(), false, false, false, false);
 		BackgroundImage bgImg = new BackgroundImage(new Image(Resource.BACKGROUND), null, null, null, bgSize);
 		BackgroundImage[] bgImgA = { bgImg };

@@ -15,7 +15,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 
-public class TimeSelectPane extends VBox {
+public class TimeSelectPane extends VBox implements UnchangeableBackground{
 
 	public TimeSelectPane() {
 		Label select = new Label("Select Time Limit");
@@ -38,7 +38,7 @@ public class TimeSelectPane extends VBox {
 		this.getChildren().addAll(select, thirtyMin, fifteenMin, fiveMin, noLimit, returnBtn);
 	}
 
-	private void setBackgroundWithImage() {
+	public void setBackgroundWithImage() {
 		BackgroundSize bgSize = new BackgroundSize(this.getPrefWidth(), this.getPrefHeight(), false, false, false, false);
 		BackgroundImage bgImg = new BackgroundImage(new Image(Resource.BACKGROUND), null, null, null, bgSize);
 		BackgroundImage[] bgImgA = { bgImg };

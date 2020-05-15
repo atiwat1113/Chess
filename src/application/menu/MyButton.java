@@ -12,7 +12,7 @@ import javafx.scene.layout.BackgroundSize;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 
-public class MyButton extends Button {
+public class MyButton extends Button implements ChangeableBackground{
 	
 	protected double fontSize;
 

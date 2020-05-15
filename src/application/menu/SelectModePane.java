@@ -16,7 +16,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 
-public class SelectModePane extends VBox {
+public class SelectModePane extends VBox implements UnchangeableBackground{
 
 	public SelectModePane() {
 		HBox selectBox = new HBox();
@@ -55,7 +55,7 @@ public class SelectModePane extends VBox {
 
 	}
 
-	private void setBackgroundWithImage() {
+	public void setBackgroundWithImage() {
 		BackgroundSize bgSize = new BackgroundSize(this.getPrefWidth(), this.getPrefHeight(), false, false, false, false);
 		BackgroundImage bgImg = new BackgroundImage(new Image(Resource.BACKGROUND), null, null, null, bgSize);
 		BackgroundImage[] bgImgA = { bgImg };

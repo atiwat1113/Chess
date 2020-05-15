@@ -19,7 +19,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 
-public class SettingMenu extends VBox {
+public class SettingMenu extends VBox implements UnchangeableBackground{
 
 	private Slider bgmSlider;
 	private Label bgmValue;
@@ -106,7 +106,7 @@ public class SettingMenu extends VBox {
 
 	// --------------------------------------------------------------------------------------
 
-	class SoundButton extends Button {
+	class SoundButton extends Button implements ChangeableBackground{
 
 		private boolean isMuted;
 
@@ -159,7 +159,7 @@ public class SettingMenu extends VBox {
 			}
 		}
 
-		private void setBackgroundWithImage(Image img) {
+		public void setBackgroundWithImage(Image img) {
 			BackgroundSize bgSize = new BackgroundSize(this.getPrefWidth(), this.getPrefHeight(), false, false, false, false);
 			BackgroundImage bgImg = new BackgroundImage(img, null, null, null, bgSize);
 			BackgroundImage[] bgImgA = { bgImg };
@@ -234,7 +234,7 @@ public class SettingMenu extends VBox {
 		});
 	}
 
-	private void setBackgroundWithImage() {
+	public void setBackgroundWithImage() {
 		BackgroundSize bgSize = new BackgroundSize(this.getPrefWidth(), this.getPrefHeight(), false, false, false, false);
 		BackgroundImage bgImg = new BackgroundImage(new Image(Resource.BACKGROUND), null, null, null, bgSize);
 		BackgroundImage[] bgImgA = { bgImg };

@@ -16,7 +16,6 @@ public class SelectModeButton extends MyButton {
 		super(text, fontSize);
 		this.setPrefWidth(300);
 		setBackgroundWithImage(new Image(Resource.BUTTON_FRAME));
-		// TODO Auto-generated constructor stub
 		switch (text) {
 		case "Normal":
 			this.gameType = Games.NORMAL;
