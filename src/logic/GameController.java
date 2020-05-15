@@ -108,6 +108,7 @@ public class GameController {
 		return board.getCellMap();
 	}
 
+	// win, draw and check
 	public static boolean isWin() {
 		return board.isWin(turn);
 	}
@@ -122,10 +123,21 @@ public class GameController {
 		return false;
 	}
 
+	// move
+	public static void startAnimation(Point oldPoint, Point newPoint) {
+		board.startAnimation(oldPoint, newPoint);
+	}
+
+	public static void continueMove() {
+		board.continueMove();
+	}
+
+	// moveList
 	public static ArrayList<Point> moveList(Point p) {
 		return board.moveList(p);
 	}
 
+	// promotion
 	public static void setPromotion(Point point, Side side) {
 		promotionPoint = point;
 		promotionSide = side;
@@ -140,6 +152,7 @@ public class GameController {
 		promotionPoint = null;
 	}
 
+	// turn
 	public static boolean isTurn(Point p, Side turn) throws Exception {
 		if (board.getEntity(p).getSide() != turn) {
 			throw new WrongPieceException("It's not your piece.");
@@ -158,18 +171,11 @@ public class GameController {
 		}
 	}
 
-	public static void startAnimation(Point oldPoint, Point newPoint) {
-		board.startAnimation(oldPoint, newPoint);
-	}
-
-	public static void continueMove() {
-		board.continueMove();
-	}
-
 	public static Side getTurn() {
 		return turn;
 	}
 
+	// other
 	public static Side getAnotherSide(Side side) {
 		if (side == Side.WHITE)
 			return Side.BLACK;
