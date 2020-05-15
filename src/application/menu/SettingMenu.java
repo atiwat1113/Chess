@@ -253,11 +253,11 @@ public class SettingMenu extends VBox implements UnchangeableBackground{
 		
 	}
 	
-	public Slider getBgmSlider() {
+	public Slider getBgmSlider() { //used in AppManager
 		return bgmSlider;
 	}
 
-	public Slider getSfxSlider() {
+	public Slider getSfxSlider() { //used in AppManager
 		return sfxSlider;
 	}
 

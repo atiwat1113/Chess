@@ -88,35 +88,35 @@ public class BoardCell extends Pane {
 	// getter and setter
 	// -------------------------------------------------------------------------------------
 
-	public void setMyCell(Cell myCell) {
+	public void setMyCell(Cell myCell) { //used in BoardPane rotateBoard() and updateBoard()
 		this.myCell = myCell;
 	}
 
-	public Cell getMyCell() {
+	public Cell getMyCell() { //used in BoardPane addOnClickHandler() and showWalkPath()
 		return myCell;
 	}
 
-	public void setP(Point p) {
+	public void setP(Point p) { //used in BoardPane rotateBoard()
 		this.p = p;
 	}
 
-	public Point getP() {
+	public Point getP() { //used in BoardPane
 		return p;
 	}
 
-	public boolean isClicked() {
+	public boolean isClicked() { //used in BaordPane addOnClickHandler()
 		return isClicked;
 	}
 
-	public void setClicked(boolean isClicked) {
+	public void setClicked(boolean isClicked) { //used in BoardPane addOnClickHandler()
 		this.isClicked = isClicked;
 	}
 
-	public boolean isMoveable() {
+	public boolean isMoveable() { //used in BoardPane addOnClickHandler()
 		return moveable;
 	}
 
-	public void setMoveable(boolean moveable) {
+	public void setMoveable(boolean moveable) { //used in BoardPane showWalkPath()
 		this.moveable = moveable;
 	}
 

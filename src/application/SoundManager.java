@@ -140,19 +140,19 @@ public class SoundManager {
 		}
 	}
 
-	public static double getMenuBgmVolume() {
+	public static double getMenuBgmVolume() { //used in SettingMenu to set bgmSlider value
 		return bgm.getVolume();
 	}
 
-	public static void setMenuBgmVolume(double volume) {
+	public static void setMenuBgmVolume(double volume) { //used in Main, SettingMenu
 		bgm.setVolume(volume);
 	}
 
-	public static double getSoundEffectVolume() {
+	public static double getSoundEffectVolume() { //used in SettingMenu to set sfxSlider value
 		return clickingSound.getVolume();
 	}
 
-	public static void setSoundEffectVolume(double volume) {
+	public static void setSoundEffectVolume(double volume) { //used in Main, SettingMenu
 		clockTick.setVolume(volume);
 		clickingSound.setVolume(volume);
 		wrongSelected.setVolume(volume * 0.70);
@@ -160,11 +160,11 @@ public class SoundManager {
 		winning.setVolume(volume);
 	}
 
-	public static boolean getSoundEffectStatus() {
+	public static boolean getSoundEffectStatus() { //used in SettingPane, SettingMenu
 		return soundEffectStatus;
 	}
 
-	public static void setSoundEffectStatus(boolean soundEffectStatus) {
+	public static void setSoundEffectStatus(boolean soundEffectStatus) { //used in Main, SettingPane, SettingMenu
 		SoundManager.soundEffectStatus = soundEffectStatus;
 	}
 }

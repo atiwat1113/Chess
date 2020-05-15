@@ -170,91 +170,91 @@ public class AppManager { // for Classes to communicate with each other.
 	// getter and setter
 	// ----------------------------------------------------------------------------------------
 
-	public static void setStage(Stage stage) {
+	public static void setStage(Stage stage) { //used in Main
 		AppManager.stage = stage;
 	}
 
-	public static void setScene(Scene scene) {
+	public static void setScene(Scene scene) { //used in Main
 		AppManager.scene = scene;
 	}
 
-	public static void setMenuPane(MenuPane menuPane) {
+	public static void setMenuPane(MenuPane menuPane) { //used in Main
 		AppManager.menuPane = menuPane;
 	}
 
-	public static void setGamePane(GamePane gamePane) {
+	public static void setGamePane(GamePane gamePane) { //used in TimeSelectButton startGame()
 		AppManager.gamePane = gamePane;
 	}
 
-	public static GamePane getGamePane() {
+	public static GamePane getGamePane() { //used in BoardPane showEndGameWindow()
 		return gamePane;
 	}
 
-	public static BoardPane getBoardPane() {
+	public static BoardPane getBoardPane() { //used in PlayerStatusDiplay, TimeSelectButton, and SettingPane
 		return boardPane;
 	}
 
-	public static void setBoardPane(BoardPane boardPane) {
+	public static void setBoardPane(BoardPane boardPane) { //used in SelectModeButton setGame()
 		AppManager.boardPane = boardPane;
 	}
 
-	public static PromotionPane getPromotionPane() {
+	public static PromotionPane getPromotionPane() { //used in GamePane inner class Console
 		return promotionPane;
 	}
 
-	public static void setPromotionPane(PromotionPane promotionPane) {
+	public static void setPromotionPane(PromotionPane promotionPane) { //used in Main
 		AppManager.promotionPane = promotionPane;
 	}
 
-	public static SettingPane getSetting() {
+	public static SettingPane getSetting() { //used in GamePane inner class Console
 		return setting;
 	}
 
-	public static void setSetting(SettingPane setting) {
+	public static void setSetting(SettingPane setting) { //used in TimeSelectButton startGame()
 		AppManager.setting = setting;
 	}
 
-	public static void setSelectModePane(SelectModePane selectModePane) {
+	public static void setSelectModePane(SelectModePane selectModePane) { //used in Main
 		AppManager.selectModePane = selectModePane;
 	}
 
-	public static void setSettingMenu(SettingMenu settingMenu) {
+	public static void setSettingMenu(SettingMenu settingMenu) { //used in Main
 		AppManager.settingMenu = settingMenu;
 	}
 
-	public static void setTimeSelectPane(TimeSelectPane timeSelectPane) {
+	public static void setTimeSelectPane(TimeSelectPane timeSelectPane) { //used in Main
 		AppManager.timeSelectPane = timeSelectPane;
 	}
 
-	public static String getGameType() {
+	public static String getGameType() { //used in BoardCell and GamePane inner class Console
 		return gameType;
 	}
 
-	public static void setGameType(String gameType) {
+	public static void setGameType(String gameType) { //used in SelectModeButton setGame()
 		AppManager.gameType = gameType;
 	}
 
-	public static boolean getRotateStatus() {
+	public static boolean getRotateStatus() { //used in BoardPane updateBoard()
 		return rotateStatus;
 	}
 
-	public static int getSpareTime() {
+	public static int getSpareTime() { //used in PlayerStatusDisplay
 		return spareTime;
 	}
 
-	public static void setSpareTime(int spareTime) {
+	public static void setSpareTime(int spareTime) { //used in TimeSelectButton startGame()
 		AppManager.spareTime = spareTime;
 	}
 
-	public static void setWhiteDisplay(PlayerStatusDisplay whiteDisplay) {
+	public static void setWhiteDisplay(PlayerStatusDisplay whiteDisplay) { //used in GamePane inner class Console
 		AppManager.whiteDisplay = whiteDisplay;
 	}
 
-	public static void setBlackDisplay(PlayerStatusDisplay blackDisplay) {
+	public static void setBlackDisplay(PlayerStatusDisplay blackDisplay) { //used in GamePane inner class Console
 		AppManager.blackDisplay = blackDisplay;
 	}
 
-	public static PlayerStatusDisplay getStatusDisplay(Side side) {
+	public static PlayerStatusDisplay getStatusDisplay(Side side) { //used in BoardPane, SettingPane, and TimeSelectButton
 		if (side == Side.BLACK) {
 			return blackDisplay;
 		} else {
@@ -263,7 +263,7 @@ public class AppManager { // for Classes to communicate with each other.
 
 	}
 
-	public static void setRotateStatus(boolean rotateStatus) {
+	public static void setRotateStatus(boolean rotateStatus) { //used in SettingPane rotation listener
 		AppManager.rotateStatus = rotateStatus;
 	}
 

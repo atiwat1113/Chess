@@ -61,7 +61,7 @@ public class PromotionPane extends VBox {
 		}
 	}
 
-	public void setMessage(String message) {
+	public void setMessage(String message) { //used in AppManager
 		this.text.setText(message);
 	}
 }

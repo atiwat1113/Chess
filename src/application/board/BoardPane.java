@@ -243,20 +243,12 @@ public class BoardPane extends GridPane {
 	}
 
 	public void promotion(String text) {
-		setPromotionPiece(text);
-		GameController.promotion(this.getPromotionPiece());
+		this.promotionPiece = text;
+		GameController.promotion(promotionPiece);
 		AppManager.getStatusDisplay(GameController.getTurn()).endTurn();
 		GameController.nextTurn();
 		AppManager.getStatusDisplay(GameController.getTurn()).startTurn();
 		updateBoard();
-	}
-
-	public String getPromotionPiece() {
-		return promotionPiece;
-	}
-
-	public void setPromotionPiece(String promotionPiece) {
-		this.promotionPiece = promotionPiece;
 	}
 
 }
