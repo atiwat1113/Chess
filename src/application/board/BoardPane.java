@@ -101,6 +101,7 @@ public class BoardPane extends GridPane {
 							if (GameController.isPromotion()) {
 								myBoardCell.update();
 								AppManager.showPromotion();
+								enableBoardCell();
 							} else {
 								AppManager.getStatusDisplay(GameController.getTurn()).endTurn();
 								GameController.nextTurn();
