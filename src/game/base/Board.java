@@ -28,9 +28,9 @@ public abstract class Board {
 	protected Point twoWalkPawn;
 	private Cell[][] cellMap;
 	private Entity whiteKing, blackKing;
-	protected ArrayList<Point> removePoint = new ArrayList<Point>();
-	protected Entity movePiece, castlingRook = null;
-	protected Point movePoint, newRookPoint = null;
+	protected ArrayList<Point> removePoint;
+	protected Entity movePiece, castlingRook;
+	protected Point movePoint, newRookPoint;
 	protected static final Point[] knightWalk = { new Point(1, 2), new Point(2, 1), new Point(2, -1), new Point(1, -2),
 			new Point(-1, -2), new Point(-2, -1), new Point(-2, 1), new Point(-1, 2) };
 	protected static final Point[] KingWalk = { new Point(1, 1), new Point(1, 0), new Point(1, -1), new Point(0, -1),
@@ -41,6 +41,11 @@ public abstract class Board {
 		twoWalkPawn = null;
 		int column = map[0].length;
 		int row = map.length;
+		removePoint = new ArrayList<Point>();
+		movePiece = null;
+		castlingRook = null;
+		movePoint = null;
+		newRookPoint = null;
 		whiteKing = null;
 		blackKing = null;
 		width = column;
